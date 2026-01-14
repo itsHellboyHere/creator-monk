@@ -1,5 +1,7 @@
 .section {
   min-height: 100vh;
+  padding: 120px 40px;
+  /* background: #05070c; */
   background: radial-gradient(
       at top left,
       rgba(88, 101, 242, 0.35),
@@ -11,7 +13,159 @@
       transparent 50%
     ),
     #0b0f14;
+}
 
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+.header {
+  max-width: 620px;
+  margin-bottom: 80px;
+}
+
+.header h1 {
+  font-size: clamp(42px, 6vw, 56px);
+  line-height: 1.1;
+  color: white;
+}
+
+.header h1 span {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header p {
+  margin-top: 16px;
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+}
+
+/* CONTENT GRID */
+.content {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* FORM */
+.form {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(14px);
+  border-radius: 24px;
+  padding: 40px;
+}
+
+.field {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.field label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+}
+
+.field input,
+.field textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: white;
+  outline: none;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: rgba(124,124,255,0.6);
+}
+
+.submit {
+  margin-top: 12px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #7c7cff, #ff4ecd);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+
+  transition: transform 0.25s ease;
+}
+
+.submit:hover {
+  transform: translateY(-2px);
+}
+
+.note {
+  margin-top: 12px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+}
+
+/* INFO */
+.info {
+  padding-top: 20px;
+}
+
+.info h3 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.email {
+  font-size: 16px;
+  margin-bottom: 24px;
+  color: rgba(255,255,255,0.75);
+}
+
+.success {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #22c55e;
+}
+
+.error {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #ef4444;
+}
+/* MOBILE */
+@media (max-width: 768px) {
+  .section {
+    padding: 100px 24px;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .header {
+    text-align: center;
+  }
+
+  .form {
+    padding: 32px;
+  }
+
+  .info {
+    text-align: center;
+  }
 }
