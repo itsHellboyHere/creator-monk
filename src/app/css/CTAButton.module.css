@@ -1,0 +1,24 @@
+.btn {
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: #facc15;
+
+  border: 1px solid rgba(250, 204, 21, 0.6);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+  width: fit-content;
+  position: relative;
+  z-index: 2;
+  transform: translateY(2px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(0);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.35),
+    0 0 28px rgba(250, 204, 21, 0.35);
+}

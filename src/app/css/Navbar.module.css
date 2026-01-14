@@ -1,0 +1,149 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
+  z-index: 1000;
+
+  background: transparent;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.scrolled {
+  background: rgba(11, 15, 20, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navInner {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* LOGO */
+.logo {
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.3px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.logo span {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* DESKTOP LINKS */
+.links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.link {
+  position: relative;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 0.2s ease;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.link a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mobileLink {
+  color: inherit;
+  text-decoration: none;
+}
+.link:hover {
+  color: white;
+}
+
+/* hover underline */
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--gradient);
+  transition: width 0.25s ease;
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+/* ACTIVE LINK */
+.active {
+  color: white;
+}
+
+.active::after {
+  width: 100%;
+}
+
+/* HAMBURGER */
+.menuBtn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menuBtn span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+  margin: 5px 0;
+}
+
+/* MOBILE MENU */
+.mobileMenu {
+  display: none;
+}
+
+/* =====================
+   MOBILE
+===================== */
+
+@media (max-width: 768px) {
+  .links {
+    display: none;
+  }
+
+  .menuBtn {
+    display: block;
+  }
+
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    background: rgba(11, 15, 20, 0.95);
+    backdrop-filter: blur(12px);
+  }
+
+  .mobileLink {
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    cursor: pointer;
+  }
+
+  .mobileLink.active {
+    color: white;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

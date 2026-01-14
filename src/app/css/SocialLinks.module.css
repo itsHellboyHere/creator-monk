@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  gap: 14px;
+  padding: 0;
+  list-style: none;
+  justify-content: center;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+
+  color: rgba(255,255,255,0.8);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    color 0.3s ease;
+}
+
+.icon:hover {
+  transform: translateY(-4px);
+  color: white;
+  box-shadow: 0 0 24px rgba(124,124,255,0.45);
+}
+
+/* CONTACT VARIANT (more emphasis) */
+.contact .icon {
+  width: 52px;
+  height: 52px;
+}
+
+/* FOOTER VARIANT (subtle) */
+.footer .icon {
+  opacity: 0.8;
+}

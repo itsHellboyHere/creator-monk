@@ -1,0 +1,17 @@
+.section {
+  min-height: 100vh;
+  background: radial-gradient(
+      at top left,
+      rgba(88, 101, 242, 0.35),
+      transparent 50%
+    ),
+    radial-gradient(
+      at bottom right,
+      rgba(236, 72, 153, 0.35),
+      transparent 50%
+    ),
+    #0b0f14;
+
+  display: flex;
+  align-items: center;
+}
