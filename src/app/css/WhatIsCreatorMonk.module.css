@@ -18,7 +18,7 @@
 /* Sticky container = pull-up effect */
 .stickyWrap {
   position: sticky;
-  top: 120px;              /* adjust based on navbar */
+  top: 120px;     
   height: calc(100vh - 120px);
 
   display: flex;

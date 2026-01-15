@@ -16,7 +16,7 @@
   display: flex;
   align-items: flex-start;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .wrapper {
@@ -26,7 +26,11 @@
   color: #e5e7eb;
   position: relative;
 }
-
+/* .stickyWrap {
+  position: sticky;
+  top: 100;
+  z-index: 2;
+} */
 
 .heroCard {
   position: relative;
@@ -107,6 +111,101 @@
   animation: fadeUp 0.9s ease-out forwards;
   animation-delay: 0.4s;
 }
+.content {
+  margin-top: 5rem;
+  display: grid;
+  gap: 4rem;
+}
+
+.block {
+  max-width: 720px;
+}
+.block span{
+   background: linear-gradient(90deg, #7c7cff, #ff4ecd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.block h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  color: #f9fafb;
+  position: relative;
+}
+
+/* subtle accent dot */
+.block h2::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #6366f1, #ec4899);
+}
+
+.block p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #b5b8c0;
+}
+
+.values {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.values h3 {
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1.5rem;
+}
+
+.values ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.values li {
+  font-size: 1.05rem;
+  color: #d1d5db;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.values li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #a5b4fc;
+}
+
+.closing {
+  margin-top: 4rem;
+  font-size: 1.15rem;
+  text-align: center;
+  color: #e5e7eb;
+  opacity: 0.7;
+}
+.closing span{
+  display: inline-block;
+  margin-right: 1px;
+  margin-left: 2px;
+  font-size: 1.4rem; 
+  
+  /* Initial state */
+  filter: drop-shadow(0 0 0px rgba(34, 211, 238, 0));
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 @keyframes fadeUp {
   from {
@@ -118,3 +217,4 @@
     transform: translateY(0);
   }
 }
+
