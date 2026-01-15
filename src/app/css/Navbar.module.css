@@ -163,8 +163,12 @@
   /* Floating animation */
   animation: floatingMonk 3.5s ease-in-out infinite;
 }
+.logo {
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
 
-/* Hover Effect: The "Zen" State */
 .logo:hover .monk {
   transform: scale(1.25) rotate(-8deg);
   /* Uses your cyan brand color for the glow */
@@ -184,9 +188,4 @@
   }
 }
 
-/* Ensure the logo text color transition is smooth when monk is hovered */
-.logo {
-  display: flex;
-  align-items: center;
-  transition: opacity 0.3s ease;
-}
+
