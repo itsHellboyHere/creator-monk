@@ -2,12 +2,19 @@
 
 import styles from "../css/Footer.module.css";
 import SocialLinks from "../components/SocialLinks"
+import Link from "next/link";
 
+const links_items = [
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" }
+]
 export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
-        
+
         {/* BRAND */}
         <div className={styles.brand}>
           <h3>
@@ -23,10 +30,13 @@ export default function Footer() {
         <div className={styles.links}>
           <h4>Explore</h4>
           <ul>
-            <li>Home</li>
-            <li>Services</li>
-            <li>About</li>
-            <li>Contact</li>
+            {links_items.map((item) => (
+              <li key={item.name}>
+                <Link href={item.href} className={styles.footerLink}>
+                  {item.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 

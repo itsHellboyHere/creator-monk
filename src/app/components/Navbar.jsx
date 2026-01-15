@@ -38,6 +38,7 @@ useEffect(() => {
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.navInner}>
         <h2 className={styles.logo}>
+          <span className={styles.monk}>🧘‍♂️</span>
           Creator<span>Monk</span>
         </h2>
 

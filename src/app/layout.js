@@ -11,8 +11,12 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "CreatorMonk",
-  description: "We help creators turn ideas into polished content, strong brands, and meaningful growth.",
+  title: {
+    default: "CreatorMonk",
+    template: "%s | CreatorMonk",
+  },
+  description:
+    "We help creators turn ideas into polished content, strong brands, and meaningful growth.",
 };
 
 export default function RootLayout({ children }) {

@@ -54,7 +54,7 @@
   font-size: 15px;
 }
 
-/* LINKS */
+/* SECTION HEADINGS */
 .links h4,
 .social h4 {
   font-size: 14px;
@@ -63,6 +63,7 @@
   color: rgba(255,255,255,0.5);
   margin-bottom: 20px;
 }
+
 
 .links ul {
   list-style: none;
@@ -74,16 +75,28 @@
   gap: 12px;
 }
 
+
 .links li {
+  margin: 0;
+  padding: 0;
+}
+
+
+.footerLink,
+.footerLink:link,
+.footerLink:visited {
+  display: inline-block; /* or block if you want full width */
+  padding: 4px 0;
+
   color: rgba(255,255,255,0.75);
-  cursor: pointer;
+  text-decoration: none;
   transition: color 0.25s ease;
 }
 
-.links li:hover {
+.footerLink:hover,
+.footerLink:focus-visible {
   color: white;
 }
-
 /* SOCIAL */
 .social {
   display: flex;
