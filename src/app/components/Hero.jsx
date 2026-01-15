@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section className={styles.hero}>
       <h1 className={styles.title}>
-        Creator <span>Monks</span>
+        Creator <span>Monk</span>
       </h1>
 
       <p className={styles.subtitle}>

@@ -81,7 +81,7 @@ export default function ContactPage() {
           {/* INFO */}
           <div className={styles.info}>
             <h3>Other ways to reach us</h3>
-            <p className={styles.email}>📩 hello@creatormonk.in</p>
+            <p className={styles.email}>📩 creatormonkstudio@gmail.com</p>
             <SocialLinks variant="contact" />
           </div>
 

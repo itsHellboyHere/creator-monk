@@ -1,0 +1,120 @@
+.section {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      at top left,
+      rgba(88, 101, 242, 0.35),
+      transparent 50%
+    ),
+    radial-gradient(
+      at bottom right,
+      rgba(236, 72, 153, 0.35),
+      transparent 50%
+    ),
+    #0b0f14;
+
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 8rem 2rem 4rem;
+  color: #e5e7eb;
+  position: relative;
+}
+
+
+.heroCard {
+  position: relative;
+  margin: 3rem 0;
+  padding: 3rem 2rem 2.5rem;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(49, 57, 100, 0.35);
+
+  text-align: center;
+}
+
+.heroCard p , 
+.heroCard span {
+  opacity: 0;
+}
+.heroCard p {
+  font-size: 1.3rem;
+  font-size: clamp(1rem, 1vw, 2rem);
+  line-height: 1.6;
+  color: #f3f4f6;
+  margin-bottom: 0.8rem;
+  animation: fadeUp 0.9s ease-out forwards;
+}
+
+.heroCard::before {
+  content: "ABOUT CREATORMONK";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 6px 14px;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+
+  background: #0b0f14;
+  color: white;
+
+  border-radius: 6px;
+
+  border: 1px solid transparent;
+  background-image:
+    linear-gradient(#0b0f14, #0b0f14),
+    linear-gradient(90deg, #6366f1, #ec4899);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.heroCard::after {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #5f5aacf2, transparent);
+  opacity: 0.6;
+}
+.heroCard span {
+  font-size: 0.95rem;
+  background: linear-gradient(90deg, #7c7cff, #ff4ecd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.04em;
+  animation: fadeUp 0.9s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
