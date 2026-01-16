@@ -3,9 +3,9 @@ import styles from "@/app/css/SocialLinks.module.css";
 import { FiInstagram, FiTwitter, FiFacebook } from "react-icons/fi";
 
 const socials = [
-  { name: "Instagram", icon: FiInstagram, href: "#" },
+  { name: "Instagram", icon: FiInstagram, href: "https://www.instagram.com/creatormonk.in?igsh=b200cHBmYzNlOHVq" },
   { name: "Twitter", icon: FiTwitter, href: "#" },
-  { name: "Facebook", icon: FiFacebook, href: "#" },
+  { name: "Facebook", icon: FiFacebook, href: "https://www.facebook.com/share/171GX42oU9" },
 ];
 
 export default function SocialLinks({ variant = "footer" }) {

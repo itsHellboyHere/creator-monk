@@ -2,6 +2,7 @@
 
 import OurServices from "./OurServices"
 import PricingPlans from "./PricingPlans"
+import PricingPlans2 from "./PricingPlans2"
 import ServicesHighlights from "./ServicesHighlights"
 
 export default function Services(){
@@ -10,6 +11,7 @@ export default function Services(){
         <OurServices/>
         <ServicesHighlights/>
         <PricingPlans/>
+        <PricingPlans2/>
         </>
     )
 }

@@ -4,17 +4,14 @@ import { useRef, useState } from "react";
 import styles from "@/app/css/PricingPlans.module.css";
 
 const plans = [
-  { name: "Youtube-Basic", price: "₹4999", features: ["Content roadmap", "Basic analytics", "Email support"] },
-  { name: "Insta-Basic", price: "$49", features: ["Growth strategy", "Advanced analytics", "Priority support"] },
-  { name: "Facebook-basic", price: "$99", features: ["Full monetization", "1:1 mentoring", "Dedicated support"] },
-    { name: "Youtube-Premium", price: "$19", features: ["Content roadmap", "Basic analytics", "Email support"] },
-  { name: "Insta-Premium", price: "$49", features: ["Growth strategy", "Advanced analytics", "Priority support"] },
-  { name: "Facebook-Premium", price: "$99", features: ["Full monetization", "1:1 mentoring", "Dedicated support"] },
-  // { name: "Premium2", price: "$99", features: ["Full monetization", "1:1 mentoring", "Dedicated support"] },
-  // { name: "Premium3", price: "$99", features: ["Full monetization", "1:1 mentoring", "Dedicated support"] }
+  { name: "Basic", price: "$19", features: ["Content roadmap", "Basic analytics", "Email support"] },
+  { name: "Pro", price: "$49", features: ["Growth strategy", "Advanced analytics", "Priority support"] },
+  { name: "Premium", price: "$99", features: ["Full monetization", "1:1 mentoring", "Dedicated support"] },
+  { name: "Premium2", price: "$99", features: ["Full monetization", "1:1 mentoring", "Dedicated support"] },
+  { name: "Premium3", price: "$99", features: ["Full monetization", "1:1 mentoring", "Dedicated support"] }
 ];
 
-export default function PricingPlans() {
+export default function PricingPlans2() {
   const sliderRef = useRef(null);
   const cardRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(1); // start near center
@@ -42,7 +39,7 @@ export default function PricingPlans() {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.heading}>Social Media <span>Plans</span></h2>
+      {/* <h2 className={styles.heading}>Pricing <span>Plans</span></h2> */}
 
       <div
         className={styles.slider}

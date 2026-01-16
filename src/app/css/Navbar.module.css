@@ -5,7 +5,6 @@
   width: 100%;
   padding: 20px 40px;
   z-index: 1000;
-
   background: transparent;
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
@@ -19,27 +18,65 @@
 .navInner {
   max-width: 1200px;
   margin: 0 auto;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* LOGO */
+/* =====================
+   LOGO
+===================== */
+
 .logo {
+  display: flex;
+  align-items: center;
   font-weight: 500;
-  color: white;
   letter-spacing: 0.3px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  transition: opacity 0.3s ease;
 }
 
-.logo span {
+/* Text container */
+.text {
+  color: white;
+}
+
+/* Gradient only on "Monk" */
+.gradient {
   background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* DESKTOP LINKS */
+/* =====================
+   LOGO ICON
+===================== */
+
+.monk {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  cursor: pointer;
+
+  filter: drop-shadow(0 0 0px rgba(34, 211, 238, 0));
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: floatingMonk 3.5s ease-in-out infinite;
+}
+
+.monk img {
+  border-radius: 50%;
+}
+
+.logo:hover .monk {
+  transform: scale(1.25) rotate(-8deg);
+  filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.8));
+}
+
+/* =====================
+   DESKTOP LINKS
+===================== */
+
 .links {
   display: flex;
   gap: 28px;
@@ -53,20 +90,17 @@
   transition: color 0.2s ease;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
 .link a {
   color: inherit;
   text-decoration: none;
 }
 
-.mobileLink {
-  color: inherit;
-  text-decoration: none;
-}
 .link:hover {
   color: white;
 }
 
-/* hover underline */
+/* underline animation */
 .link::after {
   content: "";
   position: absolute;
@@ -78,20 +112,19 @@
   transition: width 0.25s ease;
 }
 
-.link:hover::after {
-  width: 100%;
-}
-
-/* ACTIVE LINK */
-.active {
-  color: white;
-}
-
+.link:hover::after,
 .active::after {
   width: 100%;
 }
 
-/* HAMBURGER */
+.active {
+  color: white;
+}
+
+/* =====================
+   HAMBURGER
+===================== */
+
 .menuBtn {
   display: none;
   background: none;
@@ -107,7 +140,10 @@
   margin: 5px 0;
 }
 
-/* MOBILE MENU */
+/* =====================
+   MOBILE MENU
+===================== */
+
 .mobileMenu {
   display: none;
 }
@@ -136,56 +172,30 @@
 
   .mobileLink {
     font-size: 18px;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
     cursor: pointer;
   }
 
   .mobileLink.active {
-    color: white;
     background: var(--gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 }
 
-/* Update your existing .monk and animation styles with this */
+/* =====================
+   ANIMATION
+===================== */
 
-.monk {
-  display: inline-block;
-  margin-right: 8px;
-  font-size: 1.4rem; /* Slightly larger for better visibility */
-  
-  /* Initial state */
-  filter: drop-shadow(0 0 0px rgba(34, 211, 238, 0));
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  cursor: pointer;
-  
-  /* Floating animation */
-  animation: floatingMonk 3.5s ease-in-out infinite;
-}
-.logo {
-  display: flex;
-  align-items: center;
-  transition: opacity 0.3s ease;
-}
-
-.logo:hover .monk {
-  transform: scale(1.25) rotate(-8deg);
-  /* Uses your cyan brand color for the glow */
-  filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.8));
-}
-
-/* Levitating Animation */
 @keyframes floatingMonk {
   0% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
   50% {
     transform: translateY(-6px);
   }
   100% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 }
-
-
