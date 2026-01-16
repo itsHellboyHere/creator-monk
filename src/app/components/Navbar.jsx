@@ -41,7 +41,7 @@ export default function Navbar() {
         <h2 className={styles.logo}>
           <span className={styles.monk}>
             <Image
-              src="/monk-icon.jpeg"
+              src="/logo.jpeg"
               alt="Creator Monk Logo"
               width={32}
               height={32}
