@@ -1,5 +1,6 @@
 'use client'
 
+import PricingSection from "../Pricing/PricingSection"
 import OurServices from "./OurServices"
 import PricingPlans from "./PricingPlans"
 import PricingPlans2 from "./PricingPlans2"
@@ -10,8 +11,8 @@ export default function Services(){
         <>
         <OurServices/>
         <ServicesHighlights/>
-        <PricingPlans/>
-        <PricingPlans2/>
+        <PricingSection/>
+        {/* <PricingPlans2/> */}
         </>
     )
 }
