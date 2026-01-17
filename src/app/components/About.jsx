@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "@/app/css/About.module.css";
+import OurTeam from "./OurTeam";
 
 export default function About() {
   return (
@@ -57,7 +58,9 @@ export default function About() {
             It’s a mindset for creators who want to build with intention.
           </p>
         </div>
+       
       </div>
+       <OurTeam/>
     </section>
   );
 }
