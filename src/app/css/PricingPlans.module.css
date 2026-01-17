@@ -131,6 +131,10 @@
   .active {
     transform: scale(1.04); /* less aggressive */
   }
+  .centered {
+    justify-content: flex-start;
+    overflow-x: auto;  
+  }
 }
 
 

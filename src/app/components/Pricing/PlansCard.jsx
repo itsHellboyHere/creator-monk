@@ -34,7 +34,7 @@ export default function PlanCards({ plans, onSelect }) {
       ref={sliderRef}
       onScroll={handleScroll}
       className={`${styles.slider} ${
-        plans.length <= 3 ? styles.centered : ""
+        plans.length <= 2 ? styles.centered : ""
       }`}
     >
       {plans.map((plan, i) => (
