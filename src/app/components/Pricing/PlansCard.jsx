@@ -1,38 +1,13 @@
 "use client";
-import { useRef, useState } from "react";
+
+import { useState } from "react";
 import styles from "@/app/css/PricingPlans.module.css";
 
-export default function PlanCards({ plans, onSelect }) {
-  const sliderRef = useRef(null);
-  const cardRefs = useRef([]);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const handleScroll = () => {
-    if (plans.length <= 2) return; // ✅ no scroll logic needed
-
-    const slider = sliderRef.current;
-    const center = slider.scrollLeft + slider.offsetWidth / 2;
-
-    let closest = 0;
-    let minDist = Infinity;
-
-    cardRefs.current.forEach((card, i) => {
-      if (!card) return;
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const dist = Math.abs(center - cardCenter);
-      if (dist < minDist) {
-        minDist = dist;
-        closest = i;
-      }
-    });
-
-    setActiveIndex(closest);
-  };
+export default function PlanCards({ plans = [], onSelect }) {
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   return (
     <div
-      ref={sliderRef}
-      onScroll={handleScroll}
       className={`${styles.slider} ${
         plans.length <= 2 ? styles.centered : ""
       }`}
@@ -40,10 +15,10 @@ export default function PlanCards({ plans, onSelect }) {
       {plans.map((plan, i) => (
         <div
           key={plan.name}
-          ref={(el) => (cardRefs.current[i] = el)}
           className={`${styles.card} ${
-            plans.length > 2 && activeIndex === i ? styles.active : ""
+            selectedIndex === i ? styles.active : ""
           }`}
+          onClick={() => setSelectedIndex(i)}
         >
           <h3>{plan.name}</h3>
 
@@ -55,7 +30,7 @@ export default function PlanCards({ plans, onSelect }) {
             ))}
           </ul>
 
-          <button onClick={() => onSelect(plan)}>
+          <button onClick={() => onSelect?.(plan)}>
             Check Plans
           </button>
         </div>
