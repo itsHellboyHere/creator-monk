@@ -17,6 +17,9 @@ export const metadata = {
   },
   description:
     "We help creators turn ideas into polished content, strong brands, and meaningful growth.",
+    icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -137,7 +137,6 @@
   }
 }
 
-/* DESKTOP ONLY: CENTER WHEN 1–2 CARDS */
 @media (min-width: 769px) {
   .centered {
     justify-content: center;
