@@ -42,7 +42,7 @@ export default function Navbar() {
           <span className={styles.monk}>
             <Image
               src="/logo.jpeg"
-              alt="Creator Monk Logo"
+              alt="CreatorMonk creator growth agency"
               width={32}
               height={32}
               priority

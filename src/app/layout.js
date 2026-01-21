@@ -12,12 +12,12 @@ const inter = Inter({
 
 export const metadata = {
   title: {
-    default: "CreatorMonk",
+    default: "CreatorMonk – Creator Growth & Personal Branding Agency",
     template: "%s | CreatorMonk",
   },
   description:
     "We help creators turn ideas into polished content, strong brands, and meaningful growth.",
-    icons: {
+  icons: {
     icon: "/favicon.ico",
   },
 };
