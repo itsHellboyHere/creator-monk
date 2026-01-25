@@ -1,8 +1,7 @@
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
-
+import { Inter } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,25 +10,37 @@ const inter = Inter({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://creatormonk.in"), 
+
   title: {
     default: "CreatorMonk – Creator Growth & Personal Branding Agency",
     template: "%s | CreatorMonk",
   },
+
   description:
-    "We help creators turn ideas into polished content, strong brands, and meaningful growth.",
+    "CreatorMonk helps creators turn ideas into polished content, strong personal brands, and meaningful audience growth.",
+
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
+
+  manifest: "/site.webmanifest",
+
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* 'antialiased' makes the font look smoother and more premium */}
       <body className={`${inter.variable} font-sans antialiased`}>
         <Navbar />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
