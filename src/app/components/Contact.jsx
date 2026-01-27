@@ -1,5 +1,5 @@
 "use client";
-
+import { useEffect } from "react";
 import styles from "@/app/css/Contact.module.css";
 import SocialLinks from "@/app/components/SocialLinks";
 import { sendContactEmail } from "@/app/actions/sendContactEmail";
@@ -22,6 +22,14 @@ function SubmitButton() {
 
 export default function ContactPage() {
   const [state, formAction] = useActionState(sendContactEmail, null);
+useEffect(() => {
+  if (state?.success && window.gtag) {
+    window.gtag("event", "contact_form_submit", {
+      event_category: "engagement",
+      event_label: "contact_page",
+    });
+  }
+}, [state]);
 
   return (
     <section className={styles.section}>
