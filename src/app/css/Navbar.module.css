@@ -11,35 +11,14 @@
   background: transparent;
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
   will-change: background;
-  -webkit-transform: translateZ(0); /* Forces GPU layer */
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+  
 }
-.nav::before {
-  content: "";
-  position: absolute;
-  inset: 0;
 
-  background: rgba(2, 2, 3, 0.85);
-
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-
-  opacity: 0;
-  transition: opacity 0.3s ease;
-
-  z-index: -1; /* stays behind content */
-}
 .scrolled {
   background: rgba(2, 2, 3, 0.85);
-  backdrop-filter: blur(50px);
+  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-}
-.scrolled::before {
-  opacity: 1;
 }
 .navInner {
   max-width: 1400px;
