@@ -1,6 +1,6 @@
 .section {
-  background-color: #f6f6f5; /* Light mode interlude */
-  padding: 14vh 0;
+  background-color: #f6f6f5; /* Premium Light Mode Break */
+  padding: 18vh 0;
   position: relative;
   overflow: hidden;
   z-index: 10;
@@ -13,26 +13,26 @@
 }
 
 .header {
-  margin-bottom: 8vh;
-  text-align: left;
+  margin-bottom: 12vh;
 }
 
 .badge {
   font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.4em;
   color: #888;
   display: block;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 6rem);
+  font-size: clamp(3.5rem, 9vw, 8rem);
   font-weight: 900;
   line-height: 0.85;
   color: #1a1a1a;
   text-transform: uppercase;
+  letter-spacing: -0.04em;
 }
 
 .gold { color: var(--monk-orange); }
@@ -40,106 +40,161 @@
 .grid {
   display: flex;
   flex-direction: column;
-  gap: 120px;
+  gap: 18vh;
 }
 
 .projectCard {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 60px;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 80px;
   align-items: center;
 }
+
+.reverse {
+  grid-template-columns: 0.6fr 1.4fr;
+}
+
+.reverse .visualArea { order: 2; }
+.reverse .contentArea { order: 1; text-align: right; align-items: flex-end; }
+.reverse .techStack { justify-content: flex-end; }
 
 .visualArea {
   position: relative;
   overflow: hidden;
   border-radius: 4px;
+  background: #000;
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.15);
+}
+
+.imgWrap {
+  aspect-ratio: 19 / 9; /* Cinematic Ultra-wide */
+  overflow: hidden;
 }
 
 .imgWrap img {
   width: 100%;
-  aspect-ratio: 13/7;
+  height: 100%;
   object-fit: cover;
-  filter: grayscale(100%) brightness(0.9);
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(100%) brightness(0.8);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.2) 100%);
+  pointer-events: none;
 }
 
 .projectCard:hover .imgWrap img {
   filter: grayscale(0%) brightness(1);
-  /* transform: scale(1.05); */
+  transform: scale(1.08); /* Cinematic Zoom */
 }
 
 .statusBadge {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 30px;
+  left: 30px;
   background: #1a1a1a;
   color: var(--monk-orange);
-  padding: 8px 15px;
-  font-size: 0.6rem;
+  padding: 10px 20px;
+  font-size: 0.65rem;
   font-weight: 900;
   letter-spacing: 0.2em;
+  z-index: 5;
+}
+
+.cardHindi {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-family: var(--font-display);
+  font-size: 5rem;
+  color: rgba(255, 255, 255, 0.05);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.contentArea {
+  display: flex;
+  flex-direction: column;
 }
 
 .projectName {
   font-family: var(--font-display);
-  font-size: 4rem;
+  font-size: clamp(3rem, 5vw, 6rem);
   font-weight: 900;
   color: #1a1a1a;
-  margin: 20px 0;
+  margin: 15px 0;
   text-transform: uppercase;
+  line-height: 0.9;
 }
 
 .type {
   font-size: 0.8rem;
-  color: #888;
-  font-weight: 700;
+  color: #999;
+  font-weight: 800;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
 }
 
 .techStack {
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .techStack span {
-  font-size: 0.65rem;
-  color: #aaa;
-  font-weight: 600;
+  font-size: 0.7rem;
+  color: var(--monk-orange);
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .launchBtn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 30px;
+  gap: 15px;
+  margin-top: 40px;
   font-weight: 900;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #1a1a1a;
   text-decoration: none;
-  border-bottom: 2px solid var(--monk-orange);
-  padding-bottom: 5px;
-  transition: gap 0.3s ease;
+  letter-spacing: 0.2em;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 8px;
+  transition: all 0.4s ease;
+  width: fit-content;
 }
 
-.launchBtn:hover { gap: 18px; }
+.launchBtn:hover {
+  border-color: var(--monk-orange);
+  gap: 25px;
+}
 
+/* MASSIVE BACKGROUND WATERMARK */
 .bgWatermark {
   position: absolute;
-  bottom: 0%;
-  right: -5%;
+  bottom: -5%;
+  left: 50%;
+  transform: translateX(-50%);
   font-family: var(--font-display);
   font-size: 25vw;
   font-weight: 900;
-  color: rgba(0,0,0,0.02);
+  color: rgba(0,0,0,0.015);
   pointer-events: none;
+  white-space: nowrap;
+  z-index: 0;
 }
 
 /* MOBILE */
-@media (max-width: 1024px) {
-  .projectCard { grid-template-columns: 1fr; gap: 30px; }
-  .grid { gap: 80px; }
-  .projectName { font-size: 2.5rem; }
+@media (max-width: 1100px) {
+  .projectCard, .reverse {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .reverse .contentArea { text-align: left; align-items: flex-start; }
+  .reverse .techStack { justify-content: flex-start; }
+  .imgWrap { aspect-ratio: 16 / 9; }
 }
