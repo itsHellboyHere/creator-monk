@@ -14,7 +14,7 @@ const services = [
   {
     id: "02",
     title: "Web & Software",
-    desc: "Next.js platforms, funnels & internal systems built to scale creators.",
+    desc: "Next.js platforms, Python & nodejs systems built to scale creators.",
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
     color: "#4287f5",
   },

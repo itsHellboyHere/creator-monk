@@ -198,3 +198,110 @@
   .reverse .techStack { justify-content: flex-start; }
   .imgWrap { aspect-ratio: 16 / 9; }
 }
+
+/* =========================
+   MOBILE OPTIMIZATION
+   MAX-WIDTH: 768px
+========================= */
+@media (max-width: 768px) {
+
+  .section {
+    padding: 12vh 0; /* Reduced from 18vh */
+  }
+
+  .container {
+    padding: 0 6%;
+  }
+
+  .header {
+    margin-bottom: 8vh; /* Reduced from 12vh */
+  }
+
+  .badge {
+    font-size: 0.65rem;
+    margin-bottom: 16px;
+  }
+
+  .title {
+    font-size: clamp(2.6rem, 10vw, 4rem);
+    line-height: 0.9;
+  }
+
+  .grid {
+    gap: 12vh; /* Reduced vertical separation */
+  }
+
+  /* CARD LAYOUT */
+  .projectCard,
+  .reverse {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .visualArea {
+    border-radius: 6px;
+  }
+
+  .imgWrap {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* STATUS BADGE */
+  .statusBadge {
+    top: 16px;
+    left: 16px;
+    padding: 8px 14px;
+    font-size: 0.6rem;
+  }
+
+  /* HINDI WATERMARK */
+  .cardHindi {
+    font-size: 3.2rem;
+    bottom: 12px;
+    right: 12px;
+    opacity: 0.6;
+  }
+
+  /* TEXT AREA */
+  .contentArea {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .projectName {
+    font-size: clamp(2.2rem, 9vw, 3.5rem);
+    margin: 12px 0;
+    line-height: 1;
+  }
+
+  .type {
+    font-size: 0.7rem;
+  }
+
+  .techStack {
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .techStack span {
+    font-size: 0.65rem;
+  }
+
+  /* CTA */
+  .launchBtn {
+    margin-top: 28px;
+    font-size: 0.75rem;
+    padding-bottom: 6px;
+  }
+
+  .launchBtn:hover {
+    gap: 15px; /* Prevent jumpiness on mobile */
+  }
+
+  /* BIG BACKGROUND TEXT */
+  .bgWatermark {
+    font-size: 40vw;
+    bottom: -8%;
+    opacity: 0.4;
+  }
+}

@@ -10,12 +10,13 @@
   --nav-height: 80px; 
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 body {
   background: var(--bg-deep);
   color: #fff;
@@ -25,7 +26,7 @@ body {
 }
 
 /* Film Grain – GPU safe */
-body::after {
+/* body::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -34,4 +35,9 @@ body::after {
   pointer-events: none;
   z-index: 9999;
   transform: translateZ(0);
+} */
+
+#__next,
+#root {
+  isolation: isolate;
 }
