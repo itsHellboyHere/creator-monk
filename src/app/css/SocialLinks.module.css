@@ -9,27 +9,20 @@
 .icon {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
-
+  border-radius: 4px; /* Industrial Square Look */
   display: grid;
   place-items: center;
-
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-
-  color: rgba(255,255,255,0.8);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    color 0.3s ease;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
 }
 
 .icon:hover {
-  transform: translateY(-4px);
-  color: white;
-  box-shadow: 0 0 24px rgba(124,124,255,0.45);
+  transform: translateY(-5px);
+  border-color: var(--monk-orange);
+  color: var(--monk-orange);
+  box-shadow: 0 10px 30px rgba(255, 174, 0, 0.1);
 }
 
 /* CONTACT VARIANT (more emphasis) */
@@ -58,7 +51,8 @@ background: #22d3ee;
 
 @media (max-width: 768px)  {
   .footer,.contact{
-    justify-content: center;
+    /* justify-content: center; */
+    margin-left: -12px;
   }
 
 }

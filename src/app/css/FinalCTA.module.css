@@ -1,0 +1,204 @@
+/* =========================
+   CTA SECTION
+========================= */
+.ctaSection {
+  padding: 8vh 0;
+  background: var(--bg-deep);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  z-index: 70;
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 165, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 165, 0, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  pointer-events: none;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 5%;
+  z-index: 10;
+}
+
+/* =========================
+   POWER BOX
+========================= */
+.powerBox {
+  background: rgba(10, 10, 10, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 36px;
+
+  padding: 96px 32px;
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-shadow:
+    inset 0 0 100px rgba(255, 165, 0, 0.03),
+    0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+.content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+}
+
+/* =========================
+   TEXT
+========================= */
+.label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  color: var(--monk-orange);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.mainTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  font-weight: 900;
+  line-height: 0.9;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 48px;
+  letter-spacing: -0.04em;
+}
+
+.gold {
+  color: var(--monk-orange);
+}
+
+/* =========================
+   CTA BUTTON
+========================= */
+.ctaButton {
+  position: relative;
+  padding: 22px 56px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  text-decoration: none;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.btnContent {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: color 0.4s ease;
+}
+
+.btnFill {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  transition: top 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 1;
+}
+
+.ctaButton:hover .btnFill { top: 0; }
+.ctaButton:hover .btnContent { color: #000; }
+
+/* =========================
+   CINEMATIC WATERMARK
+========================= */
+.boxWatermark {
+  position: absolute;
+  bottom: -6%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-family: var(--font-display);
+  font-size: 16vw;
+  font-weight: 900;
+
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 192, 85, 0.593);
+  text-shadow: 0 0 40px rgba(255, 174, 0, 0.06);
+
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+
+  animation: breathe 8s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.25;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(-50%) scale(1.02);
+  }
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+@media (max-width: 768px) {
+  .ctaSection {
+    padding: 6vh 0;
+  }
+
+  .powerBox {
+    padding: 64px 20px;
+    border-radius: 22px;
+  }
+
+  .mainTitle {
+    font-size: 2.6rem;
+    margin-bottom: 36px;
+    line-height: 0.95;
+  }
+
+  .ctaButton {
+    width: 100%;
+    padding: 18px 32px;
+    text-align: center;
+  }
+
+  .btnContent {
+    justify-content: center;
+  }
+
+  .boxWatermark {
+    font-size: 22vw;
+    bottom: 4%;
+    -webkit-text-stroke: 0.75px rgba(242, 192, 85, 0.593);
+  }
+}

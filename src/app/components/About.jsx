@@ -60,7 +60,7 @@ export default function About() {
         </div>
        
       </div>
-       <OurTeam/>
+       {/* <OurTeam/> */}
     </section>
   );
 }

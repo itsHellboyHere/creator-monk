@@ -1,10 +1,15 @@
 import CreatorReferral from "./components/CreatorRefferal"
+import FinalCTA from "./components/FinalCTA"
 import Footer from "./components/Footer"
 import Hero from "./components/Hero"
+import OurTeam from "./components/OurTeam"
+import ProjectShowcase from "./components/ProjectShowcase"
+import RoadmapGrid from "./components/Roadmap"
+// import Services from "./components/services/Services"
+import ServicesStack from "./components/Services"// 1. Import the new component
 import WhatIsCreatorMonk from "./components/WhatIsCreatorMonk"
+import WhoWeAre from "./components/WhoWeAre"
 import WhyCreatorMonk from "./components/WhyCreatorMonk"
-// import Navbar from "./components/Navbar"
-import WhySolar from "./components/WhyCreatorMonk"
 
 export const metadata = {
   title: "Home",
@@ -13,16 +18,20 @@ export const metadata = {
 };
 
 export default function Home (){
-
   return(
     <>
-      {/* <Navbar/> */}
       <Hero/>
       
-      <WhatIsCreatorMonk/>
+<WhoWeAre/>
+<ProjectShowcase/>
+      <ServicesStack/>
+      <RoadmapGrid/>
+      <OurTeam/>
+      <FinalCTA/>
+      {/* <WhatIsCreatorMonk/>
       <WhyCreatorMonk/>
-      <CreatorReferral/>
-      
+      <CreatorReferral/> */}
+      {/* <Footer /> */}
     </>
   )
 }

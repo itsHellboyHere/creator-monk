@@ -1,135 +1,173 @@
 .footer {
-  background: #05070c;
+  background: #020203; /* Matches Hero and Services background */
   position: relative;
   overflow: hidden;
+  padding-top: 120px;
+  padding-bottom: 50px;
 }
 
-/* subtle background glow */
-.footer::before {
-  content: "";
+.gridOverlay {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(
-      500px at 10% 0%,
-      rgba(124,124,255,0.12),
-      transparent 60%
-    ),
-    radial-gradient(
-      400px at 90% 100%,
-      rgba(255,78,205,0.12),
-      transparent 60%
-    );
+  background-image: 
+    linear-gradient(rgba(255, 174, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 174, 0, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
   pointer-events: none;
 }
 
-.inner {
-  max-width: 1200px;
+/* FIXED ALIGNMENT: Matches Navbar Container */
+.container {
+  max-width: 1200px; 
   margin: 0 auto;
-  padding: 100px 40px 60px;
+  padding: 0 4%;
+  position: relative;
+  z-index: 2;
+}
 
+.inner {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 1.5fr 1fr 1fr; /* Left-weighted alignment */
+  gap: 80px;
+  padding-bottom: 80px;
 }
 
-/* BRAND */
-.brand h3 {
-  font-size: 26px;
-  font-weight: 500;
+.logo {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 900;
   color: white;
-  margin-bottom: 12px;
-}
-
-.brand h3 span {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.brand p {
-  max-width: 360px;
-  color: rgba(255,255,255,0.65);
-  line-height: 1.6;
-  font-size: 15px;
-}
-
-/* SECTION HEADINGS */
-.links h4,
-.social h4 {
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.1em;
   margin-bottom: 20px;
 }
 
+.logo span {
+  color: var(--monk-orange); /* Monk Orange theme */
+}
 
-.links ul {
+.tagline {
+  max-width: 320px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--monk-orange); /* Monk Orange */
+  margin-bottom: 30px;
+}
+
+.list {
   list-style: none;
   padding: 0;
-  margin: 0;
-
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
 }
 
-
-.links li {
-  margin: 0;
-  padding: 0;
-}
-
-
-.footerLink,
-.footerLink:link,
-.footerLink:visited {
-  display: inline-block; /* or block if you want full width */
-  padding: 4px 0;
-
-  color: rgba(255,255,255,0.75);
+.footerLink {
+  color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
-  transition: color 0.25s ease;
+  font-size: 14px;
+  font-weight: 700;
+  transition: color 0.3s ease;
 }
 
-.footerLink:hover,
-.footerLink:focus-visible {
-  color: white;
-}
-/* SOCIAL */
-.social {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.footerLink:hover {
+  color: #fff;
 }
 
 /* BOTTOM BAR */
-.bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 24px 40px;
-  text-align: center;
+.bottomBar {
+  padding-bottom: 40px;
 }
 
-.bottom p {
-  font-size: 14px;
-  color: rgba(255,255,255,0.5);
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  margin-bottom: 30px;
 }
 
-/* MOBILE */
+.bottomContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+/* MASSIVE BACKGROUND WATERMARK */
+.bgWatermark {
+  position: absolute;
+  /* Shifted slightly lower so it "peeks" out from the bottom */
+  bottom: -10%; 
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 20vw; /* Increased size for that "Sansthan" impact */
+  font-weight: 900;
+  
+  /* THE FIX: Use a stroke instead of a solid fill */
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(233, 194, 98, 0.169);
+  
+  /* Optional: Add a very slight glow to the stroke */
+  text-shadow: 0 0 20px rgba(255, 174, 0, 0.02);
+  
+  pointer-events: none;
+  z-index: 2;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+/* MOBILE RESPONSIVENESS — OPTIMIZED (NO DESIGN CHANGE) */
 @media (max-width: 768px) {
+  .footer {
+    padding-top: 80px;   /* was 120px */
+    padding-bottom: 40px;
+  }
+
+  .container {
+    padding: 0 6%; /* Slightly more breathing room on phones */
+  }
+
   .inner {
     grid-template-columns: 1fr;
-    text-align: center;
-    gap: 48px;
-    padding: 80px 24px 48px;
+    gap: 42px; /* was 80px */
+    padding-bottom: 60px;
   }
 
-  .brand p {
-    margin: 0 auto;
+  .tagline {
+    max-width: 280px; /* tighter text measure */
+    font-size: 13px;
   }
 
-  .links ul {
-    align-items: center;
+  .sectionHeading {
+    margin-bottom: 22px; /* was 30px */
+  }
+
+  .list {
+    gap: 12px;
+  }
+
+  .bottomContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 11px;
+  }
+
+  .bgWatermark {
+    font-size: 24vw;   /* slightly smaller */
+    bottom: 6%;        /* lifted so it doesn’t push height */
+    -webkit-text-stroke: 0.75px rgba(233, 194, 98, 0.18);
   }
 }

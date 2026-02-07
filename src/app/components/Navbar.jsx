@@ -5,95 +5,114 @@ import { usePathname } from "next/navigation";
 import styles from "@/app/css/Navbar.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
   { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const isHome = pathname === "/";
-
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
+  // Handle Scroll effect
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-
-    if (pathname !== "/") {
-      setScrolled(true);
-    } else {
-      window.addEventListener("scroll", onScroll);
-    }
-
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, [pathname]);
+  }, []);
+
+  // Prevent background scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isOpen]);
 
   return (
-    <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
+    <nav className={`${styles.nav} ${scrolled || isOpen ? styles.scrolled : ""}`}>
       <div className={styles.navInner}>
-        <h2 className={styles.logo}>
-          <span className={styles.monk}>
-            <Image
-              src="/logo.jpeg"
-              alt="CreatorMonk creator growth agency"
-              width={32}
-              height={32}
-              priority
-            />
+        <Link href="/" className={styles.logo} onClick={() => setIsOpen(false)}>
+          <div className={styles.logoIcon}>
+            <Image src="/logo.png" alt="Logo" width={34} height={34} priority />
+          </div>
+          <span className={styles.logoText}>
+            CREATOR<span className={styles.gold}>MONK</span>
           </span>
-          <span className={styles.text}>
-            Creator<span className={styles.gradient}>Monk</span>
-          </span>
-        </h2>
+        </Link>
 
-        {/* Desktop links */}
-        <ul className={styles.links}>
-          {links.map((link) => (
-            <li
-              key={link.href}
-              className={`${styles.link} ${pathname === link.href ? styles.active : ""
-                }`}
-            >
-              <Link href={link.href}>{link.name}</Link>
-            </li>
-          ))}
-        </ul>
+        {/* Desktop Navigation */}
+        <div className={styles.desktopContainer}>
+          <ul className={styles.links}>
+            {links.map((link) => (
+              <li key={link.href}>
+                <Link 
+                  href={link.href} 
+                  className={`${styles.navLink} ${pathname === link.href ? styles.active : ""}`}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link href="/contact" className={styles.ctaBtn}>START A PROJECT</Link>
+        </div>
 
-        {/* Mobile toggle */}
-        <button
-          className={styles.menuBtn}
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
+        {/* Mobile Toggle */}
+        <button 
+          className={`${styles.menuBtn} ${isOpen ? styles.menuOpen : ""}`}
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle Menu"
         >
-          <span />
-          <span />
-          <span />
+          <div className={styles.hamburger} />
         </button>
       </div>
 
-      {/* Mobile menu */}
-      {open && (
-        <div className={styles.mobileMenu}>
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`${styles.mobileLink} ${pathname === link.href ? styles.active : ""
-                }`}
-              onClick={() => setOpen(false)}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-      )}
+      {/* Full-Screen Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className={styles.mobileOverlay}
+          >
+            <div className={styles.mobileContent}>
+              {links.map((link, i) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * i }}
+                >
+                  <Link
+                    href={link.href}
+                    className={`${styles.mobileNavLink} ${pathname === link.href ? styles.activeMobile : ""}`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
+                <Link href="/contact" className={styles.mobileCta} onClick={() => setIsOpen(false)}>
+                  WORK WITH US
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

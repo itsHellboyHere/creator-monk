@@ -1,120 +1,168 @@
 .teamSection {
-  margin-top: 60px;
-  width: 100%;
-    margin-bottom: 60px;
+  padding: 15vh 0;
+  background: #020203;
+  position: relative;
+  overflow: hidden;
+  z-index: 60;
 }
 
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 174, 0, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 174, 0, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+  pointer-events: none;
+}
 
 .teamContainer {
-  max-width: 1200px;  
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 6%;
+}
+
+.header {
   text-align: center;
+  margin-bottom: 8vh;
+}
+
+.badge {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  color: var(--monk-orange);
+  margin-bottom: 20px;
+  display: block;
 }
 
 .heading {
-  font-size: 36px;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
   color: white;
-  margin-bottom: 48px;
+  text-transform: uppercase;
 }
 
 .heading span {
-  background: linear-gradient(90deg, #7c7cff, #ff4ecd);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--monk-orange);
+  font-style: italic;
 }
 
-/* GRID */
 .teamGrid {
-  display: flex;
-  gap: 32px;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
 }
 
-/* CARD */
 .teamCard {
   position: relative;
-  width: 280px;
-  height: 360px;
-  border-radius: 22px;
+  height: 550px;
+  border-radius: 4px;
   overflow: hidden;
-
-  background-size: cover;
-  background-position: center;
-
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  cursor: pointer;
 }
 
-/* DARK OVERLAY */
-.overlay {
+/* --- THE COLOR TRANSITION --- */
+.cardImg {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(8px);
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  background-size: cover;
+  background-position: center;
+  /* Start Grayscale and Dim */
+  filter: grayscale(100%) brightness(0.6) contrast(1.1);
+  transform: scale(1);
+  transition: 
+    filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.teamCard:hover {
+  transform: translateY(-15px);
+  border-color: var(--monk-orange);
+}
+
+.teamCard:hover .cardImg {
+  filter: grayscale(0%) brightness(1) contrast(1);
+  transform: scale(1.08); /* Moving/Zooming effect */
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #020203 5%, transparent 60%);
   z-index: 1;
 }
 
-/* INFO (child) */
-.info {
+.cardContent {
   position: absolute;
-  bottom: 24px;
-  left: 24px;
-  right: 24px;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+  z-index: 3;
+}
 
-  padding: 16px 18px;
-  border-radius: 14px;
-
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
-
-  transform: translateY(20px) scale(0.95);
+.dialogue {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--monk-orange);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
   opacity: 0;
-
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  z-index: 2;
+  transform: translateY(15px);
+  transition: all 0.5s ease;
 }
 
-.info h3 {
-  margin: 0;
-  font-size: 18px;
+.teamCard:hover .dialogue {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nameBlock h3 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
   color: white;
+  margin: 0;
+  line-height: 1;
 }
 
-.info p {
-  margin: 6px 0 0;
-  font-size: 14px;
-  color: rgba(255,255,255,0.8);
+.roleTag {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
 }
 
-/* HOVER EFFECTS */
-.teamCard:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+/* --- HINDI WATERMARK FIX --- */
+.hindiWatermark {
+  position: absolute;
+  top: 15%;
+  right: -5%;
+  font-size: 6rem; /* Made larger */
+  font-weight: 900;
+  /* Increased Opacity and used Monk Orange hue */
+  color: rgba(119, 244, 185, 0.19); 
+  writing-mode: vertical-rl;
+  pointer-events: none;
+  z-index: 2; 
+  font-family: var(--font-display);
 }
 
-.teamCard:hover .overlay {
-  opacity: 1;
-}
-
-.teamCard:hover .info {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .teamGrid {
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 25px;
   }
 
   .teamCard {
-    width: 240px;
-    height: 320px;
+    height: 480px;
   }
 }

@@ -1,0 +1,17 @@
+.mainWrapper {
+  background: #020203;
+  position: relative;
+}
+
+.stickyHero {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 1; /* Base layer */
+}
+
+.stackLayer {
+  position: relative;
+  z-index: 10; /* Higher than hero to pull over */
+  background: #020203;
+}

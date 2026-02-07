@@ -1,53 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Syne:wght@800&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@1,600&display=swap');
+
 :root {
-  --gradient: linear-gradient(90deg, #6366f1, #22d3ee);
-  --text-muted: rgba(255,255,255,0.65);
-}
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
-
-/* html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  background-color: #0b0f14;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg-deep: #020203;
+  --monk-orange: #ffa500;
+  --font-display: 'Syne', sans-serif;
+  --font-heading: 'Bebas Neue', cursive;
+  --font-accent: 'Cormorant Garamond', serif;
+  /* --nav-height: 80px; */
+  --nav-height: 80px; 
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-} */
-
-*{
-  margin: 0;
-  box-sizing: border-box;
   padding: 0;
-  
 }
+
 body {
- font-family: var(--font-inter), ui-sans-serif, system-ui;
+  background: var(--bg-deep);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Film Grain – GPU safe */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translateZ(0);
 }

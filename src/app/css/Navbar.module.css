@@ -1,201 +1,247 @@
+/* Navbar.module.css */
+
 .nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 40px;
+  height: var(--nav-height); 
   z-index: 1000;
+
   background: transparent;
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  will-change: background;
+  -webkit-transform: translateZ(0); /* Forces GPU layer */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
 
+  background: rgba(2, 2, 3, 0.85);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  z-index: -1; /* stays behind content */
+}
 .scrolled {
-  background: rgba(11, 15, 20, 0.75);
-  backdrop-filter: blur(12px);
+  background: rgba(2, 2, 3, 0.85);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
 }
-
+.scrolled::before {
+  opacity: 1;
+}
 .navInner {
-  max-width: 1200px;
+  max-width: 1400px;
+  height: 100%;
+
   margin: 0 auto;
+  padding: 0 6%;         
+
   display: flex;
+  align-items: center;  
   justify-content: space-between;
-  align-items: center;
 }
 
-/* =====================
-   LOGO
-===================== */
-
+/* --- LOGO --- */
 .logo {
   display: flex;
   align-items: center;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: white;
-  transition: opacity 0.3s ease;
+  gap: 12px;
+  text-decoration: none;
+  z-index: 2001; /* Keep logo above mobile menu */
 }
 
-/* Text container */
-.text {
-  color: white;
-}
-
-/* Gradient only on "Monk" */
-.gradient {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* =====================
-   LOGO ICON
-===================== */
-
-.monk {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 8px;
-  cursor: pointer;
-
-  filter: drop-shadow(0 0 0px rgba(34, 211, 238, 0));
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  animation: floatingMonk 3.5s ease-in-out infinite;
-}
-
-.monk img {
+.logoIcon {
+  position: relative;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
+  overflow: hidden;
+  transition: transform 0.4s ease;
 }
 
-.logo:hover .monk {
-  transform: scale(1.25) rotate(-8deg);
-  filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.8));
+.logo:hover .logoIcon {
+  transform: rotate(-10deg) scale(1.1);
 }
 
-/* =====================
-   DESKTOP LINKS
-===================== */
+.logoText {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: #fff;
+}
+
+.gold {
+  color: var(--monk-orange, #ffae00);
+}
+
+/* --- DESKTOP NAVIGATION --- */
+.desktopContainer {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
 
 .links {
   display: flex;
-  gap: 28px;
+  gap: 32px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.link {
-  position: relative;
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.85);
-  transition: color 0.2s ease;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.link a {
-  color: inherit;
+.navLink {
   text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-.link:hover {
-  color: white;
+.navLink:hover, 
+.active {
+  color: #fff;
 }
 
-/* underline animation */
-.link::after {
+/* Desktop Active Underline */
+.navLink::after {
   content: "";
   position: absolute;
+  bottom: -5px;
   left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 2px;
-  background: var(--gradient);
-  transition: width 0.25s ease;
+  width: 0%;
+  height: 1px;
+  background: var(--monk-orange, #ffae00);
+  transition: width 0.3s ease;
 }
 
-.link:hover::after,
 .active::after {
   width: 100%;
 }
 
-.active {
-  color: white;
+/* --- CTA BUTTON --- */
+.ctaBtn {
+  padding: 12px 24px;
+  border: 1px solid #fff;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-/* =====================
-   HAMBURGER
-===================== */
+.ctaBtn:hover {
+  background: #fff;
+  color: #000;
+}
 
+/* --- HAMBURGER BUTTON --- */
 .menuBtn {
   display: none;
+  width: 30px;
+  height: 30px;
   background: none;
   border: none;
   cursor: pointer;
+  position: relative;
+  z-index: 2001; /* Above the overlay */
 }
 
-.menuBtn span {
+.hamburger, 
+.hamburger::before, 
+.hamburger::after {
+  content: "";
   display: block;
   width: 24px;
   height: 2px;
-  background: white;
-  margin: 5px 0;
+  background: #fff;
+  position: absolute;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* =====================
-   MOBILE MENU
-===================== */
-
-.mobileMenu {
-  display: none;
+.hamburger {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-/* =====================
-   MOBILE
-===================== */
+.hamburger::before { top: -8px; }
+.hamburger::after { bottom: -8px; }
 
+.menuOpen .hamburger { background: transparent; }
+.menuOpen .hamburger::before { transform: rotate(45deg); top: 0; }
+.menuOpen .hamburger::after { transform: rotate(-45deg); bottom: 0; }
+
+/* --- MOBILE FULL SCREEN COVER --- */
 @media (max-width: 768px) {
-  .links {
-    display: none;
-  }
+  .desktopContainer { display: none; }
+  .menuBtn { display: block; }
 
-  .menuBtn {
-    display: block;
-  }
-
-  .mobileMenu {
+  .mobileOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #020203; /* Deep dark background */
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 24px;
-    background: rgba(11, 15, 20, 0.95);
-    backdrop-filter: blur(12px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
   }
 
-  .mobileLink {
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.85);
+  .mobileContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+  }
+
+  .mobileNavLink {
+    font-size: 2.5rem; /* Large impact font */
+    font-family: var(--font-display);
+    font-weight: 900;
+    color: #fff;
     text-decoration: none;
-    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
   }
 
-  .mobileLink.active {
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  .activeMobile {
+    color: var(--monk-orange, #ffae00);
   }
-}
 
-/* =====================
-   ANIMATION
-===================== */
+  .mobileCta {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    color: #000;
+    background: #fff;
+    padding: 18px 40px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
 
-@keyframes floatingMonk {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-  100% {
-    transform: translateY(0);
+  .mobileCta:active {
+    transform: scale(0.95);
   }
 }
