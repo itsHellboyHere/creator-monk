@@ -17,17 +17,13 @@ export default function ServicePortals() {
     offset: ["start end", "end start"]
   });
 
-  // Smoother springs 
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
-
-  // Background shifts precisely to white as the 3rd card arrives
   const bgColor = useTransform(smoothProgress, [0.1, 0.45], ["#020203", "#F8F8F8"]);
   const studioOpacity = useTransform(smoothProgress, [0.2, 0.45], [0, 0.06]);
   const cardScale = useTransform(smoothProgress, [0, 0.3], [0.9, 1]);
 
   return (
     <motion.section ref={containerRef} style={{ backgroundColor: bgColor }} className={styles.section}>
-      {/* Massive Background Logo */}
       <motion.div style={{ opacity: studioOpacity }} className={styles.watermark}>
         STUDIO
       </motion.div>
@@ -42,7 +38,11 @@ export default function ServicePortals() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <Link href={`/services/${item.title.toLowerCase().replace('_os', '')}`} className={styles.glassCard}>
+             
+              <Link 
+                href={`/services/${item.title.toLowerCase().replace('_', '-')}`} 
+                className={styles.glassCard}
+              >
                 <div className={styles.visualStack}>
                   <img src={item.img} alt={item.title} className={styles.glowImg} />
                   <div className={styles.glassOverlay} />

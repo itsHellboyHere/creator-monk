@@ -1,0 +1,122 @@
+.introHero {
+  background-color: #020203;
+  height: 35vh; 
+  min-height: 480px; /* Slightly increased for better centric balance */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centers the container */
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 40px 0; /* Balanced top/bottom padding */
+}
+
+/* Subtle tech grid to fill the void */
+.techOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 6%;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.layout {
+  display: flex;
+  justify-content: center; /* Brings elements toward the center */
+  align-items: center;
+  gap: 80px; /* Wider gap for a more expansive, cinematic feel */
+  max-width: 1200px; /* Tighter layout to keep focus centric */
+  margin: 0 auto;
+}
+.textContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Keeps text aligned left but centered in the layout */
+  max-width: 550px;
+}
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem); /* Tuned for Hindi characters */
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.tagWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.accentLine {
+  width: 30px;
+  height: 1px;
+  background-color: var(--monk-orange);
+}
+
+.tagline {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: #777;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.visualSide {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageWrap {
+  position: relative;
+  z-index: 2;
+}
+
+.serviceImg {
+  height: 300px; 
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 30px rgba(255, 174, 0, 0.2));
+}
+
+.divineGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(255, 174, 0, 0.2) 0%, transparent 70%);
+  z-index: -1;
+  filter: blur(40px);
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  .introHero { height: auto; min-height: 400px; padding: 100px 0 40px; }
+  .layout { flex-direction: column-reverse; text-align: center; }
+  .tagWrapper { justify-content: center; }
+  .serviceImg { height: 180px; }
+  .title { font-size: 1.8rem; }
+}

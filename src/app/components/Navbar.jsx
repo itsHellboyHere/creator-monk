@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import styles from "@/app/css/Navbar.module.css";
@@ -9,7 +8,15 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
   { name: "Home", href: "/" },
-  { name: "Services", href: "/services" },
+  { 
+    name: "Services", 
+    href: "/services",
+    subLinks: [
+      { name: "SOCIAL_OS", href: "/services/social-os", tag: "REACH" },
+      { name: "SOFT_OS", href: "/services/soft-os", tag: "CORE" },
+      { name: "FILM_OS", href: "/services/film-os", tag: "LENS" },
+    ]
+  },
   { name: "About", href: "/about" },
 ];
 
@@ -17,22 +24,22 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSub, setActiveSub] = useState(false);
 
-  // Handle Scroll effect
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Prevent background scroll when mobile menu is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
   }, [isOpen]);
+
+  const isActive = (href) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   return (
     <nav className={`${styles.nav} ${scrolled || isOpen ? styles.scrolled : ""}`}>
@@ -46,69 +53,121 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* DESKTOP NAV */}
         <div className={styles.desktopContainer}>
           <ul className={styles.links}>
-            {links.map((link) => (
-              <li key={link.href}>
-                <Link 
-                  href={link.href} 
-                  className={`${styles.navLink} ${pathname === link.href ? styles.active : ""}`}
+            {links.map((link) => {
+              const parentActive =
+                isActive(link.href) ||
+                link.subLinks?.some((sub) => isActive(sub.href));
+
+              return (
+                <li
+                  key={link.href}
+                  className={styles.navLi}
+                  onMouseEnter={() => link.subLinks && setActiveSub(true)}
+                  onMouseLeave={() => setActiveSub(false)}
                 >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
+                  <Link
+                    href={link.href}
+                    className={`${styles.navLink} ${parentActive ? styles.active : ""}`}
+                  >
+                    {link.name}
+                  </Link>
+
+                  {/* DROPDOWN */}
+                  {link.subLinks && (
+                    <AnimatePresence>
+                      {activeSub && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          className={styles.dropdown}
+                        >
+                          {link.subLinks.map((sub) => (
+                            <Link
+                              key={sub.href}
+                              href={sub.href}
+                              className={`${styles.subLink} ${
+                                isActive(sub.href) ? styles.subActive : ""
+                              }`}
+                            >
+                              <span className={styles.subTag}>{sub.tag}</span>
+                              <span className={styles.subName}>{sub.name}</span>
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  )}
+                </li>
+              );
+            })}
           </ul>
-          <Link href="/contact" className={styles.ctaBtn}>START A PROJECT</Link>
+
+          <Link href="/contact" className={styles.ctaBtn}>
+            START A PROJECT
+          </Link>
         </div>
 
-        {/* Mobile Toggle */}
-        <button 
+        {/* MOBILE TOGGLE */}
+        <button
           className={`${styles.menuBtn} ${isOpen ? styles.menuOpen : ""}`}
           onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle Menu"
         >
           <div className={styles.hamburger} />
         </button>
       </div>
 
-      {/* Full-Screen Mobile Menu */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className={styles.mobileOverlay}
           >
             <div className={styles.mobileContent}>
-              {links.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * i }}
-                >
+              {links.map((link) => (
+                <div key={link.href} className={styles.mobileItemWrap}>
                   <Link
                     href={link.href}
-                    className={`${styles.mobileNavLink} ${pathname === link.href ? styles.activeMobile : ""}`}
+                    className={`${styles.mobileNavLink} ${
+                      isActive(link.href) ? styles.activeMobile : ""
+                    }`}
                     onClick={() => setIsOpen(false)}
                   >
                     {link.name}
                   </Link>
-                </motion.div>
+
+                  {link.subLinks && (
+                    <div className={styles.mobileSubGroup}>
+                      {link.subLinks.map((sub) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className={`${styles.mobileSubLink} ${
+                            isActive(sub.href) ? styles.mobileSubActive : ""
+                          }`}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {sub.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
+
+              <Link
+                href="/contact"
+                className={styles.mobileCta}
+                onClick={() => setIsOpen(false)}
               >
-                <Link href="/contact" className={styles.mobileCta} onClick={() => setIsOpen(false)}>
-                  WORK WITH US
-                </Link>
-              </motion.div>
+                WORK WITH US
+              </Link>
             </div>
           </motion.div>
         )}

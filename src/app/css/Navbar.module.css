@@ -13,7 +13,6 @@
   /* will-change: background; */
   
 }
-
 .scrolled {
   background: rgba(2, 2, 3, 0.85);
   backdrop-filter: blur(20px);
@@ -21,6 +20,52 @@
    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+.navLi {
+  position: relative;
+  padding: 10px 0;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  background: #0a0a0b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 15px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.subLink {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  padding: 10px;
+  transition: background 0.2s ease;
+}
+
+.subLink:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.subTag {
+  font-size: 0.55rem;
+  font-family: monospace;
+  color: var(--monk-orange, #ffae00);
+  letter-spacing: 0.2em;
+}
+
+.subName {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 4px;
+}
+
 .navInner {
   max-width: 1400px;
   height: 100%;
@@ -140,9 +185,31 @@
   border: none;
   cursor: pointer;
   position: relative;
-  z-index: 2001; /* Above the overlay */
+  z-index: 2001; 
+}
+.mobileItemWrap {
+  text-align: center;
 }
 
+.mobileSubGroup {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobileSubLink {
+  font-size: 1rem;
+  color: #666;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.mobileSubLink:hover {
+  color: #fff;
+}
 .hamburger, 
 .hamburger::before, 
 .hamburger::after {
@@ -224,4 +291,34 @@
   .mobileCta:active {
     transform: scale(0.95);
   }
+}
+
+
+/* active styles */
+/* DESKTOP ACTIVE */
+.active {
+  color: #fff;
+}
+
+.active::after {
+  width: 100%;
+}
+
+/* DROPDOWN ACTIVE */
+.subActive {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.subActive .subName {
+  color: var(--monk-orange, #ffae00);
+}
+
+/* MOBILE ACTIVE */
+.activeMobile {
+  color: var(--monk-orange, #ffae00);
+}
+
+/* MOBILE SUB ACTIVE */
+.mobileSubActive {
+  color: #fff;
 }

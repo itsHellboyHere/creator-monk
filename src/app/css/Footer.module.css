@@ -1,9 +1,10 @@
 .footer {
-  background: #020203; /* Matches Hero and Services background */
+  background: #020203; 
   position: relative;
   overflow: hidden;
   padding-top: 120px;
   padding-bottom: 50px;
+  z-index: 2;
 }
 
 .gridOverlay {
