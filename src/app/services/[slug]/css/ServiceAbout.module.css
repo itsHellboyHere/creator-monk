@@ -1,10 +1,8 @@
 .aboutWrapper {
-  background-color: #F8F8F6; /* Premium Bone White */
-  min-height: 120vh;
+  background-color: #F8F8F6;
+  min-height: 160vh; /* Increased for longer sticky scroll */
   position: relative;
   padding: 160px 0;
-  overflow-x: hidden;
-  overflow-y: visible; /* Allows watermark to stay visible */
 }
 
 /* THE FIXED WATERMARK: Bold and pinned */
@@ -14,11 +12,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: var(--font-display);
-  font-size: 22vw;
+  font-size: 26vw;
   font-weight: 900;
   color: #000;
   mix-blend-mode: multiply; 
-  letter-spacing: -0.02em;
+  letter-spacing: -0.05em;
   white-space: nowrap;
   z-index: 1;
   pointer-events: none;
@@ -29,24 +27,21 @@
 .contentContainer {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 8%; /* Increased padding for breathing room */
+  padding: 0 8%; 
   position: relative;
   z-index: 5;
+  mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
 }
 
 .mainGrid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr; 
-  gap: 100px;
+  gap: 120px;
   align-items: start;
 }
 
 
 /* MISSION ZONE */
-.missionZone {
-  position: relative;
-  padding-top: 40px;
-}
 
 .missionContent {
   position: relative;
@@ -67,31 +62,79 @@
 /* Core mission statement */
 .missionStatement {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4.2vw, 3.6rem);
-  line-height: 1.08;
-  font-weight: 900;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  max-width: 600px;
+}
+.heavyText {
   color: #111;
-  letter-spacing: -0.03em;
-  margin-bottom: 36px;
+  display: block;
+  font-weight: 900;
 }
 
-/* Visual anchor rule */
+.lightText {
+  color: #111;
+  opacity: 0.35; 
+  font-weight: 800;
+  display: block;
+}
+
 .missionRule {
   width: 80px;
   height: 4px;
   border-radius: 4px;
   opacity: 0.9;
 }
+.missionZone {
+  position: sticky;
+  top: 20vh;
+  height: fit-content;
+  align-items:start;
+}
+.missionFooter {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
 
+.detailText {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #666;
+  max-width: 250px;
+  line-height: 1.4;
+}
+
+.tagWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.livePulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.5; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.5; }
+}
 /* TECHNICAL CARDS */
 .technicalZone {
-  padding-left: 40px;
-  border-left: 1px solid rgba(0, 0, 0, 0.06); /* Vertical separator */
+  padding-left: 60px;
+  border-left: 1px solid rgba(0, 0, 0, 0.08); 
 }
 
 .specCard {
-  margin-bottom: 80px;
-  position: relative;
+  margin-bottom: 140px;
+  /* position: relative; */
 }
 
 .specHeader {
@@ -115,10 +158,11 @@
 }
 
 .specTitle {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2.2rem;
+  font-weight: 800;
   color: #000;
   margin-bottom: 12px;
+  letter-spacing: -0.02em;
 }
 
 .specDesc {

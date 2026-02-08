@@ -10,48 +10,61 @@ export default function ServiceAbout({ mission, benefits, accent, title }) {
         offset: ["start end", "end start"]
     });
 
-    // Fixed Watermark opacity logic
-    const opacity = useTransform(scrollYProgress, [0.1, 0.3, 0.7, 0.9], [0, 0.08, 0.08, 0]);
+    // Splitting the mission for visual impact
+    const words = mission.split(" ");
+    const head = words.slice(0, 3).join(" ");
+    const tail = words.slice(3).join(" ");
+
+    // Adjusted opacity: much subtler to prevent clashing with text
+    const watermarkOpacity = useTransform(scrollYProgress, [0.1, 0.3, 0.7, 0.9], [0, 0.05, 0.05, 0]);
 
     return (
         <section ref={containerRef} className={styles.aboutWrapper}>
-            {/* FIXED WATERMARK: Pinned in the background */}
-            <motion.div style={{ opacity }} className={styles.fixedWatermark}>
-                {typeof title === 'string' ? title : "SYSTEM_CORE"}
+            {/* BACKGROUND LAYER */}
+            <motion.div style={{ opacity: watermarkOpacity }} className={styles.fixedWatermark}>
+                {typeof title === 'string' ? title : "CORE"}
             </motion.div>
 
             <div className={styles.contentContainer}>
                 <div className={styles.mainGrid}>
-
-
-                    {/* Left Side: Mission */}
+                    
+                    {/* LEFT: STICKY MISSION */}
                     <div className={styles.missionZone}>
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                            initial={{ opacity: 0, x: -40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
                             className={styles.missionContent}
                         >
-                            <span className={styles.missionEyebrow} style={{ color: accent }}>
-                                ARCHITECTING DOMINANCE
-                            </span>
+                            <div className={styles.tagWrapper}>
+                                <div className={styles.livePulse} style={{ backgroundColor: accent }} />
+                                <span className={styles.missionEyebrow} style={{ color: accent }}>
+                                    // MISSION_OBJECTIVE
+                                </span>
+                            </div>
 
                             <h2 className={styles.missionStatement}>
-                                {mission}
+                                <span className={styles.heavyText}>{head}</span> 
+                                <span className={styles.lightText}>{tail}</span>
                             </h2>
 
-                            <div className={styles.missionRule} style={{ backgroundColor: accent }} />
+                            <div className={styles.missionFooter}>
+                                <div className={styles.missionRule} style={{ backgroundColor: accent }} />
+                                <p className={styles.detailText}>
+                                    Engineering unshakeable foundations for the next generation of the Creator Empire.
+                                </p>
+                            </div>
                         </motion.div>
                     </div>
 
-                    {/* Right Side: Styled Technical Cards */}
+                    {/* RIGHT: SCROLLING SPECS */}
                     <div className={styles.technicalZone}>
                         {benefits.map((item, index) => (
                             <motion.div
                                 key={item.id}
-                                initial={{ opacity: 0, x: 40 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.8, delay: index * 0.1 }}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.7, delay: index * 0.1 }}
                                 className={styles.specCard}
                             >
                                 <div className={styles.specHeader}>

@@ -1,12 +1,13 @@
 .introHero {
   background-color: #020203;
   height: 35vh; 
-  min-height: 480px; /* Slightly increased for better centric balance */
+  min-height: 480px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center; /* Centers the container */
-  position: relative;
+  position:sticky;
+  top: 0;
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   padding: 40px 0; /* Balanced top/bottom padding */

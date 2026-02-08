@@ -2,6 +2,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import styles from "@/app/css/Services.module.css";
+import Link from "next/link";
 
 const services = [
   {
@@ -32,6 +33,7 @@ const ServiceCard = ({ service, i, progress, range, targetScale }) => {
   
   return (
     <div className={styles.stickyTrack}>
+      <Link href="/services" className={styles.cardLink}>
       <motion.div
         style={{
           scale,
@@ -60,7 +62,9 @@ const ServiceCard = ({ service, i, progress, range, targetScale }) => {
             </button>
           </div>
         </div>
+       
       </motion.div>
+       </Link>
     </div>
   );
 };

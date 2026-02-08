@@ -81,6 +81,11 @@
   position: sticky;
   top: 0;
 }
+.cardLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
 
 /* =========================
    CARD
