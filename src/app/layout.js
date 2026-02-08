@@ -4,7 +4,6 @@ import Footer from "./components/Footer";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import Analytics from "./components/Analytics";
-import SmoothScroll from "./components/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -60,12 +59,10 @@ export default function RootLayout({ children }) {
   </head>
 
   <body className={`${inter.variable} font-sans antialiased`}>
-    <SmoothScroll>
     <Analytics />
     <Navbar />
     {children}
     <Footer />
-    </SmoothScroll>
   </body>
 </html>
   );
