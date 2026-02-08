@@ -1,13 +1,14 @@
 .scrollWrapper {
-  height: 1800px; 
+  height: 2000px; 
   position: relative;
   background-color: #020203;
-  /* Fill the "bad design" empty space with a tech grid */
-  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
-  background-size: 50px 50px;
+  /* Updated Grid for better "Lab" texture */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
-/* Fixed Portal: Ensures text is NEVER cut off */
 .cinePortal {
   position: fixed;
   top: 0;
@@ -21,9 +22,18 @@
   z-index: 1;
 }
 
+.textWrapper {
+  position: relative;
+  overflow: hidden; /* Clips the beam to the text boundaries */
+  padding: 20px 0;
+}
+
 .cinematicText {
+  display: flex;
+  gap: 0.2 em;
+  justify-content: center;
   font-family: var(--font-display);
-  font-size: clamp(4rem, 10vw, 12vw); /* Responsive size for MacBook Air */
+  font-size: clamp(4rem, 10vw, 12vw);
   font-weight: 900;
   color: transparent;
   -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.4); 
@@ -31,9 +41,26 @@
   text-transform: uppercase;
   white-space: nowrap;
   text-align: center;
-  width: 100%;
-  padding: 0 4%; /* Safety margin to keep text inside viewport */
 }
+
+/* The Scanner Light Effect */
+.scannerBeam {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    var(--monk-orange), 
+    transparent
+  );
+  box-shadow: 0 0 15px var(--monk-orange);
+  z-index: 2;
+  opacity: 0.6;
+}
+
+
 
 .introHero {
   /* background-color: #aeadcdcb;  */
@@ -45,7 +72,7 @@
   top: 0;
   z-index: 5; /* Stays above the cinematic text */
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
 }
 
 .container {
@@ -125,7 +152,56 @@
 
 /* MOBILE Optimization */
 @media (max-width: 768px) {
-  .introHero { height: auto; min-height: 450px; padding: 120px 0 40px; position: relative; }
-  .layout { flex-direction: column-reverse; text-align: center; }
-  .visualSide { height: 200px; margin-bottom: 30px; }
+  .scrollWrapper {
+    height: 1600px; 
+  }
+
+  .introHero {
+    height: 100vh; 
+    min-height: 500px;
+    /* padding: 80px 0 20px; */
+    padding: 60px 0;
+    position: sticky;
+  }
+
+  .layout {
+    flex-direction: column-reverse; 
+    text-align: center;
+    gap: 10px;
+  }
+
+  /* Shrink the long mission text */
+  .hindiTitle {
+    font-size: 1.8rem; 
+    line-height: 1.2;
+    padding: 0 10px;
+  }
+
+  .tagline {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    margin-top: 10px;
+  }
+
+  .visualSide {
+    height: 180px; /* Smaller visual to save space */
+    margin-bottom: 10px;
+  }
+
+  /* Shrink the Cinematic Text so it doesn't overflow mobile width */
+  .cinematicText {
+    flex-direction: column;
+    font-size: 16vw; 
+    line-height: 0.9;
+    letter-spacing: 0.05em;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  }
+  .hindiTitle{
+    font-size: 1.8rem;
+    padding: 0 15px;
+  }
+  .scannerBeam{
+    height: 3px;
+    opacity: 0.8;
+  }
 }

@@ -10,24 +10,31 @@ export default function ServicesIntro() {
     offset: ["start start", "end start"], 
   });
 
-  // Hero Fades out quickly to reveal the lab
   const opacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.35], [1, 0.95]);
   
-  // Cinematic Text timing: Arrives as hero leaves, holds, then fades
   const cineOpacity = useTransform(scrollYProgress, [0.25, 0.45, 0.85, 0.98], [0, 1, 1, 0]);
   const cineScale = useTransform(scrollYProgress, [0.3, 0.98], [0.9, 1.15]);
 
   return (
     <div ref={scrollRef} className={styles.scrollWrapper}>
-      {/* Centered Portal: Fixes the 60-70% cutoff issue */}
       <div className={styles.cinePortal}>
-        <motion.h2 
-          style={{ opacity: cineOpacity, scale: cineScale }} 
-          className={styles.cinematicText}
-        >
-          SERVICES
-        </motion.h2>
+<motion.div 
+  style={{ opacity: cineOpacity, scale: cineScale }}
+  className={styles.textWrapper}
+>
+  {/* Using a data-attribute or separate spans for better control */}
+  <h2 className={styles.cinematicText}>
+    <span className={styles.line}>CREATION</span>
+    <span className={styles.line}>LAB</span>
+  </h2>
+  
+  <motion.div 
+    animate={{ top: ["-5%", "105%", "-5%"] }}
+    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+    className={styles.scannerBeam}
+  />
+</motion.div>
       </div>
 
       <section className={styles.introHero}>
