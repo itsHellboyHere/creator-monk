@@ -1,19 +1,59 @@
-.introHero {
-  background-color: #020203; /* Deep dark base to support transparent nav */
-  height: 400px; /* Fixed height as requested */
+.scrollWrapper {
+  height: 1800px; 
+  position: relative;
+  background-color: #020203;
+  /* Fill the "bad design" empty space with a tech grid */
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-size: 50px 50px;
+}
+
+/* Fixed Portal: Ensures text is NEVER cut off */
+.cinePortal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
-  position: relative;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cinematicText {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 12vw); /* Responsive size for MacBook Air */
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.4); 
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: center;
+  width: 100%;
+  padding: 0 4%; /* Safety margin to keep text inside viewport */
+}
+
+.introHero {
+  /* background-color: #aeadcdcb;  */
+  height: 480px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 5; /* Stays above the cinematic text */
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 60px; /* Space for your fixed Navbar */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .container {
-  max-width: 1400px; /* Site-wide standard for MacBook Air */
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 6%;
   width: 100%;
+  will-change: transform , opacity , filter;
 }
 
 .layout {
@@ -22,7 +62,8 @@
   align-items: center;
   gap: 40px;
 }
-.textContent{
+
+.textContent {
   max-width: 620px;
 }
 
@@ -48,12 +89,12 @@
   text-transform: uppercase;
 }
 
-/* IMAGE STYLING */
+/* IMAGE & GLOW STYLING */
 .visualSide {
   position: relative;
   display: flex;
   justify-content: center;
-  height: 340px; /* Controlled height within the 400px hero */
+  height: 340px;
 }
 
 .imageWrap {
@@ -77,14 +118,14 @@
   transform: translate(-50%, -50%);
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, rgba(223, 240, 38, 0.487) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(223, 240, 38, 0.3) 0%, transparent 70%); /* Adjusted for premium feel */
   z-index: -1;
-  filter: blur(30px);
+  filter: blur(40px);
 }
 
-/* MOBILE 768px Optimization */
+/* MOBILE Optimization */
 @media (max-width: 768px) {
-  .introHero { height: auto; min-height: 450px; padding: 120px 0 40px; }
+  .introHero { height: auto; min-height: 450px; padding: 120px 0 40px; position: relative; }
   .layout { flex-direction: column-reverse; text-align: center; }
   .visualSide { height: 200px; margin-bottom: 30px; }
 }
