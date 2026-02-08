@@ -44,14 +44,19 @@ export default function Navbar() {
   return (
     <nav className={`${styles.nav} ${scrolled || isOpen ? styles.scrolled : ""}`}>
       <div className={styles.navInner}>
-        <Link href="/" className={styles.logo} onClick={() => setIsOpen(false)}>
-          <div className={styles.logoIcon}>
-            <Image src="/logo.png" alt="Logo" width={34} height={34} priority />
-          </div>
-          <span className={styles.logoText}>
-            CREATOR<span className={styles.gold}>MONK</span>
-          </span>
-        </Link>
+<Link href="/" className={styles.logo} onClick={() => setIsOpen(false)}>
+  <Image 
+    src="/logo1.png" 
+    alt="CreatorMonk Logo" 
+    width={70} // Adjusted for better scale
+    height={70} 
+    priority 
+    className={styles.logoImg}
+  />
+  <span className={styles.logoText}>
+    CREATOR<span className={styles.gold}>MONK</span>
+  </span>
+</Link>
 
         {/* DESKTOP NAV */}
         <div className={styles.desktopContainer}>
