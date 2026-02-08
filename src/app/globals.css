@@ -41,3 +41,43 @@ body {
 #root {
   isolation: isolate;
 }
+
+
+
+/* --- CREATOR_MONK SYSTEM SCROLLER --- */
+
+/* Chrome, Safari, and Edge */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F8F6;
+}
+
+::-webkit-scrollbar-thumb {
+  /* Monk Orange Gradient */
+  background: linear-gradient(
+    180deg, 
+    #ffae00 0%, 
+    #ff7b00 100%
+  );
+  border-radius: 20px;
+  border: 3px solid #F8F8F6; 
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* Brighter glow on hover */
+  background: linear-gradient(
+    180deg, 
+    #ffd000 0%, 
+    #ffae00 100%
+  );
+}
+
+/* Firefox Support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ffae00 #F8F8F6;
+}
