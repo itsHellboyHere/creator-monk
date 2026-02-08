@@ -144,8 +144,8 @@
 }
 
 .scrollHint p {
-  font-size: 0.8rem;
-  letter-spacing: 0.4em;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
   color: rgba(255,255,255,0.4);
   margin-bottom: 8px;
 }

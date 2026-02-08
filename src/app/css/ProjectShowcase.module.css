@@ -301,7 +301,7 @@
   /* BIG BACKGROUND TEXT */
   .bgWatermark {
     font-size: 40vw;
-    bottom: -8%;
+    bottom: -8%; 
     opacity: 0.4;
   }
 }

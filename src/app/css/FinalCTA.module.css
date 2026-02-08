@@ -78,7 +78,7 @@
   font-family: var(--font-display);
   font-size: clamp(2.4rem, 6vw, 5.2rem);
   font-weight: 900;
-  line-height: 0.9;
+  line-height: 1;
   color: #fff;
   text-transform: uppercase;
   margin-bottom: 48px;
@@ -181,9 +181,9 @@
   }
 
   .mainTitle {
-    font-size: 2.6rem;
+    font-size: 2.3rem;
     margin-bottom: 36px;
-    line-height: 0.95;
+    line-height: 0.96;
   }
 
   .ctaButton {
@@ -197,8 +197,8 @@
   }
 
   .boxWatermark {
-    font-size: 22vw;
+    font-size: 24vw;
     bottom: 4%;
-    -webkit-text-stroke: 0.75px rgba(242, 192, 85, 0.593);
+    -webkit-text-stroke: 0.78px rgba(242, 192, 85, 0.593);
   }
 }
