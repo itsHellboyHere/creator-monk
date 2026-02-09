@@ -1,6 +1,7 @@
 
 import ServiceAbout from "./comp/ServiceAbout";
 import ServiceDynamicIntro from "./comp/ServiceDynamicIntro";
+import ServicePricing from "./comp/ServicePricing";
 
 const SERVICE_DATA = {
   "social-os": {
@@ -16,7 +17,44 @@ const SERVICE_DATA = {
       { id: "LOGIC_01", head: "Algorithmic Dominance", desc: "Reverse-engineering platform logic to center your message." },
       { id: "LOGIC_02", head: "Narrative Architecture", desc: "Every post is a brick in your digital empire, built with precision." },
       { id: "LOGIC_03", head: "Mass Influence", desc: "Scaling your voice from a single person to an unstoppable movement." }
+    ],
+    plans: [
+  {
+    id: "S1",
+    name: "Insta Launch",
+    price: "₹14,999",
+    features: [
+      "Instagram Profile Optimization",
+      "Reels Content Strategy",
+      "Posting Schedule & Hashtags",
+      "Basic Performance Insights"
     ]
+  },
+  {
+    id: "S2",
+    name: "Reels Growth",
+    price: "₹24,999",
+    features: [
+      "Viral Reels Strategy",
+      "Reels Editing & Optimization",
+      "Audience Engagement Tactics",
+      "Trend & Audio Research",
+      "Growth Analytics"
+    ]
+  },
+  {
+    id: "S3",
+    name: "Social Scale",
+    price: "₹49,999",
+    features: [
+      "High-Volume Reels System",
+      "Cross-Platform Social Promotion",
+      "Monetization Strategy",
+      "Brand Collaboration Setup",
+      "1:1 Growth Mentorship"
+    ]
+  }
+],
   },
   "soft-os": {
     title: (
@@ -31,7 +69,44 @@ const SERVICE_DATA = {
       { id: "CODE_01", head: "Full-Stack Mastery", desc: "Leveraging Django and React for high-performance digital tools." },
       { id: "CODE_02", head: "Scalable Infrastructure", desc: "Systems designed to grow with your user base without breaking." },
       { id: "CODE_03", head: "Intuitive UX/UI", desc: "Complex logic wrapped in beautiful, user-centric interfaces." }
+    ],
+    plans: [
+  {
+    id: "C1",
+    name: "Creator Monk – Starter",
+    price: "₹10,000",
+    features: [
+      "Next.js Frontend ",
+      "Basic Backend Service",
+      "Database Configuration",
+      "Project Deployment"
     ]
+  },
+  {
+    id: "C2",
+    name: "Creator Monk – Growth",
+    price: "₹25,000",
+    features: [
+      "Advanced Search Container",
+      "Backend API Architecture",
+      "Database Design & Optimization",
+      "Object Storage Integration",
+      "Secure Deployment"
+    ]
+  },
+  {
+    id: "C3",
+    name: "Creator Monk – Platform",
+    price: "₹30,000",
+    features: [
+      "Search Container (Scalable)",
+      "Full Backend System",
+      "Database + Object Storage",
+      "Real-Time Chat Service",
+      "Production-Ready Architecture"
+    ]
+  }
+],
   },
   "film-os": {
     title: (
@@ -46,6 +121,30 @@ const SERVICE_DATA = {
       { id: "FILM_01", head: "Cinematic Narrative", desc: "Crafting stories that resonate deeply with your target audience." },
       { id: "FILM_02", head: "Visual Mastery", desc: "High-end production quality that sets your brand apart from competitors." },
       { id: "FILM_03", head: "Divine Vision", desc: "Merging spiritual storytelling with modern visual technology." }
+    ],
+    plans:[
+       {
+    id: "Y1",
+    name: "YouTube Starter",
+    price: "₹10,000 / month",
+    features: [
+      "Channel Audit & Content Strategy",
+      "4 Long-Form Videos / Month",
+      "SEO Titles & Descriptions",
+      "Basic Thumbnail Design"
+    ]
+  },
+  {
+    id: "Y2",
+    name: "YouTube Growth",
+    price: "₹20,000 / month",
+    features: [
+      "8 Long-Form Videos / Month",
+      "Advanced SEO & CTR Optimization",
+      "Thumbnail Optimization",
+      "Analytics & Improvement Report"
+    ]
+  },
     ]
   }
 };
@@ -67,7 +166,10 @@ export default async function Page({params}) {
         benefits={data.benefits}
         accent={data.accent}
       />
-
+<ServicePricing 
+plans={data.plans}
+accent={data.accent}
+/>
     </main>
   );
 }

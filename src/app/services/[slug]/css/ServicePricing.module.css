@@ -1,0 +1,304 @@
+.pricingWrapper {
+  height: 350vh; 
+  background-color: #F8F8F6; 
+  position: relative;
+}
+
+.stickyContainer {
+  position: sticky;
+  top: 6%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 8%;
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+/* Sidebar Title Styling */
+.sidebarHeader {
+  min-width: 400px;
+  margin-right: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  z-index: 2; 
+  position: relative;
+}
+
+.label {
+  font-family: monospace;
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.mainTitle {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 0.9;
+  font-weight: 900;
+  color: #111;
+  letter-spacing: -0.04em;
+  margin-top: 15px;
+  white-space: nowrap; 
+}
+
+/* Card Track */
+.cardTrack {
+  display: flex;
+  gap: 50px;
+  padding: 50px 100px 50px 0;
+  z-index: 3;
+  position: relative;
+  
+}
+
+.pricingCard {
+  min-width: 440px; 
+  height: 600px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 45px;
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.02);
+  transition: all 0.5s ease;
+
+}
+
+.pricingCard:hover {
+  border-color: #000;
+  transform: translateY(-10px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+}
+
+/* Card Typography Fixes */
+.planName {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111;
+  margin: 30px 0;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.priceBox {
+  margin-bottom: 30px;
+}
+
+.investmentLabel {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #999;
+  letter-spacing: 1px;
+}
+
+.amount {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #000;
+  letter-spacing: -0.05em;
+  margin-top: 5px;
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
+}
+
+.featureText {
+  color: #444; /* Readable Dark Gray */
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.featureDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+/* UI Elements */
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.idBadge {
+  font-family: monospace;
+  font-weight: 800;
+  border: 1px solid;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusText {
+  font-family: monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #bbb;
+}
+.disclaimerBox {
+  max-width: 280px;
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+  padding-left: 20px;
+  margin-top: 20px;
+}
+
+.disclaimerText {
+  font-family: monospace;
+  font-size: 0.65rem;
+  line-height: 1.5;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.plusMore {
+  margin-top: 15px;
+  font-family: monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #aaa;
+  list-style: none;
+}
+
+.upgradeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 22px;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+}
+
+.upgradeBtn:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+.btnGlow {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: top 0.3s ease;
+  z-index: 0;
+}
+
+.upgradeBtn:hover .btnGlow {
+  top: 0;
+}
+
+.btnText {
+  position: relative;
+  z-index: 1;
+}
+
+/* Custom Scroll Progress Bar */
+.scrollBar {
+  width: 100%;
+  height: 2px;
+  position: relative;
+  margin-top: 10px;
+}
+
+.scrollProgress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+}
+
+.scrollText {
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: #999;
+  letter-spacing: 2px;
+  display: block;
+  margin-top: 8px;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .pricingWrapper {
+    height: auto; /* Allow section to grow with content */
+    padding: 80px 0;
+  }
+
+  .stickyContainer {
+    position: relative; /* Remove sticky on mobile */
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 6%;
+    mask-image: none; /* Remove mask for better clarity */
+    overflow: visible;
+  }
+
+  .sidebarHeader {
+    min-width: 100%;
+    margin-right: 0;
+    margin-bottom: 40px;
+    gap: 20px;
+  }
+
+  .mainTitle {
+    font-size: 2.8rem; /* Smaller for mobile screens */
+    white-space: normal; /* Allow wrapping */
+  }
+
+  .cardTrack {
+    flex-direction: column; /* Stack cards vertically */
+    width: 100%;
+    padding: 0;
+    gap: 30px;
+  }
+
+
+  .pricingCard {
+    min-width: 100%; /* Full width cards */
+    height: auto;
+    min-height: 500px;
+    padding: 30px;
+  }
+
+  .amount {
+    font-size: 2.5rem; /* Scale down the price text */
+  }
+
+  .upgradeBtn {
+    padding: 18px; /* Slightly smaller touch targets */
+  }
+  .disclaimerBox {
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+}

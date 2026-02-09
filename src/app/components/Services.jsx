@@ -8,7 +8,7 @@ const services = [
   {
     id: "01",
     title: "Social Growth",
-    desc: "We engineer attention at scale. 100M+ organic reach across Reels, Shorts & feeds.",
+    desc: "We engineer attention at scale. 10M+ organic reach across Reels, Shorts & feeds.",
     image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200&auto=format&fit=crop",
     color: "#ffae00",
   },

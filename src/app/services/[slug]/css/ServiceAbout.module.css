@@ -88,7 +88,7 @@
 }
 .missionZone {
   position: sticky;
-  top: 10vh;
+  top: 12vh;
   height: fit-content;
   align-self:start;
 }
