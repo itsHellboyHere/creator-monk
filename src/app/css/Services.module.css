@@ -5,7 +5,7 @@
   position: relative;
   height: 350vh;
   background: #020203;
-  z-index: 20;
+  z-index: 10;
 
   /* NEW: section breathing room */
   padding: 12vh 0 10vh;

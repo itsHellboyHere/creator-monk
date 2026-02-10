@@ -19,7 +19,6 @@ export default function ServicePricing({ plans, accent }) {
         target: targetRef,
     });
 
-    // Disable horizontal movement on mobile to prevent layout breaking
     const x = useTransform(scrollYProgress, [0, 1], ["0%", isMobile ? "0%" : "-55%"]);
 
     return (
@@ -32,7 +31,21 @@ export default function ServicePricing({ plans, accent }) {
                         <h2 className={styles.mainTitle}>UPGRADE<br/>YOUR_STACK</h2>
                     </div>
 
-                    {/* Technical Disclaimer for Bokaro Agency */}
+                    {/* Restored Scroll Progress Bar */}
+                    <div className={styles.scrollIndicator}>
+                        <div className={styles.scrollBar} style={{ backgroundColor: `${accent}20` }}>
+                            <motion.div 
+                                className={styles.scrollProgress} 
+                                style={{ 
+                                    scaleX: scrollYProgress, 
+                                    backgroundColor: accent,
+                                    transformOrigin: "left" 
+                                }} 
+                            />
+                        </div>
+                        <span className={styles.scrollText}>DATA_ENTRY_PROGRESS</span>
+                    </div>
+                    
                     <div className={styles.disclaimerBox}>
                         <p className={styles.disclaimerText}>
                             * Base pricing shown. Final deployment costs vary based on system complexity, 

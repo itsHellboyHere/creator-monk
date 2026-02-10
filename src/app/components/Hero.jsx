@@ -38,7 +38,7 @@ export default function Hero() {
   }, [mouseX, mouseY]);
 
   return (
-    <section className={styles.hero}>
+    <section id="banner" className={`${styles.hero} sec-wrapper`}>
       {/* Bollywood Style Moving Mesh - Increased Opacity */}
       <div className={styles.movingGradient} />
       
