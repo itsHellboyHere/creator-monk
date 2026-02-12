@@ -110,7 +110,7 @@ export default function MonkCanvas() {
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         if (monkRef.current) {
-            const baseScale = window.innerWidth < 768 ? 0.5 : 0.85;
+            const baseScale = window.innerWidth < 768 ? 0.5 : 0.7;
             monkRef.current.scale.set(baseScale, baseScale, baseScale);
         }
     };

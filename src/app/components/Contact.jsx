@@ -5,7 +5,7 @@ import { useFormStatus } from "react-dom";
 import styles from "@/app/css/Contact.module.css";
 import SocialLinks from "@/app/components/SocialLinks";
 import { sendContactEmail } from "@/app/actions/sendContactEmail";
-
+import { useEffect, useState } from "react";
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
@@ -18,6 +18,14 @@ function SubmitButton() {
 
 export default function Contact() {
   const [state, formAction] = useActionState(sendContactEmail, null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   return (
     <section className={styles.section}>
@@ -25,14 +33,27 @@ export default function Contact() {
       <div className={styles.bgGrid} />
 
       <div className={styles.svgContainer}>
-        <svg width="100%" height="100%" viewBox="0 0 1440 900" fill="none">
+        <svg
+          viewBox="0 0 1440 900"
+          preserveAspectRatio="xMidYMid slice"
+          className={styles.svg}
+          fill="none"
+        >
           <motion.path
-            d="M 100 250 Q 400 250 600 550 T 1300 750"
-            stroke="#ffae00" 
-            strokeWidth="4"
+            d={
+              isMobile
+                ? "M 730 920 Q 590 590 720 350 T 720 0"
+                : "M 100 250 Q 400 250 600 550 T 1300 750"
+            }
+            stroke="#ffae00"
+            strokeWidth={isMobile ? 2 : 4}
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.4 }}
-            transition={{ duration: 4, ease: "linear", repeat: Infinity }}
+            transition={{
+              duration: isMobile ? 6 : 4,
+              ease: "linear",
+              repeat: Infinity,
+            }}
           />
         </svg>
       </div>
@@ -47,7 +68,7 @@ export default function Contact() {
             <p>BOKARO_STATION</p>
             <p>23.66° N, 86.15° E</p>
           </div>
-           <div className={styles.socialBar}>
+          <div className={styles.socialBar}>
             <SocialLinks variant="contact" />
           </div>
         </div>
@@ -56,8 +77,8 @@ export default function Contact() {
           <div className={styles.terminalWrapper}>
             {/* The "Overlapping Square" Decorative Layer */}
             <div className={styles.terminalBackdrop} />
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -79,9 +100,9 @@ export default function Contact() {
                 <SubmitButton />
                 <AnimatePresence>
                   {state?.success && (
-                    <motion.p 
-                      initial={{ opacity: 0 }} 
-                      animate={{ opacity: 1 }} 
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
                       className={styles.success}
                     >
                       TRANSMISSION_COMPLETE_
@@ -91,8 +112,8 @@ export default function Contact() {
               </form>
             </motion.div>
           </div>
-          
-         
+
+
         </div>
       </div>
     </section>
