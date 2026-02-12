@@ -1,58 +1,65 @@
 .wrapper {
   display: flex;
-  gap: 14px;
+  gap: 10px;
   padding: 0;
   list-style: none;
-  /* justify-content: center; */
 }
 
 .icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 4px; /* Industrial Square Look */
+  width: 48px;
+  height: 48px;
+  border-radius: 50%; 
   display: grid;
   place-items: center;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.6);
-  transition: all 0.3s ease;
-}
-
-.icon:hover {
-  transform: translateY(-5px);
-  border-color: var(--monk-orange);
-  color: var(--monk-orange);
-  box-shadow: 0 10px 30px rgba(255, 174, 0, 0.1);
-}
-
-/* CONTACT VARIANT (more emphasis) */
-.contact .icon {
-  width: 52px;
-  height: 52px;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Visible against Bone White */
+  color: #111;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
   
+
 }
-.contact .icon:hover{
-background: #22d3ee;
-  color: #0b0f14;
+
+/* --- CONTACT VARIANT FIX --- */
+
+.contact .icon {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(0, 0, 0, 0.1); /* High contrast for light side */
+  background: #ffffff;
 }
-/* FOOTER VARIANT (subtle) */
+
+.contact .icon:hover {
+  transform: translateY(-8px);
+  border-color: #000;
+  background: #000;
+  color: #ffae00; 
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* --- FOOTER VARIANT --- */
 .footer .icon {
-  opacity: 0.8;
-}
-.footer {
-  justify-content: flex-start;
-}
-
-/* CONTACT (left-aligned) */
-.contact {
-  justify-content: flex-start;
-  margin-top: 12px;
+  width: 42px;
+  height: 42px;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
-@media (max-width: 768px)  {
-  .footer,.contact{
-    /* justify-content: center; */
-    margin-left: -12px;
+.footer .icon:hover {
+  border-color: #ffae00;
+  color: #ffae00;
+}
+
+/* --- MOBILE OPTIMIZATION --- */
+@media (max-width: 768px) {
+  .contact {
+    justify-content: flex-start;
+    margin-top: 30px;
   }
-
+  
+  .contact .icon {
+    width: 50px;
+    height: 50px;
+  }
 }
