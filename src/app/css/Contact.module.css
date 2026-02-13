@@ -1,6 +1,6 @@
 .section {
   min-height: 100vh;
-  background-color: #F8F8F6; /* Premium Bone White */
+  background-color: #F8F8F6; 
   position: relative;
   overflow: hidden;
   display: flex;
@@ -15,7 +15,7 @@
   width: 100%;
   height: 220px; 
   background: linear-gradient(to bottom, #00000092 0%, transparent 100%);
-  z-index: 100;
+  z-index: 10;
   pointer-events: none;
 }
 

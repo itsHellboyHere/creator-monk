@@ -7,7 +7,7 @@ const socials = [
   { name: "Instagram", icon: FiInstagram, href: "https://www.instagram.com/creatormonk.in?igsh=b200cHBmYzNlOHVq" },
   // { name: "Twitter", icon: FiTwitter, href: "#" },
   { name: "Facebook", icon: FiFacebook, href: "https://www.facebook.com/share/171GX42oU9" },
-  { name: "WhatsApp", icon: FaWhatsapp, href: "https://wa.me/7827332337?text=Hi%20Creator%20Monk",},
+  { name: "WhatsApp", icon: FaWhatsapp, href: "https://wa.me/8527555909?text=Hi%20Creator%20Monk",},
 ];
 
 export default function SocialLinks({ variant = "footer" }) {
