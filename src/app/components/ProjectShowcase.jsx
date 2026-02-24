@@ -9,7 +9,7 @@ const projects = [
     type: "Interior Design Platform",
     status: "MISSION: SUCCESS",
     image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1770456446/Image_07-02-26_at_2.54_PM_1_fkgkwi.jpg", 
-    link: "https://hexa-lam.vercel.app",
+    link: "https://theunidecor.com",
     tech: ["Next.js", "Framer Motion", "CMS", "Sanity","Dynamic Search"],
     hindi: "सुंदरता"
   },
@@ -27,7 +27,7 @@ const projects = [
     type: "Digital Laminate Catalog",
     status: "BETA LAUNCH",
     image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1770456446/Image_07-02-26_at_2.55_PM_fh47xf.jpg",
-    link: "https://hexa-lam.vercel.app",
+    link: "https://hexalam.com",
     tech: ["Nextjs Routing", "Product API", "Module CSS","Aesthic 3D"],
     hindi: "विविधता"
   }
