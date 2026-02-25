@@ -238,7 +238,7 @@
 .menuOpen .hamburger::before { transform: rotate(45deg); top: 0; }
 .menuOpen .hamburger::after { transform: rotate(-45deg); bottom: 0; }
 
-/* --- MOBILE FULL SCREEN COVER --- */
+
 @media (max-width: 768px) {
   .desktopContainer { display: none; }
   .menuBtn { display: block; }

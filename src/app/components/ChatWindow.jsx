@@ -4,54 +4,35 @@ import styles from "@/app/css/ChatWindow.module.css";
 
 export default function ChatWindow({ isOpen, onClose }) {
   const [messages, setMessages] = useState([
-    {
-      role: "bot",
-      text: "Hey! 👋 I'm the CreatorMonk assistant. Ask me anything about our services!",
-    },
+    { role: "bot", text: "Hey! 👋 Ask me anything about CreatorMonk!" },
   ]);
-
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, loading]);
 
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
-
-    const userMessage = input.trim();
+    const userMsg = input.trim();
     setInput("");
-    setMessages((prev) => [...prev, { role: "user", text: userMessage }]);
+    setMessages((prev) => [...prev, { role: "user", text: userMsg }]);
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/chat/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question: userMessage }),
-        }
-      );
-
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chat/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: userMsg }),
+      });
       const data = await response.json();
       setMessages((prev) => [...prev, { role: "bot", text: data.answer }]);
-    } catch (error) {
-      setMessages((prev) => [
-        ...prev,
-        { role: "bot", text: "Something went wrong. Please try again!" },
-      ]);
+    } catch (e) {
+      setMessages((prev) => [...prev, { role: "bot", text: "Service temporarily unavailable. 🛠️" }]);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
     }
   };
 
@@ -59,66 +40,43 @@ export default function ChatWindow({ isOpen, onClose }) {
 
   return (
     <div className={styles.chatWindow}>
-      {/* Header */}
       <div className={styles.header}>
-        <div className={styles.avatar}>🤖</div>
-        <div>
-          <p className={styles.title}>CreatorMonk AI</p>
-          <p className={styles.status}>● Online</p>
+        <div className={styles.headerInfo}>
+          <div className={styles.avatar}>🤖</div>
+          <div>
+            <p className={styles.title}>CreatorMonk AI</p>
+            <p className={styles.status}>● Online</p>
+          </div>
         </div>
+        <button onClick={onClose} style={{background:'none', border:'none', color:'#fff', cursor:'pointer', fontSize:'18px'}}>✕</button>
       </div>
 
-      {/* Messages */}
       <div className={styles.messages}>
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={
-              msg.role === "user"
-                ? styles.userWrapper
-                : styles.botWrapper
-            }
-          >
-            <div
-              className={
-                msg.role === "user"
-                  ? styles.userMessage
-                  : styles.botMessage
-              }
-            >
+        {messages.map((msg, i) => (
+          <div key={i} className={msg.role === "user" ? styles.userWrapper : styles.botWrapper}>
+            <div className={msg.role === "user" ? styles.userMessage : styles.botMessage}>
               {msg.text}
             </div>
           </div>
         ))}
-
         {loading && (
           <div className={styles.botWrapper}>
-            <div className={styles.botMessageMuted}>
-              Thinking...
-            </div>
+            <div className={`${styles.botMessage} ${styles.loading}`}>CreatorMonk is thinking...</div>
           </div>
         )}
-
         <div ref={bottomRef} />
       </div>
 
-      {/* Input */}
       <div className={styles.inputContainer}>
         <textarea
           rows={1}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Ask about our services..."
+          onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), sendMessage())}
+          placeholder="Message..."
           className={styles.textarea}
         />
-        <button
-          onClick={sendMessage}
-          disabled={loading}
-          className={styles.sendButton}
-        >
-          ↑
-        </button>
+        <button onClick={sendMessage} className={styles.sendButton}>↑</button>
       </div>
     </div>
   );
