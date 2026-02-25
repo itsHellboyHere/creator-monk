@@ -121,7 +121,7 @@
   font-family: 'DM Mono', monospace;
   font-size: clamp(0.7rem, 1.2vw, 0.9rem);
   letter-spacing: 8px;
-  color: rgba(255,255,255,0.22);
+  color: rgba(248, 244, 244, 0.661);
   margin: 0;
   text-transform: uppercase;
 }
