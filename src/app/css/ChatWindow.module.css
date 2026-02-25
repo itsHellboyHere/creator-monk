@@ -1,6 +1,6 @@
 .chatWindow {
   position: fixed;
-  bottom: 100px;
+  bottom: 85px;
   right: 24px;
   z-index: 1500;
   width: 380px;

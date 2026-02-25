@@ -9,7 +9,9 @@ export default function Chat() {
   return (
     <>
       <ChatWindow isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      <ChatBubble isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+     {!isOpen && (
+        <ChatBubble isOpen={isOpen} onClick={() => setIsOpen(true)} />
+      )}
     </>
   );
 }
