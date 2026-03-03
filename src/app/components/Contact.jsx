@@ -64,10 +64,10 @@ export default function Contact() {
           <h1 className={styles.headline}>
             LET'S <br /> <span className={styles.outline}>CONNECT</span>.
           </h1>
-          <div className={styles.locData}>
+          {/* <div className={styles.locData}>
             <p>BOKARO_STATION</p>
             <p>23.66° N, 86.15° E</p>
-          </div>
+          </div> */}
           <div className={styles.socialBar}>
             <SocialLinks variant="contact" />
           </div>
