@@ -45,7 +45,7 @@ const SERVICE_DATA = {
   {
     id: "S3",
     name: "Social Scale",
-    price: "₹49,999",
+    // price: "₹49,999",
     features: [
       "High-Volume Reels System",
       "Cross-Platform Social Promotion",
