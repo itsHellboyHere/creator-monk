@@ -22,7 +22,7 @@ const SERVICE_DATA = {
   {
     id: "S1",
     name: "Insta Launch",
-    price: "₹14,999",
+    // price: "₹14,999",
     features: [
       "Instagram Profile Optimization",
       "Reels Content Strategy",
@@ -33,7 +33,7 @@ const SERVICE_DATA = {
   {
     id: "S2",
     name: "Reels Growth",
-    price: "₹24,999",
+    // price: "₹24,999",
     features: [
       "Viral Reels Strategy",
       "Reels Editing & Optimization",
@@ -74,7 +74,7 @@ const SERVICE_DATA = {
   {
     id: "C1",
     name: "Creator Monk – Starter",
-    price: "₹10,000",
+    // price: "₹10,000",
     features: [
       "Next.js Frontend ",
       "Basic Backend Service",
@@ -85,7 +85,7 @@ const SERVICE_DATA = {
   {
     id: "C2",
     name: "Creator Monk – Growth",
-    price: "₹25,000",
+    // price: "₹25,000",
     features: [
       "Advanced Search Container",
       "Backend API Architecture",
@@ -97,7 +97,7 @@ const SERVICE_DATA = {
   {
     id: "C3",
     name: "Creator Monk – Platform",
-    price: "₹30,000",
+    // price: "₹30,000",
     features: [
       "Search Container (Scalable)",
       "Full Backend System",
@@ -126,7 +126,7 @@ const SERVICE_DATA = {
        {
     id: "Y1",
     name: "YouTube Starter",
-    price: "₹10,000 / month",
+    // price: "₹10,000 / month",
     features: [
       "Channel Audit & Content Strategy",
       "4 Long-Form Videos / Month",
@@ -137,7 +137,7 @@ const SERVICE_DATA = {
   {
     id: "Y2",
     name: "YouTube Growth",
-    price: "₹20,000 / month",
+    // price: "₹20,000 / month",
     features: [
       "8 Long-Form Videos / Month",
       "Advanced SEO & CTR Optimization",
