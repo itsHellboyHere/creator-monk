@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import styles from "@/app/css/ChatWindow.module.css";
 
@@ -41,7 +41,6 @@ export default function ChatWindow({ onClose }) {
   const [loading, setLoading] = useState(false);
   const [showSuggested, setShowSuggested] = useState(true);
   const bottomRef = useRef(null);
-  const textareaRef = useRef(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -95,8 +94,8 @@ export default function ChatWindow({ onClose }) {
             <Image
               src="/logo1.png"
               alt="CreatorMonk"
-              width={36}
-              height={36}
+              width={38}
+              height={38}
               className={styles.avatarImg}
             />
             <span className={styles.onlineDot} />
@@ -108,11 +107,7 @@ export default function ChatWindow({ onClose }) {
             <p className={styles.status}>● Online · Replies instantly</p>
           </div>
         </div>
-        <button
-          onClick={onClose}
-          className={styles.closeBtn}
-          aria-label="Close chat"
-        >
+        <button onClick={onClose} className={styles.closeBtn} aria-label="Close">
           ✕
         </button>
       </div>
@@ -123,21 +118,16 @@ export default function ChatWindow({ onClose }) {
           <motion.div
             key={i}
             className={msg.role === "user" ? styles.userWrapper : styles.botWrapper}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.22 }}
           >
-            <div
-              className={
-                msg.role === "user" ? styles.userMessage : styles.botMessage
-              }
-            >
+            <div className={msg.role === "user" ? styles.userMessage : styles.botMessage}>
               {msg.text}
             </div>
           </motion.div>
         ))}
 
-        {/* Typing indicator */}
         {loading && (
           <motion.div
             className={styles.botWrapper}
@@ -150,13 +140,12 @@ export default function ChatWindow({ onClose }) {
           </motion.div>
         )}
 
-        {/* Suggested questions — show only at start */}
         {showSuggested && !loading && (
           <motion.div
             className={styles.suggestedWrap}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.35 }}
           >
             {SUGGESTED.map((q) => (
               <button
@@ -176,7 +165,6 @@ export default function ChatWindow({ onClose }) {
       {/* ── INPUT ── */}
       <div className={styles.inputContainer}>
         <textarea
-          ref={textareaRef}
           rows={1}
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -193,21 +181,14 @@ export default function ChatWindow({ onClose }) {
           onClick={() => sendMessage()}
           className={styles.sendButton}
           disabled={loading || !input.trim()}
-          aria-label="Send"
+          aria-label="Send message"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 4l0 16M12 4l-6 6M12 4l6 6"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          {/* Simple clean up arrow — no SVG path issues */}
+          <span style={{ fontSize: "18px", fontWeight: 700, lineHeight: 1 }}>↑</span>
         </button>
       </div>
 
-      {/* Powered by strip */}
+      {/* ── POWERED BY ── */}
       <div className={styles.poweredBy}>
         <span>Powered by</span>
         <span className={styles.poweredMonk}>

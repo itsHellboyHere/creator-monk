@@ -10,10 +10,11 @@
   width: 380px;
   max-height: 76vh;
   border-radius: 20px;
-  background: rgba(10, 10, 12, 0.92);
+  background: rgba(10, 10, 12, 0.94);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 2px solid #ffae00;
   box-shadow:
     0 24px 64px rgba(0, 0, 0, 0.55),
     0 0 0 1px rgba(255, 174, 0, 0.06),
@@ -22,8 +23,6 @@
   flex-direction: column;
   overflow: hidden;
   font-family: var(--font-inter), -apple-system, sans-serif;
-  /* Top accent bar */
-  border-top: 2px solid #ffae00;
 }
 
 /* ── HEADER ── */
@@ -125,6 +124,8 @@
   flex-direction: column;
   gap: 10px;
   scrollbar-width: none;
+  /* Critical: allow scroll, don't overflow container */
+  min-height: 0;
 }
 
 .messages::-webkit-scrollbar {
@@ -198,6 +199,7 @@
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   line-height: 1.4;
+  font-family: inherit;
 }
 
 .suggestedBtn:hover {
@@ -209,12 +211,13 @@
 /* ── INPUT AREA ── */
 .inputContainer {
   padding: 12px 14px;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.3);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   gap: 10px;
   align-items: flex-end;
   flex-shrink: 0;
+  /* No bottom padding issue on desktop */
 }
 
 .textarea {
@@ -224,7 +227,7 @@
   border-radius: 12px;
   padding: 10px 13px;
   color: #fff;
-  font-size: 16px; /* prevents iOS zoom */
+  font-size: 16px; /* prevents iOS zoom — DO NOT change */
   resize: none;
   outline: none;
   font-family: inherit;
@@ -274,7 +277,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 8px;
+  padding: 7px 8px;
   font-size: 9.5px;
   color: rgba(255, 255, 255, 0.15);
   letter-spacing: 0.08em;
@@ -288,21 +291,30 @@
   color: rgba(255, 255, 255, 0.25);
 }
 
-/* ─────────────────────────────────────────
+/* ═══════════════════════════════════════
    MOBILE — full bottom sheet
-───────────────────────────────────────── */
+   ═══════════════════════════════════════ */
 @media (max-width: 768px) {
   .chatWindow {
-    bottom: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
+    /* Pin to bottom, full width */
+    position: fixed;
+    bottom: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+
+    /* Fill up but leave room at top */
+    height: 88dvh;
     max-height: 88dvh;
+
     border-radius: 24px 24px 0 0;
     border-top: 2px solid #ffae00;
     border-left: none;
     border-right: none;
     border-bottom: none;
+
     z-index: 2000;
   }
 
@@ -312,12 +324,16 @@
 
   .messages {
     padding: 14px 14px;
+    /* flex: 1 with min-height: 0 ensures proper scroll */
+    flex: 1;
+    min-height: 0;
   }
 
   .inputContainer {
-    padding: 10px 12px;
-    /* Safe area for iPhone home bar */
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    padding: 10px 14px;
+    /* Push above iPhone home indicator */
+    padding-bottom: max(14px, env(safe-area-inset-bottom, 14px));
+    /* No overlap with bubble — bubble is hidden on mobile when open */
   }
 
   .botMessage,
@@ -327,6 +343,20 @@
 
   .suggestedBtn {
     font-size: 13px;
-    padding: 10px 14px;
+    padding: 11px 14px;
+  }
+
+  .sendButton {
+    /* Slightly larger touch target on mobile */
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    /* Align with textarea bottom */
+    align-self: flex-end;
+    margin-bottom: 0;
+  }
+
+  .poweredBy {
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
   }
 }

@@ -7,7 +7,7 @@ export default function ChatBubble({ isOpen, onClick }) {
   return (
     <motion.button
       onClick={onClick}
-      className={styles.bubble}
+      className={`${styles.bubble} ${isOpen ? styles.bubbleHidden : ""}`}
       aria-label="Toggle Chat"
       whileHover={{ scale: 1.08 }}
       whileTap={{ scale: 0.92 }}
@@ -28,16 +28,16 @@ export default function ChatBubble({ isOpen, onClick }) {
             />
             <motion.span
               className={styles.ring}
-              initial={{ scale: 1, opacity: 0.35 }}
-              animate={{ scale: 2.4, opacity: 0 }}
+              initial={{ scale: 1, opacity: 0.3 }}
+              animate={{ scale: 2.5, opacity: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut", delay: 0.4 }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut", delay: 0.5 }}
             />
           </>
         )}
       </AnimatePresence>
 
-      {/* Inner icon */}
+      {/* Icon */}
       <div className={styles.inner}>
         <AnimatePresence mode="wait">
           {isOpen ? (
@@ -47,7 +47,7 @@ export default function ChatBubble({ isOpen, onClick }) {
               initial={{ rotate: -90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.18 }}
             >
               ✕
             </motion.span>
@@ -57,13 +57,13 @@ export default function ChatBubble({ isOpen, onClick }) {
               initial={{ rotate: 90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.18 }}
             >
               <Image
                 src="/logo1.png"
                 alt="CreatorMonk"
-                width={36}
-                height={36}
+                width={40}
+                height={40}
                 className={styles.logoImg}
                 priority
               />
