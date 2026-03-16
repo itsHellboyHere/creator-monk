@@ -78,7 +78,7 @@ export default function ServicesIntro() {
             <div className={styles.visualSide}>
               <motion.div variants={itemVariants} className={styles.imageWrap}>
                 <img 
-                  src="https://res.cloudinary.com/dgifa4wgb/image/upload/v1773686763/Gemini_Generated_Image_ckeuk5ckeuk5ckeu-Photoroom_nzotk9.png" 
+                  src="https://res.cloudinary.com/dgifa4wgb/image/upload/v1773687048/Gemini_Generated_Image_ckeuk5ckeuk5ckeu-Photoroom_ycie7r.jpg" 
                   alt="Sarathi"
                   className={styles.sarathiImage}
                 />
