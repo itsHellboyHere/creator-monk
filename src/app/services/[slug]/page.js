@@ -22,7 +22,7 @@ const SERVICE_DATA = {
     accentRgb: "255,174,0",
     mission:
       "To architect a digital presence that doesn't just attract attention, but commands authority across the social battlefield.",
-    stat: { value: "10M+", label: "Organic Reach Delivered" },
+    stat: { value: "1M+", label: "Organic Reach Delivered" },
     about: {
       headline: "We don't post content. We engineer movements.",
       body: "Most brands treat social media like a billboard. We treat it like a growth system. Every Reel, every caption, every campaign is designed with one goal — compounding attention that converts into real business outcomes.",
@@ -108,7 +108,7 @@ const SERVICE_DATA = {
     accentRgb: "66,135,245",
     mission:
       "Building unshakeable software foundations that support rapid business scaling and complex user interactions.",
-    stat: { value: "50+", label: "Products Shipped" },
+    stat: { value: "20+", label: "Products Shipped" },
     about: {
       headline: "We don't just write code. We build products that last.",
       body: "Most agencies hand you a website and disappear. We architect full digital products — with clean code, scalable infrastructure, and UX that converts. From a simple landing page to a complex SaaS with thousands of users, we build for the long term.",
