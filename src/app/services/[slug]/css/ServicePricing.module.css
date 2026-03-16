@@ -1,327 +1,403 @@
-.pricingWrapper {
-  height: 350vh; 
-  background-color: #F8F8F6; 
+/* =========================================
+   ServicePricing.module.css
+   Save as: app/css/ServicePricing.module.css
+   FULL REPLACEMENT
+   ========================================= */
+
+.wrapper {
+  height: 320vh;
+  background: #F0F0EE;
   position: relative;
 }
 
-.stickyContainer {
+/* ─────────────────────────────────────────
+   STICKY CONTAINER
+───────────────────────────────────────── */
+.sticky {
   position: sticky;
-  top: 6%;
+  top: 0;
   height: 100vh;
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: 0 8%;
-  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  padding: 0 0 0 6%;
+  gap: 0;
 }
 
-/* Sidebar Title Styling */
-.sidebarHeader {
-  min-width: 400px;
-  margin-right: 120px;
+/* ─────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────── */
+.sidebar {
+  flex-shrink: 0;
+  width: 340px;
   display: flex;
   flex-direction: column;
-  gap: 60px;
-  z-index: 2; 
-  position: relative;
+  gap: 40px;
+  padding-right: 60px;
+  border-right: 1px solid rgba(0, 0, 0, 0.07);
+  z-index: 2;
 }
 
-.label {
+.sidebarEyebrow {
   font-family: monospace;
-  font-size: 0.8rem;
-  letter-spacing: 3px;
-  font-weight: 700;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
 }
 
-.mainTitle {
+.sidebarTitle {
   font-family: var(--font-display);
-  font-size: 4.5rem;
-  line-height: 0.9;
+  font-size: clamp(3rem, 5vw, 5rem);
   font-weight: 900;
   color: #111;
-  letter-spacing: -0.04em;
-  margin-top: 15px;
-  white-space: nowrap; 
+  line-height: 0.92;
+  letter-spacing: -0.045em;
 }
 
-/* Card Track */
+/* Progress */
+.progressWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progressFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  border-radius: 2px;
+}
+
+.progressLabel {
+  font-family: monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+}
+
+/* Note */
+.sidebarNote {
+  border-left: 2px solid rgba(0, 0, 0, 0.08);
+  padding-left: 16px;
+}
+
+.noteText {
+  font-family: monospace;
+  font-size: 0.62rem;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.38);
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────
+   CARD TRACK
+───────────────────────────────────────── */
+.trackOuter {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* Edge fade */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
 .cardTrack {
   display: flex;
-  gap: 50px;
-  padding: 50px 100px 50px 0;
-  z-index: 3;
-  position: relative;
-  
+  gap: 28px;
+  padding: 0 80px 0 60px;
+  will-change: transform;
 }
 
-.pricingCard {
-  min-width: 440px; 
-  height: 600px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 45px;
+/* ─────────────────────────────────────────
+   PRICING CARD
+───────────────────────────────────────── */
+.card {
+  flex-shrink: 0;
+  width: 400px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 24px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
-
-  box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.02);
-  transition: all 0.5s ease;
-
+  gap: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease,
+              border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.pricingCard:hover {
-  border-color: #000;
-  transform: translateY(-10px);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Card Typography Fixes */
-.planName {
-  font-size: 2rem;
-  font-weight: 800;
-  color: #111;
-  margin: 30px 0;
-  text-transform: uppercase;
-  line-height: 1.1;
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent);
 }
 
-.priceBox {
-  margin-bottom: 30px;
+.card:hover::before {
+  transform: scaleX(1);
 }
 
-.investmentLabel {
+/* Card meta top row */
+.cardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.cardId {
   font-family: monospace;
   font-size: 0.7rem;
-  color: #999;
-  letter-spacing: 1px;
-}
-
-.amount {
-  font-size: 3.5rem;
   font-weight: 900;
-  color: #000;
-  letter-spacing: -0.05em;
-  margin-top: 5px;
+  border: 1px solid;
+  padding: 4px 12px;
+  border-radius: 4px;
+  letter-spacing: 0.1em;
 }
 
+.cardStatus {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.statusPulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  animation: pulse 2.2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.statusText {
+  font-family: monospace;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+}
+
+/* Plan name */
+.planName {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+
+.planTag {
+  font-size: 0.72rem;
+  color: rgba(0, 0, 0, 0.38);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 28px;
+}
+
+/* Divider */
+.cardDivider {
+  height: 1px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+/* Features label */
+.featuresLabel {
+  font-size: 0.57rem;
+  font-weight: 800;
+  letter-spacing: 0.4em;
+  color: rgba(0, 0, 0, 0.22);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+/* Feature list */
 .featureList {
   list-style: none;
   padding: 0;
-  margin: 0;
-  flex-grow: 1;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  flex: 1;
 }
 
 .featureItem {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 12px;
+  gap: 12px;
 }
 
-.featureText {
-  color: #444; /* Readable Dark Gray */
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.featureDot {
+.featDot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
-/* UI Elements */
-.cardTop {
+.featText {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Card footer */
+.cardFooter {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: auto;
 }
 
-.idBadge {
+.cardFooterNote {
   font-family: monospace;
-  font-weight: 800;
-  border: 1px solid;
-  padding: 4px 10px;
-  font-size: 0.75rem;
-}
-
-.statusIndicator {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.statusText {
-  font-family: monospace;
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #bbb;
-}
-.disclaimerBox {
-  max-width: 280px;
-  border-left: 2px solid rgba(0, 0, 0, 0.1);
-  padding-left: 20px;
-  margin-top: 20px;
-}
-
-.disclaimerText {
-  font-family: monospace;
-  font-size: 0.65rem;
-  line-height: 1.5;
-  color: #888;
+  font-size: 0.6rem;
+  color: rgba(0, 0, 0, 0.28);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.plusMore {
-  margin-top: 15px;
-  font-family: monospace;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #aaa;
-  list-style: none;
-}
-
-.upgradeBtn {
+/* CTA button */
+.ctaBtn {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  padding: 22px;
-  background: #000;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 24px;
+  background: #111;
   color: #fff;
   text-decoration: none;
+  font-size: 0.68rem;
   font-weight: 900;
-  letter-spacing: 2px;
-  transition: all 0.3s ease;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 10px;
+  transition: background 0.25s ease, gap 0.3s ease;
 }
 
-.upgradeBtn:hover {
+.ctaBtn:hover {
   background: var(--accent);
   color: #000;
+  gap: 18px;
 }
 
-.btnGlow {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: top 0.3s ease;
-  z-index: 0;
+.ctaArrow {
+  font-size: 0.9rem;
+  transition: transform 0.25s ease;
 }
 
-.upgradeBtn:hover .btnGlow {
-  top: 0;
+.ctaBtn:hover .ctaArrow {
+  transform: translateX(3px);
 }
 
-.btnText {
-  position: relative;
-  z-index: 1;
-}
-
-/* Custom Scroll Progress Bar */
-.scrollIndicator {
-  margin-top: 20px;
-  width: 100%;
-  max-width: 300px;
-}
-
-.scrollBar {
-  width: 100%;
-  height: 2px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 2px;
-}
-
-.scrollProgress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.scrollText {
-  font-family: monospace;
-  font-size: 0.65rem;
-  color: #999;
-  letter-spacing: 2px;
-  display: block;
-  margin-top: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-
-.pulse {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  animation: pulseAnim 2s infinite;
-}
-
-@keyframes pulseAnim {
-  0% { transform: scale(0.95); opacity: 0.5; }
-  70% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(0.95); opacity: 0.5; }
-}
-
-
+/* ─────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────── */
 @media (max-width: 768px) {
-  .pricingWrapper {
-    height: auto; /* Allow section to grow with content */
+  .wrapper {
+    height: auto;
     padding: 80px 0;
   }
 
-  .stickyContainer {
-    position: relative; /* Remove sticky on mobile */
+  .sticky {
+    position: relative;
     height: auto;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0 6%;
-    mask-image: none; /* Remove mask for better clarity */
+    padding: 0 5%;
     overflow: visible;
+    gap: 48px;
   }
 
-  .sidebarHeader {
-    min-width: 100%;
-    margin-right: 0;
-    margin-bottom: 40px;
-    gap: 20px;
+  .sidebar {
+    width: 100%;
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    padding-bottom: 40px;
+    gap: 24px;
   }
 
-  .mainTitle {
-    font-size: 2.8rem; /* Smaller for mobile screens */
-    white-space: normal; /* Allow wrapping */
+  .sidebarTitle {
+    font-size: 3rem;
+  }
+
+  .progressWrap {
+    display: none;
+  }
+
+  .trackOuter {
+    width: 100%;
+    overflow: visible;
+    mask-image: none;
+    height: auto;
   }
 
   .cardTrack {
-    flex-direction: column; /* Stack cards vertically */
-    width: 100%;
+    flex-direction: column;
     padding: 0;
-    gap: 30px;
+    gap: 20px;
+    transform: none !important; /* Override JS transform on mobile */
   }
 
-
-  .pricingCard {
-    min-width: 100%; /* Full width cards */
-    height: auto;
-    min-height: 500px;
-    padding: 30px;
+  .card {
+    width: 100%;
+    padding: 30px 26px;
   }
 
-  .amount {
-    font-size: 2.5rem; /* Scale down the price text */
-  }
-
-  .upgradeBtn {
-    padding: 18px; /* Slightly smaller touch targets */
-  }
-  .disclaimerBox {
-    max-width: 100%;
-    margin-bottom: 40px;
-  }
-  .scrollIndicator{
-    display: none;
+  .planName {
+    font-size: 1.6rem;
   }
 }

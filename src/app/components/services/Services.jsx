@@ -12,8 +12,9 @@ export default function Services(){
     return(
         <>
         <ServicesIntro/>
-        <ServicePortals/>
-        {/* <OurServices/> */}
+        {/* <ServicePortals/> */}
+
+        <OurServices/>
         {/* <ServicesHighlights/> */}
         {/* <PricingSection/> */}
         {/* <PricingPlans2/> */}

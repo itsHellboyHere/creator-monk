@@ -8,15 +8,15 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
   { name: "Home", href: "/" },
-  { 
-    name: "Services", 
-    href: "/services",
-    subLinks: [
-      { name: "SOCIAL_OS", href: "/services/social-os", tag: "REACH" },
-      { name: "SOFT_OS", href: "/services/soft-os", tag: "CORE" },
-      { name: "FILM_OS", href: "/services/film-os", tag: "LENS" },
-    ]
-  },
+ { 
+  name: "Services", 
+  href: "/services",
+  subLinks: [
+    { name: "SOCIAL_OS", href: "/services/social-media", tag: "REACH" },
+    { name: "BUILD_OS", href: "/services/web-software", tag: "BUILD" },
+    { name: "AUTO_OS", href: "/services/ai-automation", tag: "AUTO" },
+  ]
+},
   { name: "About", href: "/about" },
 ];
 

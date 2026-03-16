@@ -4,93 +4,143 @@ import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "../css/ServicePricing.module.css";
 
-export default function ServicePricing({ plans, accent }) {
-    const targetRef = useRef(null);
-    const [isMobile, setIsMobile] = useState(false);
+export default function ServicePricing({ plans, accent, os }) {
+  const targetRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-        return () => window.removeEventListener("resize", checkMobile);
-    }, []);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-    });
+  const { scrollYProgress } = useScroll({ target: targetRef });
+  const x = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", isMobile ? "0%" : `-${(plans.length - 1) * 32}%`]
+  );
 
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", isMobile ? "0%" : "-55%"]);
+  return (
+    <section
+      ref={targetRef}
+      className={styles.wrapper}
+      style={{ "--accent": accent }}
+    >
+      <div className={styles.sticky}>
 
-    return (
-        <section ref={targetRef} className={styles.pricingWrapper}>
-            <div className={styles.stickyContainer}>
-                
-                <div className={styles.sidebarHeader}>
-                    <div className={styles.titleGroup}>
-                        <span className={styles.label} style={{ color: accent }}>// SYSTEM_TIERS_v2.6</span>
-                        <h2 className={styles.mainTitle}>UPGRADE<br/>YOUR_STACK</h2>
-                    </div>
+        {/* Sidebar */}
+        <div className={styles.sidebar}>
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.85 }}
+          >
+            <p className={styles.sidebarEyebrow} style={{ color: accent }}>
+              {os} — PLANS
+            </p>
+            <h2 className={styles.sidebarTitle}>
+              CHOOSE<br />YOUR<br />TIER
+            </h2>
+          </motion.div>
 
-                    {/* Restored Scroll Progress Bar */}
-                    <div className={styles.scrollIndicator}>
-                        <div className={styles.scrollBar} style={{ backgroundColor: `${accent}20` }}>
-                            <motion.div 
-                                className={styles.scrollProgress} 
-                                style={{ 
-                                    scaleX: scrollYProgress, 
-                                    backgroundColor: accent,
-                                    transformOrigin: "left" 
-                                }} 
-                            />
-                        </div>
-                        <span className={styles.scrollText}>DATA_ENTRY_PROGRESS</span>
-                    </div>
-                    
-                    <div className={styles.disclaimerBox}>
-                        <p className={styles.disclaimerText}>
-                            * Base pricing shown. Final deployment costs vary based on system complexity, 
-                            API requirements, and asset volume.
-                        </p>
-                    </div>
+          {/* Scroll progress bar */}
+          <div className={styles.progressWrap}>
+            <div
+              className={styles.progressTrack}
+              style={{ background: `rgba(${accent === "#ffae00" ? "255,174,0" : accent === "#4287f5" ? "66,135,245" : "16,185,129"},0.15)` }}
+            >
+              <motion.div
+                className={styles.progressFill}
+                style={{ scaleX: scrollYProgress, background: accent }}
+              />
+            </div>
+            <span className={styles.progressLabel}>SCROLL TO EXPLORE</span>
+          </div>
+
+          <div className={styles.sidebarNote}>
+            <p className={styles.noteText}>
+              * All plans are customised to your requirements. Final scope
+              discussed on your free consultation call.
+            </p>
+          </div>
+        </div>
+
+        {/* Cards track */}
+        <div className={styles.trackOuter}>
+          <motion.div style={{ x }} className={styles.cardTrack}>
+            {plans.map((plan, i) => (
+              <motion.div
+                key={plan.id}
+                className={styles.card}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.75 }}
+              >
+                {/* Card top meta */}
+                <div className={styles.cardMeta}>
+                  <span
+                    className={styles.cardId}
+                    style={{ borderColor: accent, color: accent }}
+                  >
+                    {plan.id}
+                  </span>
+                  <div className={styles.cardStatus}>
+                    <span
+                      className={styles.statusPulse}
+                      style={{ background: accent }}
+                    />
+                    <span className={styles.statusText}>AVAILABLE</span>
+                  </div>
                 </div>
 
-                <motion.div style={{ x }} className={styles.cardTrack}>
-                    {plans.map((plan, index) => (
-                        <div key={plan.id || index} className={styles.pricingCard}>
-                            <div className={styles.cardTop}>
-                                <div className={styles.idBadge} style={{ borderColor: accent, color: accent }}>
-                                    {plan.id || `0${index + 1}`}
-                                </div>
-                                <div className={styles.statusIndicator}>
-                                    <span className={styles.pulse} style={{ backgroundColor: accent }} />
-                                    <span className={styles.statusText}>READY</span>
-                                </div>
-                            </div>
+                {/* Plan name */}
+                <h3 className={styles.planName}>{plan.name}</h3>
+                {plan.tag && (
+                  <p className={styles.planTag}>{plan.tag}</p>
+                )}
 
-                            <h3 className={styles.planName}>{plan.name}</h3>
+                {/* Divider */}
+                <div
+                  className={styles.cardDivider}
+                  style={{ background: `rgba(0,0,0,0.06)` }}
+                />
 
-                            <div className={styles.priceBox}>
-                                <span className={styles.investmentLabel}>// INITIAL_INVESTMENT</span>
-                                <h4 className={styles.amount}>{plan.price}</h4>
-                            </div>
+                {/* Features */}
+                <p className={styles.featuresLabel}>WHAT'S INCLUDED</p>
+                <ul className={styles.featureList}>
+                  {plan.features.map((feat, fi) => (
+                    <li key={fi} className={styles.featureItem}>
+                      <span
+                        className={styles.featDot}
+                        style={{ background: accent }}
+                      />
+                      <span className={styles.featText}>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
 
-                            <ul className={styles.featureList}>
-                                {plan.features.map((feat, i) => (
-                                    <li key={i} className={styles.featureItem}>
-                                        <div className={styles.featureDot} style={{ backgroundColor: accent }} />
-                                        <span className={styles.featureText}>{feat}</span>
-                                    </li>
-                                ))}
-                                <li className={styles.plusMore}>+ Full Architecture Support</li>
-                            </ul>
-
-                            <Link href="/contact" className={styles.upgradeBtn} style={{ "--accent": accent }}>
-                                <span className={styles.btnText}>INITIALIZE_UPGRADE</span>
-                            </Link>
-                        </div>
-                    ))}
-                </motion.div>
-            </div>
-        </section>
-    );
+                <div className={styles.cardFooter}>
+                  <p className={styles.cardFooterNote}>
+                    + Full onboarding & architecture support
+                  </p>
+                  <Link
+                    href="/contact"
+                    className={styles.ctaBtn}
+                    style={{ "--accent": accent }}
+                  >
+                    <span>GET STARTED</span>
+                    <span className={styles.ctaArrow}>→</span>
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 }
