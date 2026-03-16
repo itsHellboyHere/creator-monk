@@ -252,3 +252,53 @@
     font-size: 2.2rem;
   }
 }
+
+
+/* =========================
+   ADD THESE TO Services.module.css
+   (append to your existing file)
+========================= */
+
+/* Section subtitle under the heading */
+.sectionSubtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 12px;
+  letter-spacing: 0.05em;
+}
+
+/* Service pills row */
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.pill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid;
+  background: transparent;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .pillRow {
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .pill {
+    font-size: 0.6rem;
+    padding: 4px 10px;
+  }
+  .sectionSubtitle {
+    font-size: 0.9rem;
+    padding: 0 10px;
+  }
+}

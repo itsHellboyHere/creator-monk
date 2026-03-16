@@ -1,26 +1,37 @@
+/* =========================================
+   ServicesPortals.module.css — FULL FILE
+   Replace your existing file entirely
+   ========================================= */
+
+/* ── Section wrapper ── */
 .section {
-  padding: 180px 0;
+  padding: 160px 0 120px;
   position: relative;
-  overflow: hidden;
+  overflow: hidden;          /* ← CRITICAL: keeps watermark inside */
   min-height: 100vh;
   z-index: 2;
 }
 
+/* ── Watermark ── */
+/* Sits in the center-bottom of the section, never bleeds out */
 .watermark {
   position: absolute;
-  /* top: 50%; */
+  bottom: 0;                 /* anchored to bottom of section */
   left: 50%;
-  bottom: -52%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   font-family: var(--font-display);
-  font-size: 34vw;
+  font-size: clamp(160px, 28vw, 420px);
   font-weight: 900;
   color: #000;
   pointer-events: none;
   z-index: 1;
   letter-spacing: -0.09em;
+  line-height: 0.85;
+  white-space: nowrap;
+  user-select: none;
 }
 
+/* ── Container ── */
 .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -29,26 +40,105 @@
   z-index: 10;
 }
 
+/* =========================================
+   SECTION INTRO
+   ========================================= */
+.sectionIntro {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.introBadgeRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.introDash {
+  width: 32px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.2);
+  display: block;
+}
+
+.introBadge {
+  font-size: 0.65rem;
+  letter-spacing: 0.45em;
+  color: #888;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.introTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  color: #111;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+}
+
+.introThin {
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.introDesc {
+  max-width: 520px;
+  margin: 0 auto;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.48);
+  line-height: 1.75;
+}
+
+/* =========================================
+   GRID
+   ========================================= */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 35px;
+  gap: 28px;
+}
+
+/* =========================================
+   CARD WRAPPER + GLASS CARD
+   ========================================= */
+.cardWrapper {
+  position: relative;
 }
 
 .glassCard {
-  background: rgba(255, 255, 255, 0.6); /* Translucent in light mode */
-  backdrop-filter: blur(25px);
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  border-radius: 30px; /* Softer corners for the light section */
+  position: relative;           /* required for absolute children */
   display: block;
   text-decoration: none;
   overflow: hidden;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
 }
 
+.glassCard:hover {
+  transform: translateY(-10px) scale(1.015);
+  box-shadow: 0 32px 72px rgba(0, 0, 0, 0.13),
+              0 0 0 1.5px var(--card-color);
+  border-color: var(--card-color);
+}
+
+/* =========================================
+   IMAGE STACK
+   ========================================= */
 .visualStack {
   position: relative;
-  height: 320px;
+  height: 300px;
+  overflow: hidden;
   background: #e0e0e0;
 }
 
@@ -56,68 +146,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.7;
-  filter: grayscale(20%);
-  transition: all 0.5s ease;
-}
-
-.cardInfo {
-  position: absolute;
-  bottom: 25px;
-  left: 25px;
-  color: #000; /* Dark text for light mode */
-}
-
-.deptTag {
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  color: var(--monk-orange);
-  font-weight: 800;
-}
-
-.title {
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  font-weight: 900;
-}
-
-.footerArea {
-  padding: 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.label {
-  font-size: 10px;
-  color: #888;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
-.launchBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 9px;
-  font-weight: 900;
-  color: #000;
-}
-
-.circle {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--monk-orange);
-  box-shadow: 0 0 10px var(--monk-orange);
-}
-
-/* INTERACTIVE */
-.glassCard:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
-  border-color: var(--monk-orange);
+  opacity: 0.75;
+  filter: grayscale(15%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.4s ease,
+              filter 0.4s ease;
 }
 
 .glassCard:hover .glowImg {
@@ -125,77 +158,389 @@
   filter: grayscale(0%);
 }
 
-/* =========================
-   MOBILE OPTIMIZATION
-   ========================= */
-@media (max-width: 768px) {
+/* Color tint overlay on hover */
+.colorTint {
+  position: absolute;
+  inset: 0;
+  background: rgba(var(--card-rgb), 1);
+  mix-blend-mode: multiply;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
 
+.glassOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.15) 40%,
+    transparent 70%
+  );
+  z-index: 3;
+}
+
+/* Dept tag — top left */
+.cardTopMeta {
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  z-index: 10;
+}
+
+.deptTag {
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  color: var(--monk-orange);
+  font-weight: 800;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 4px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+/* Title — bottom left, transitions up on hover */
+.cardInfo {
+  position: absolute;
+  bottom: 22px;
+  left: 24px;
+  z-index: 10;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  line-height: 1;
+}
+
+/* =========================================
+   FOOTER AREA
+   ========================================= */
+.footerArea {
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.labelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.sublabel {
+  font-size: 0.62rem;
+  color: rgba(0, 0, 0, 0.38);
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.launchBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.launchText {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: #111;
+  text-transform: uppercase;
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--monk-orange);
+  box-shadow: 0 0 8px var(--monk-orange);
+}
+
+/* =========================================
+   HOVER REVEAL PANEL — Premium agency style
+   ========================================= */
+.hoverReveal {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 8, 8, 0.96);
+  backdrop-filter: blur(20px);
+  z-index: 30;
+  border-radius: inherit;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+/* Left accent bar */
+.revealAccentBar {
+  width: 3px;
+  flex-shrink: 0;
+  border-radius: 0;
+}
+
+.revealInner {
+  padding: 26px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.revealTagline {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.revealDesc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+}
+
+.revealDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 4px 0;
+}
+
+.revealListLabel {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.38em;
+  color: rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+}
+
+.whatList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.whatItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.whatIcon {
+  font-size: 0.55rem;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.whatText {
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.82);
+  text-transform: uppercase;
+}
+
+/* CTA row at bottom */
+.revealCta {
+  margin-top: auto;
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.revealCtaText {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* =========================================
+   BOTTOM CTA STRIP
+   ========================================= */
+.bottomCta {
+  margin-top: 72px;
+  padding: 40px 48px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 20px;
+}
+
+.ctaInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.ctaLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ctaLabel {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.38em;
+  color: rgba(0, 0, 0, 0.35);
+  text-transform: uppercase;
+}
+
+.ctaTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.02em;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 36px;
+  background: #111;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition: background 0.25s ease, gap 0.25s ease;
+  flex-shrink: 0;
+}
+
+.ctaBtn:hover {
+  background: var(--monk-orange, #ffae00);
+  color: #000;
+  gap: 18px;
+}
+
+.ctaArrow {
+  font-size: 1rem;
+  transition: transform 0.25s ease;
+}
+
+.ctaBtn:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+}
+
+@media (max-width: 768px) {
   .section {
-    padding: 120px 0 100px;
+    padding: 100px 0 80px;
     min-height: auto;
   }
 
-  /* Watermark: cinematic but controlled */
+  /* Watermark contained and sized for mobile */
   .watermark {
-    font-size: 70vw; /* reduced from 38vw desktop logic */
+    font-size: clamp(100px, 65vw, 220px);
     letter-spacing: -0.08em;
   }
 
   .container {
-    padding: 0 6%; /* slightly more breathing room */
+    padding: 0 5%;
   }
 
-  /* One card per row – full focus */
+  .sectionIntro {
+    margin-bottom: 40px;
+  }
+
+  .introTitle {
+    font-size: 1.9rem;
+  }
+
+  .introDesc {
+    font-size: 0.9rem;
+  }
+
   .grid {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 24px;
   }
 
   .glassCard {
-    border-radius: 24px;
+    border-radius: 22px;
   }
 
-  /* Image stack tuning */
   .visualStack {
-    height: 240px; /* down from 320px */
-  }
-
-  .glowImg {
-    opacity: 0.85;
-    filter: grayscale(10%);
-  }
-
-  /* Text positioning */
-  .cardInfo {
-    bottom: 20px;
-    left: 20px;
-  }
-
-  .deptTag {
-    font-size: 8px;
+    height: 240px;
   }
 
   .title {
-    font-size: 1.9rem;
-    line-height: 1.05;
+    font-size: 1.75rem;
   }
 
-  /* Footer balance */
-  .footerArea {
-    padding: 20px;
+  /* On mobile: hover reveal becomes a permanent bottom panel */
+  .hoverReveal {
+    position: static;
+    border-radius: 0 0 22px 22px;
+    flex-direction: row;
   }
 
-  .label {
-    font-size: 9px;
+  /* Remove AnimatePresence on mobile — panel always visible */
+  /* The JS still renders it but it stays open via CSS */
+
+  .revealInner {
+    padding: 20px 18px;
   }
 
-  .launchBtn {
-    font-size: 8.5px;
-    gap: 6px;
+  .revealDesc {
+    display: none; /* too much text on small screen — keep just the list */
   }
 
-  .circle {
-    width: 7px;
-    height: 7px;
+  /* CTA strip on mobile: stack vertically */
+  .ctaInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .ctaBtn {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 24px;
+  }
+
+  .bottomCta {
+    padding: 28px 24px;
+    margin-top: 48px;
   }
 }
