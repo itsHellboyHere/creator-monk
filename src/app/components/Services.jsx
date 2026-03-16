@@ -8,7 +8,7 @@ const services = [
   {
     id: "01",
     title: "Social Growth",
-    desc: "We manage your entire social presence — from scripting Reels & Shorts to posting, engagement, and analytics. 10M+ organic reach delivered.",
+    desc: "We manage your entire social presence — from scripting Reels & Shorts to posting, engagement, and analytics. 1M+ organic reach delivered.",
     pills: ["Reels & Shorts", "Strategy", "Community Mgmt", "Analytics"],
     image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1773681431/Gemini_Generated_Image_adi1vradi1vradi1-2_irlqd3.jpg",
     color: "#ffae00",
@@ -17,7 +17,7 @@ const services = [
   {
     id: "02",
     title: "Web & Software",
-    desc: "Custom websites, SaaS platforms, mobile apps & scalable backend systems. Built with Next.js, Python & Node.js — from landing page to full product.",
+    desc: "Custom websites, SaaS platforms, full stack & scalable backend systems. Built with Next.js, Python & Node.js — from landing page to full product.",
     pills: ["Websites", "SaaS Platforms", "Full Stack Softwares", "APIs & Backend"],
     image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1773681247/Gemini_Generated_Image_trdipqtrdipqtrdi_oskvnw.jpg",
     color: "#4287f5",

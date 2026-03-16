@@ -60,9 +60,9 @@ const services = [
     stat: { value: "24/7", label: "Systems Running Autonomously" },
     what: [
       { icon: "▶", title: "Custom AI Agents & Assistants", sub: "LLM-powered agents for your specific workflows" },
-      { icon: "◈", title: "Workflow & Process Automation", sub: "n8n, Zapier, custom pipelines — no manual steps" },
+      { icon: "◈", title: "Workflow & Process Automation", sub: "custom pipelines — no manual steps" },
       { icon: "◎", title: "AI Chatbots for Support & Sales", sub: "Trained on your data, live on your site" },
-      { icon: "◆", title: "CRM & Third-party Integrations", sub: "Notion, Salesforce, Slack, any API connected" },
+      { icon: "◆", title: "CRM & Third-party Integrations", sub: "API connections" },
       { icon: "◇", title: "Data Pipelines & Auto-Reporting", sub: "Automated dashboards and scheduled insights" },
     ],
     img: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?q=80&w=1400&auto=format&fit=crop",
