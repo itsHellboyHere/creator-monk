@@ -78,8 +78,8 @@ export default function ServicesIntro() {
             <div className={styles.visualSide}>
               <motion.div variants={itemVariants} className={styles.imageWrap}>
                 <img 
-                  src="https://res.cloudinary.com/dgifa4wgb/image/upload/v1770526095/Gemini_Generated_Image_ja8wenja8wenja8w-Photoroom_nm8jk7.png" 
-                  alt="Shri Krishna Sarathi"
+                  src="https://res.cloudinary.com/dgifa4wgb/image/upload/v1773686763/Gemini_Generated_Image_ckeuk5ckeuk5ckeu-Photoroom_nzotk9.png" 
+                  alt="Sarathi"
                   className={styles.sarathiImage}
                 />
                 <div className={styles.divineGlow} />
