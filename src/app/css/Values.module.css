@@ -3,59 +3,70 @@
 /* ================================= */
 /* SECTION                           */
 /* ================================= */
-
 .section {
   width: 100%;
   background: #080808;
-  padding: 120px 80px;
+  padding: 100px 80px 120px;
   position: relative;
   overflow: hidden;
+  /* Top separator line with gold gradient */
+  border-top: 1px solid rgba(255, 174, 0, 0.15);
 }
 
-.section::before {
-  content: '';
+/* Ambient glow top right */
+.glow {
   position: absolute;
-  top: 0;
-  left: 80px;
-  right: 80px;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(255,174,0,0.35), transparent);
-}
-
-/* Ambient glow */
-.section::after {
-  content: '';
-  position: absolute;
-  top: -200px;
-  right: -100px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255,174,0,0.04) 0%, transparent 65%);
+  top: -120px;
+  right: -80px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 174, 0, 0.05) 0%,
+    transparent 65%
+  );
   pointer-events: none;
+  z-index: 0;
 }
 
 /* ================================= */
 /* HEADER                            */
 /* ================================= */
-
 .header {
+  text-align: center;
+  margin-bottom: 72px;
+  position: relative;
+  z-index: 2;
+}
+
+.headerBadgeRow {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 16px;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
+}
+
+.headerDash {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: rgba(255, 174, 0, 0.4);
 }
 
 .sectionTag {
   font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 6px;
+  font-size: 0.6rem;
+  letter-spacing: 0.45em;
   color: #ffae00;
+  text-transform: uppercase;
+  font-weight: 400;
 }
 
 .sectionTitle {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3rem, 6vw, 6rem);
-  line-height: 0.9;
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  line-height: 0.92;
   color: #fff;
   letter-spacing: 2px;
   margin: 0;
@@ -66,37 +77,52 @@
   font-style: italic;
   font-weight: 300;
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255, 174, 0, 0.9);
-  display: block;
+  -webkit-text-stroke: 1.5px rgba(255, 174, 0, 0.85);
+  letter-spacing: 2px;
 }
 
 /* ================================= */
 /* GRID                              */
 /* ================================= */
-
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.04);
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 /* ================================= */
 /* CARD                              */
 /* ================================= */
-
 .card {
   position: relative;
-  padding: 48px 44px 52px;
+  padding: 48px 40px 52px;
   background: #0e0e0e;
-  border: 1px solid rgba(255,255,255,0.07);
   overflow: hidden;
   cursor: default;
-  transition: border-color 0.4s ease, background 0.4s ease;
+  transition: background 0.4s ease;
 }
 
 .card:hover {
-  border-color: rgba(255, 174, 0, 0.3);
-  background: #131313;
+  background: #111111;
+}
+
+/* Bottom accent line — draws in on hover */
+.cardBottomLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(to right, #ffae00, #ff7b00);
+  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .cardBottomLine {
+  width: 100%;
 }
 
 .card:hover .cardGlow {
@@ -104,117 +130,123 @@
 }
 
 .card:hover .cardDivider {
-  width: 80px;
+  width: 72px;
   opacity: 1;
-}
-
-.card:hover .cardTitleOutline {
-  -webkit-text-stroke-color: rgba(255, 174, 0, 1);
 }
 
 .card:hover .cardIcon {
   opacity: 1;
-  transform: scale(1.1);
-  color: #ffa500;
+  transform: scale(1.12);
+  color: #ffae00;
 }
 
 .card:hover .cardBody {
-  color: rgba(255,255,255,0.78);
+  color: rgba(255, 255, 255, 0.75);
 }
 
-.card:hover .cardNum {
-  color: rgba(255, 174, 0, 0.1);
-}
-
-/* CARD TOP ROW */
+/* Card top */
 .cardTop {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .cardNum {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 5rem;
-  color: rgba(255,255,255,0.06);
+  font-size: 4.5rem;
+  color: rgba(255, 255, 255, 0.05);
   line-height: 1;
   letter-spacing: -1px;
   transition: color 0.3s ease;
+  user-select: none;
+}
+
+.card:hover .cardNum {
+  color: rgba(255, 174, 0, 0.08);
 }
 
 .cardIcon {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: #ffae00;
-  opacity: 0.5;
-  transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+  opacity: 0.45;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* CARD TAG */
+/* Tag */
 .cardTag {
   display: block;
   font-family: 'DM Mono', monospace;
-  font-size: 0.55rem;
-  letter-spacing: 5px;
+  font-size: 0.52rem;
+  letter-spacing: 0.42em;
   color: #ffae00;
-  margin-bottom: 18px;
-  opacity: 0.85;
+  margin-bottom: 16px;
+  opacity: 0.8;
+  text-transform: uppercase;
 }
 
-/* CARD TITLE */
+/* Title */
 .cardTitle {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .cardTitleSolid {
   display: block;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: 0.9;
+  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+  line-height: 0.95;
   color: #ffffff;
   letter-spacing: 1px;
 }
 
-.cardTitleOutline {
+.cardTitleAccent {
   display: block;
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
-  line-height: 1.05;
+  font-size: clamp(1.6rem, 2.5vw, 2.5rem);
+  line-height: 1.1;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 174, 0, 0.6);
+  -webkit-text-stroke: 1px rgba(255, 174, 0, 0.55);
   transition: -webkit-text-stroke-color 0.3s ease;
 }
 
-/* DIVIDER */
-.cardDivider {
-  width: 40px;
-  height: 1px;
-  background: linear-gradient(to right, #ffae00, #ff7b00);
-  opacity: 0.45;
-  margin-bottom: 24px;
-  transition: width 0.4s ease, opacity 0.4s ease;
+.card:hover .cardTitleAccent {
+  -webkit-text-stroke-color: rgba(255, 174, 0, 0.9);
 }
 
-/* BODY */
+/* Divider */
+.cardDivider {
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(to right, #ffae00, #ff7b00);
+  opacity: 0.4;
+  margin-bottom: 22px;
+  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+/* Body */
 .cardBody {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.08rem;
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
   font-weight: 300;
-  color: rgba(255,255,255,0.58);
-  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.88;
   transition: color 0.3s ease;
 }
 
-/* HOVER GLOW */
+/* Hover glow */
 .cardGlow {
   position: absolute;
-  bottom: -80px;
-  left: -80px;
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(255,174,0,0.07) 0%, transparent 70%);
+  bottom: -60px;
+  left: -60px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 174, 0, 0.07) 0%,
+    transparent 70%
+  );
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -223,110 +255,102 @@
 /* ================================= */
 /* BOTTOM QUOTE                      */
 /* ================================= */
-
 .quote {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
-  margin-top: 96px;
-  padding: 48px 0 0;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  gap: 36px;
+  margin-top: 80px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 2;
 }
 
 .quoteLine {
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(255,174,0,0.25));
-  flex-shrink: 0;
+  background: linear-gradient(to right, transparent, rgba(255, 174, 0, 0.2));
 }
 
 .quoteLineRight {
   flex: 1;
   height: 1px;
-  background: linear-gradient(to left, transparent, rgba(255,174,0,0.25));
-  flex-shrink: 0;
+  background: linear-gradient(to left, transparent, rgba(255, 174, 0, 0.2));
 }
 
 .quoteInner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  max-width: 680px;
+  gap: 12px;
+  max-width: 620px;
   text-align: center;
 }
 
 .quoteText {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
   font-weight: 300;
-  color: rgba(255,255,255,0.55);
-  line-height: 1.7;
-  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.48);
+  line-height: 1.72;
+  letter-spacing: 0.3px;
 }
 
 .quoteAuthor {
   font-family: 'DM Mono', monospace;
   font-size: 0.5rem;
-  letter-spacing: 5px;
-  color: rgba(255, 174, 0, 0.5);
+  letter-spacing: 0.44em;
+  color: rgba(255, 174, 0, 0.45);
+  text-transform: uppercase;
 }
 
 /* ================================= */
-/* RESPONSIVE — TABLET               */
+/* TABLET                            */
 /* ================================= */
-
 @media (max-width: 1024px) {
   .section {
-    padding: 100px 48px;
-    margin-top: 40px;
-  }
-
-  .section::before {
-    left: 48px;
-    right: 48px;
-  }
-
-  .card {
-    padding: 36px 32px 40px;
-  }
-
-  .cardNum {
-    font-size: 3.5rem;
-  }
-
-  .quote {
-    gap: 28px;
-  }
-}
-
-/* ================================= */
-/* RESPONSIVE — MOBILE               */
-/* ================================= */
-
-@media (max-width: 768px) {
-  .section {
-    padding: 80px 28px;
-  }
-
-  .section::before {
-    left: 28px;
-    right: 28px;
-  }
-
-  .header {
-    margin-bottom: 48px;
+    padding: 80px 48px 100px;
   }
 
   .grid {
     grid-template-columns: 1fr;
-    gap: 2px;
   }
 
   .card {
-    padding: 36px 28px 40px;
+    padding: 40px 36px 44px;
+  }
+
+  /* On single column, bottom line draws per card */
+  .cardNum {
+    font-size: 3.5rem;
+  }
+}
+
+/* ================================= */
+/* MOBILE                            */
+/* ================================= */
+@media (max-width: 768px) {
+  .section {
+    padding: 72px 24px 80px;
+  }
+
+  .header {
+    margin-bottom: 52px;
+  }
+
+  .sectionTitle {
+    font-size: clamp(2.2rem, 10vw, 3rem);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+
+  .card {
+    padding: 36px 24px 40px;
   }
 
   .cardNum {
@@ -334,55 +358,55 @@
   }
 
   .cardTitleSolid {
-    font-size: 2.2rem;
-  }
-
-  .cardTitleOutline {
     font-size: 2rem;
   }
 
+  .cardTitleAccent {
+    font-size: 1.8rem;
+  }
+
+  .cardBody {
+    font-size: 1rem;
+  }
+
   .quote {
-    margin-top: 60px;
-    padding-top: 40px;
-    gap: 20px;
+    margin-top: 56px;
+    padding-top: 36px;
     flex-direction: column;
+    gap: 16px;
+    text-align: center;
   }
 
   .quoteLine,
   .quoteLineRight {
-    width: 60px;
     flex: none;
-    background: linear-gradient(to right, transparent, rgba(255,174,0,0.25), transparent);
+    width: 48px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 174, 0, 0.25),
+      transparent
+    );
   }
 
   .quoteText {
-    font-size: 1rem;
+    font-size: 0.98rem;
   }
 }
 
 /* ================================= */
-/* RESPONSIVE — SMALL MOBILE         */
+/* SMALL MOBILE                      */
 /* ================================= */
-
 @media (max-width: 480px) {
   .section {
-    padding: 64px 20px;
-  }
-
-  .section::before {
-    left: 20px;
-    right: 20px;
-  }
-
-  .sectionTitle {
-    font-size: 2.8rem;
+    padding: 56px 18px 64px;
   }
 
   .card {
-    padding: 28px 20px 32px;
+    padding: 28px 18px 32px;
   }
 
-  .quoteText {
-    font-size: 0.95rem;
+  .cardNum {
+    font-size: 2.5rem;
   }
 }

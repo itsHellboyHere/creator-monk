@@ -10,11 +10,11 @@ const chapters = [
     tag: "ORIGIN",
     headline: "WE DON'T",
     headlineAccent: "FOLLOW TRENDS.",
-    subline: "WE SET THEM.",
-    body: "CreatorMonk was born from one belief: that uncommon builders deserve uncommon growth. Not viral gimmicks. Not hollow metrics. Real systems. Real results.",
-    img: "https://images.unsplash.com/photo-1509475826633-fed577a2c71b?w=1400&q=80",
-    stat: "5+",
-    statLabel: "Creators Scaled",
+    subline: "WE BUILD SYSTEMS.",
+    body: "CreatorMonk was born from one belief: that builders who think differently deserve growth that compounds. Not viral gimmicks. Not hollow metrics. Real systems — social, software, and AI — working together.",
+    img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1400&q=80",
+    stat: "30+",
+    statLabel: "Projects Delivered",
   },
   {
     id: "02",
@@ -22,10 +22,10 @@ const chapters = [
     headline: "CLARITY IS",
     headlineAccent: "THE STRATEGY.",
     subline: "NOISE IS THE ENEMY.",
-    body: "In a world addicted to content volume, we obsess over signal. Every piece of content we engineer carries intention — designed to attract, convert, and compound.",
-    img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80",
-    stat: "2x",
-    statLabel: "Avg. Growth Rate",
+    body: "In a world addicted to content volume, we obsess over signal. Every Reel, every line of code, every automated system we build carries one purpose — compounding attention that converts into real business outcomes.",
+    img: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=1400&q=80",
+    stat: "3",
+    statLabel: "Core Divisions",
   },
   {
     id: "03",
@@ -33,11 +33,11 @@ const chapters = [
     headline: "BUILD WORK",
     headlineAccent: "THAT LASTS.",
     subline: "THE MONK WAY.",
-    body: "True creation is disciplined. Structured. Timeless. We help you build a digital presence so strong, algorithms become irrelevant.",
-    img: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1400&q=80",
-    stat: "∞",
-    statLabel: "Compound Impact",
-  }
+    body: "True creation is disciplined. Structured. Timeless. We build digital products, social systems, and intelligent automation so strong that algorithms, trends, and competition become irrelevant to your growth.",
+    img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1400&q=80",
+    stat: "24/7",
+    statLabel: "Systems Running",
+  },
 ];
 
 export default function About() {
@@ -49,9 +49,9 @@ export default function About() {
     clearInterval(intervalRef.current);
     setProgress(0);
     intervalRef.current = setInterval(() => {
-      setProgress(p => {
+      setProgress((p) => {
         if (p >= 100) {
-          setActive(a => (a + 1) % chapters.length);
+          setActive((a) => (a + 1) % chapters.length);
           return 0;
         }
         return p + 0.4;
@@ -74,7 +74,7 @@ export default function About() {
   return (
     <div className={styles.root}>
 
-      {/* FULL BG IMAGE */}
+      {/* ── FULL BG IMAGE ── */}
       <AnimatePresence mode="wait">
         <motion.div
           key={active + "-bg"}
@@ -87,6 +87,7 @@ export default function About() {
           <motion.img
             className={styles.bgImg}
             src={c.img}
+            alt={c.tag}
             initial={{ scale: 1.06 }}
             animate={{ scale: 1 }}
             transition={{ duration: 8, ease: "easeOut" }}
@@ -95,10 +96,10 @@ export default function About() {
         </motion.div>
       </AnimatePresence>
 
-      {/* MAIN CONTENT */}
+      {/* ── MAIN CONTENT ── */}
       <div className={styles.inner}>
 
-        {/* LEFT: BIG TEXT */}
+        {/* LEFT */}
         <div className={styles.leftCol}>
           <AnimatePresence mode="wait">
             <motion.div
@@ -120,7 +121,7 @@ export default function About() {
           </AnimatePresence>
         </div>
 
-        {/* RIGHT: BODY + CONTROLS */}
+        {/* RIGHT */}
         <div className={styles.rightCol}>
           <AnimatePresence mode="wait">
             <motion.div
@@ -137,7 +138,7 @@ export default function About() {
               </div>
               <p className={styles.body}>{c.body}</p>
               <Link href="/services" className={styles.cta}>
-              <span>DISCOVER OUR PATH →</span>
+                <span>DISCOVER OUR PATH →</span>
               </Link>
             </motion.div>
           </AnimatePresence>
@@ -155,7 +156,10 @@ export default function About() {
                   <div className={styles.chapterThumbOverlay} />
                   {i === active && (
                     <div className={styles.chapterProgress}>
-                      <div className={styles.chapterProgressFill} style={{ width: `${progress}%` }} />
+                      <div
+                        className={styles.chapterProgressFill}
+                        style={{ width: `${progress}%` }}
+                      />
                     </div>
                   )}
                 </div>
@@ -167,12 +171,11 @@ export default function About() {
             ))}
           </div>
         </div>
-
       </div>
 
-      {/* BOTTOM BAR */}
+      {/* ── BOTTOM BAR ── */}
       <div className={styles.bottomBar}>
-        <span className={styles.bottomText}>CREATORMONK — EST. 2026</span>
+        <span className={styles.bottomText}>CREATORMONK — EST. 2025</span>
         <div className={styles.bottomDots}>
           {chapters.map((_, i) => (
             <div
@@ -182,7 +185,10 @@ export default function About() {
             />
           ))}
         </div>
-        <span className={styles.bottomCounter}>{String(active + 1).padStart(2, "0")} / {String(chapters.length).padStart(2, "0")}</span>
+        <span className={styles.bottomCounter}>
+          {String(active + 1).padStart(2, "0")} /{" "}
+          {String(chapters.length).padStart(2, "0")}
+        </span>
       </div>
 
     </div>

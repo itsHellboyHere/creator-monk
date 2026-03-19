@@ -84,3 +84,20 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #ffae00 #F8F8F6;
 }
+
+/* ── About Page Layout — add to globals.css ── */
+
+.about-sticky-hero {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.about-content-stack {
+  position: relative;
+  z-index: 10;
+}
+
+.about-content-stack > *:first-child {
+  box-shadow: 0 -40px 80px rgba(0, 0, 0, 0.6);
+}
