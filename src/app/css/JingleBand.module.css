@@ -1,6 +1,6 @@
 /* =========================================
    JingleBand.module.css
-   Save as: app/css/JingleBand.module.css
+   No Framer Motion — CSS transitions only
    ========================================= */
 
 .section {
@@ -12,7 +12,6 @@
   padding: 80px 0;
 }
 
-/* Noise texture */
 .noise {
   position: absolute;
   inset: 0;
@@ -23,7 +22,6 @@
   z-index: 0;
 }
 
-/* Ambient glow */
 .section::before {
   content: "";
   position: absolute;
@@ -37,7 +35,9 @@
   z-index: 0;
 }
 
-/* ── Inner grid ── */
+/* ── Inner grid ──
+   Starts hidden, .innerVisible added by IntersectionObserver
+   Replaces Framer Motion whileInView */
 .inner {
   max-width: 1300px;
   margin: 0 auto;
@@ -48,11 +48,18 @@
   gap: 80px;
   position: relative;
   z-index: 2;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ─────────────────────────────────────────
-   BRAND SIDE
-───────────────────────────────────────── */
+.innerVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Brand side ── */
 .brandSide {
   display: flex;
   flex-direction: column;
@@ -79,9 +86,7 @@
   text-transform: uppercase;
 }
 
-.gold {
-  color: #ffae00;
-}
+.gold { color: #ffae00; }
 
 .brandDesc {
   font-size: 0.88rem;
@@ -90,7 +95,8 @@
   line-height: 1.6;
 }
 
-/* Live tag */
+/* Live tag — CSS replaces AnimatePresence
+   Hidden by default, shown when playing */
 .liveTag {
   display: inline-flex;
   align-items: center;
@@ -106,6 +112,16 @@
   text-transform: uppercase;
   width: fit-content;
   margin-top: 8px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.liveTagActive {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .liveDot {
@@ -118,23 +134,19 @@
 
 @keyframes pulse {
   0%, 100% { opacity: 0.4; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.25); }
+  50%       { opacity: 1;   transform: scale(1.25); }
 }
 
-/* ─────────────────────────────────────────
-   PLAYER SIDE
-───────────────────────────────────────── */
+/* ── Player side ── */
 .playerSide {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-/* ── Video frame ── */
 .videoWrap {
   position: relative;
   width: 100%;
-  /* 16:9 aspect */
   aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
@@ -150,7 +162,8 @@
   display: block;
 }
 
-/* Play/pause overlay */
+/* Overlay — CSS opacity replaces AnimatePresence
+   Hidden by default, .overlayVisible shows it */
 .videoOverlay {
   position: absolute;
   inset: 0;
@@ -159,6 +172,14 @@
   align-items: center;
   justify-content: center;
   z-index: 5;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.overlayVisible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .bigPlayBtn {
@@ -171,7 +192,11 @@
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 0 40px rgba(255, 174, 0, 0.4);
+  transition: transform 0.2s ease;
 }
+
+.bigPlayBtn:hover { transform: scale(1.08); }
+.bigPlayBtn:active { transform: scale(0.95); }
 
 .playIcon {
   color: #000;
@@ -194,13 +219,10 @@
   border-radius: 2px;
 }
 
-/* Gold corner accents */
 .cornerTL {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
+  top: 0; left: 0;
+  width: 32px; height: 32px;
   border-top: 2px solid #ffae00;
   border-left: 2px solid #ffae00;
   border-radius: 12px 0 0 0;
@@ -210,10 +232,8 @@
 
 .cornerBR {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 32px;
-  height: 32px;
+  bottom: 0; right: 0;
+  width: 32px; height: 32px;
   border-bottom: 2px solid #ffae00;
   border-right: 2px solid #ffae00;
   border-radius: 0 0 12px 0;
@@ -221,7 +241,7 @@
   pointer-events: none;
 }
 
-/* ── Controls bar ── */
+/* ── Controls ── */
 .controls {
   display: flex;
   align-items: center;
@@ -229,10 +249,8 @@
   padding: 14px 4px 0;
 }
 
-/* Small play button */
 .smallPlayBtn {
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   border-radius: 50%;
   background: rgba(255, 174, 0, 0.12);
   border: 1px solid rgba(255, 174, 0, 0.25);
@@ -245,31 +263,18 @@
   color: #ffae00;
 }
 
-.smallPlayBtn:hover {
-  background: rgba(255, 174, 0, 0.22);
-}
+.smallPlayBtn:hover { background: rgba(255, 174, 0, 0.22); }
 
-.smallPlay {
-  font-size: 0.6rem;
-  margin-left: 2px;
-  line-height: 1;
-}
+.smallPlay { font-size: 0.6rem; margin-left: 2px; line-height: 1; }
 
-.smallPause {
-  display: flex;
-  gap: 3px;
-  align-items: center;
-}
-
+.smallPause { display: flex; gap: 3px; align-items: center; }
 .smallPause span {
   display: block;
-  width: 2px;
-  height: 10px;
+  width: 2px; height: 10px;
   background: #ffae00;
   border-radius: 2px;
 }
 
-/* Time */
 .time {
   font-family: monospace;
   font-size: 0.62rem;
@@ -280,7 +285,6 @@
   min-width: 30px;
 }
 
-/* Seek bar */
 .seekTrack {
   flex: 1;
   height: 3px;
@@ -291,14 +295,11 @@
   transition: height 0.2s ease;
 }
 
-.seekTrack:hover {
-  height: 5px;
-}
+.seekTrack:hover { height: 5px; }
 
 .seekFill {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   height: 100%;
   background: #ffae00;
   border-radius: 3px;
@@ -309,8 +310,7 @@
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 11px;
-  height: 11px;
+  width: 11px; height: 11px;
   border-radius: 50%;
   background: #ffae00;
   box-shadow: 0 0 8px rgba(255, 174, 0, 0.6);
@@ -318,7 +318,6 @@
   transition: left 0.1s linear;
 }
 
-/* Mute button */
 .muteBtn {
   background: transparent;
   border: none;
@@ -332,54 +331,20 @@
   flex-shrink: 0;
 }
 
-.muteBtn:hover {
-  color: #fff;
-}
+.muteBtn:hover { color: #fff; }
 
-/* ─────────────────────────────────────────
-   TABLET
-───────────────────────────────────────── */
+/* ── Tablet ── */
 @media (max-width: 1024px) {
-  .inner {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .brandSide {
-    text-align: center;
-    align-items: center;
-  }
-
-  .brandName {
-    font-size: clamp(2.5rem, 9vw, 4rem);
-  }
+  .inner { grid-template-columns: 1fr; gap: 40px; }
+  .brandSide { text-align: center; align-items: center; }
+  .brandName { font-size: clamp(2.5rem, 9vw, 4rem); }
 }
 
-/* ─────────────────────────────────────────
-   MOBILE
-───────────────────────────────────────── */
+/* ── Mobile ── */
 @media (max-width: 768px) {
-  .section {
-    padding: 60px 0;
-  }
-
-  .inner {
-    padding: 0 5%;
-    gap: 32px;
-  }
-
-  .brandName {
-    font-size: clamp(2.2rem, 10vw, 3rem);
-  }
-
-  .bigPlayBtn {
-    width: 56px;
-    height: 56px;
-  }
-
-  .cornerTL,
-  .cornerBR {
-    width: 22px;
-    height: 22px;
-  }
+  .section { padding: 60px 0; }
+  .inner { padding: 0 5%; gap: 32px; }
+  .brandName { font-size: clamp(2.2rem, 10vw, 3rem); }
+  .bigPlayBtn { width: 56px; height: 56px; }
+  .cornerTL, .cornerBR { width: 22px; height: 22px; }
 }

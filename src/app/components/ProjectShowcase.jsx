@@ -8,7 +8,7 @@ const projects = [
     name: "Unidecor",
     type: "Interior Design Platform",
     status: "MISSION: SUCCESS",
-    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1770456446/Image_07-02-26_at_2.54_PM_1_fkgkwi.jpg", 
+    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/f_webp,q_60,w_1200/v1770456446/Image_07-02-26_at_2.54_PM_1_fkgkwi.jpg", 
     link: "https://theunidecor.com",
     tech: ["Next.js", "Framer Motion", "CMS", "Sanity","Dynamic Search"],
     hindi: "सुंदरता"
@@ -17,7 +17,7 @@ const projects = [
     name: "Navya Nirman",
     type: "Industrial Paint & Waterproofing",
     status: "LIVE & KICKING",
-    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1770456445/Image_07-02-26_at_2.54_PM_vny1fs.jpg",
+    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/f_webp,q_60,w_1200/v1770456445/Image_07-02-26_at_2.54_PM_vny1fs.jpg",
     link: "https://navyyanirman.com",
     tech: ["SEO Engine", "React", "Cloud Storage"],
     hindi: "निर्माण"
@@ -26,7 +26,7 @@ const projects = [
     name: "Hexalam",
     type: "Digital Laminate Catalog",
     status: "BETA LAUNCH",
-    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1770456446/Image_07-02-26_at_2.55_PM_fh47xf.jpg",
+    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/f_webp,q_60,w_1200/v1770456446/Image_07-02-26_at_2.55_PM_fh47xf.jpg",
     link: "https://hexalam.com",
     tech: ["Nextjs Routing", "Product API", "Module CSS","Aesthic 3D"],
     hindi: "विविधता"

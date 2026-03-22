@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "@/app/css/Services.module.css";
@@ -13,7 +13,7 @@ const services = [
     pills: ["Reels & Shorts", "Strategy", "Community Mgmt", "Analytics"],
     stat: "1M+",
     statLabel: "Organic Reach",
-    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1773681431/Gemini_Generated_Image_adi1vradi1vradi1-2_irlqd3.jpg",
+    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/f_webp,q_50,w_1200/v1773681431/Gemini_Generated_Image_adi1vradi1vradi1-2_irlqd3.jpg",
     color: "#ffae00",
     href: "/services/social-media",
   },
@@ -25,7 +25,7 @@ const services = [
     pills: ["Websites", "SaaS Platforms", "Full Stack", "APIs & Backend"],
     stat: "20+",
     statLabel: "Products Shipped",
-    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1773681247/Gemini_Generated_Image_trdipqtrdipqtrdi_oskvnw.jpg",
+    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/f_webp,q_50,w_1200/v1773681247/Gemini_Generated_Image_trdipqtrdipqtrdi_oskvnw.jpg",
     color: "#4287f5",
     href: "/services/web-software",
   },
@@ -37,29 +37,35 @@ const services = [
     pills: ["AI Agents", "Workflow Automation", "Chatbots", "RAG Systems"],
     stat: "24/7",
     statLabel: "Systems Running",
-    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1400&q=80",
+    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/f_webp,q_40,w_1200/v1774172813/ChatGPT_Image_Mar_22_2026_at_03_15_41_PM_qidvkj.jpg",
     color: "#10b981",
     href: "/services/ai-automation",
   },
 ];
 
 export default function ServicesStack() {
-  const bgRefs = useRef([]);
+  const bgRefs      = useRef([]);
   const sectionRefs = useRef([]);
-  const dotRefs = useRef([]);
+  const dotRefs     = useRef([]);
+  const wrapperRef  = useRef(null);
+
+  // Controls dot visibility — only show when services wrapper is in view
+  const [dotsVisible, setDotsVisible] = useState(false);
 
   useEffect(() => {
+    // Parallax on scroll
     const onScroll = () => {
       sectionRefs.current.forEach((sec, i) => {
         if (!sec || !bgRefs.current[i]) return;
-        const rect = sec.getBoundingClientRect();
+        const rect     = sec.getBoundingClientRect();
         const progress = -rect.top / window.innerHeight;
-        const shift = progress * 80;
+        const shift    = progress * 80;
         bgRefs.current[i].style.transform = `translateY(${shift}px)`;
       });
     };
 
-    const observer = new IntersectionObserver(
+    // Active dot per section
+    const sectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const idx = Number(entry.target.dataset.index);
@@ -75,12 +81,22 @@ export default function ServicesStack() {
       { threshold: 0.5 }
     );
 
-    sectionRefs.current.forEach((sec) => sec && observer.observe(sec));
+    // Show/hide dots based on whether the whole services block is visible
+    const wrapperObserver = new IntersectionObserver(
+      ([entry]) => setDotsVisible(entry.isIntersecting),
+      // Trigger as soon as ANY part of the services wrapper enters/exits view
+      { threshold: 0 }
+    );
+
+    sectionRefs.current.forEach((sec) => sec && sectionObserver.observe(sec));
+    if (wrapperRef.current) wrapperObserver.observe(wrapperRef.current);
+
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", onScroll);
-      observer.disconnect();
+      sectionObserver.disconnect();
+      wrapperObserver.disconnect();
     };
   }, []);
 
@@ -89,10 +105,10 @@ export default function ServicesStack() {
   };
 
   return (
-    <div className={styles.stackWrapper}>
+    <div className={styles.stackWrapper} ref={wrapperRef}>
 
-      {/* Progress dots */}
-      <div className={styles.progressDots}>
+      {/* Progress dots — CSS opacity controlled by dotsVisible state */}
+      <div className={`${styles.progressDots} ${dotsVisible ? styles.dotsVisible : ""}`}>
         {services.map((s, i) => (
           <button
             key={i}
@@ -113,18 +129,13 @@ export default function ServicesStack() {
           className={styles.section}
           style={{ "--c": s.color }}
         >
-          {/* Parallax bg wrapper — Next.js Image inside */}
-          <div
-            ref={(el) => (bgRefs.current[i] = el)}
-            className={styles.bg}
-          >
+          <div ref={(el) => (bgRefs.current[i] = el)} className={styles.bg}>
             <Image
               src={s.image}
               alt={s.os}
               fill
               sizes="100vw"
               style={{ objectFit: "cover", objectPosition: "center" }}
-              // First section eager, rest lazy
               priority={i === 0}
               loading={i === 0 ? "eager" : "lazy"}
               quality={75}

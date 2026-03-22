@@ -14,57 +14,39 @@ const POSITIONS = [
   { id: "cta",         position: { x: 0,    y: -1.8, z: 2 }, rotation: { x: 0,   y: 0,    z: 0 } },
 ];
 
+// Simple lerp helper — no GSAP needed
 function lerp(a, b, t) {
   return a + (b - a) * t;
-}
-
-// Robust mobile detection — checks both screen width AND touch capability
-function isMobileDevice() {
-  if (typeof window === "undefined") return true;
-  const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-  const isSmallScreen = window.innerWidth < 1024;
-  // Only skip if BOTH small screen AND touch — avoids false positive on desktop devtools
-  return isTouchDevice && isSmallScreen;
 }
 
 export default function MonkCanvas() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // Skip on real mobile devices — saves 8MB GLB + Three.js
-    if (isMobileDevice()) return;
+    // Skip entirely on mobile — saves 8MB GLB + Three.js bundle
+    if (window.innerWidth < 768) return;
 
     let THREE, GLTFLoader;
     let renderer, scene, camera, mixer, model;
     let rafId = null;
     let clock;
-    let tabHidden = false;
-    let destroyed = false;
+    let isMoving = false;
+    let hidden = false;
 
-    // Target position/rotation for lerp
-    const target = {
-      x: 1.6, y: -1.5, z: 8,
-      rx: 0, ry: -0.5, rz: 0,
-    };
+    // Target values for lerp
+    const target = { x: 1.6, y: -1.5, z: 8, rx: 0, ry: -0.5, rz: 0 };
 
+    // Lazy load Three.js only when component mounts
     async function init() {
-      if (destroyed) return;
-
-      // Dynamic imports — Three.js only loads here, not in initial bundle
-      const threeModule = await import("three");
-      THREE = threeModule;
+      THREE = await import("three");
       const { GLTFLoader: Loader } = await import(
         "three/examples/jsm/loaders/GLTFLoader"
       );
       GLTFLoader = Loader;
 
-      if (destroyed) return; // Component may have unmounted during async load
-
-      // Scene
       scene = new THREE.Scene();
       clock = new THREE.Clock();
 
-      // Camera
       camera = new THREE.PerspectiveCamera(
         18,
         window.innerWidth / window.innerHeight,
@@ -73,12 +55,7 @@ export default function MonkCanvas() {
       );
       camera.position.z = 15;
 
-      // Renderer
-      renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: true,
-        powerPreference: "high-performance",
-      });
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -87,66 +64,92 @@ export default function MonkCanvas() {
         containerRef.current.appendChild(renderer.domElement);
       }
 
-      // Lights
-      scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+      // Lighting
+      const ambient = new THREE.AmbientLight(0xffffff, 1.2);
+      scene.add(ambient);
       const dirLight = new THREE.DirectionalLight(0xffffff, 4);
       dirLight.position.set(5, 5, 5);
       scene.add(dirLight);
 
-      // Load GLB from Cloudinary
+      // Load model
       const loader = new GLTFLoader();
       loader.load(
         GLB_URL,
         (gltf) => {
-          if (destroyed) return;
-
           model = gltf.scene;
           model.scale.set(0.55, 0.55, 0.55);
           model.position.set(target.x, target.y, target.z);
           model.rotation.set(target.rx, target.ry, target.rz);
           scene.add(model);
 
-          // Start animation mixer
           mixer = new THREE.AnimationMixer(model);
           if (gltf.animations.length > 0) {
             mixer.clipAction(gltf.animations[0]).play();
           }
 
+          // Start render loop only after model loads
           startLoop();
         },
         undefined,
-        (err) => console.warn("MonkCanvas: GLB load failed —", err.message)
+        (err) => console.error("GLB load error:", err)
       );
     }
 
+    // Render loop — only runs when needed
     function startLoop() {
       const animate = () => {
-        if (destroyed) return;
-
-        rafId = requestAnimationFrame(animate);
-
-        // Skip render when tab is not visible
-        if (tabHidden) return;
-
-        const delta = clock.getDelta();
-        if (mixer) mixer.update(delta);
-
-        if (model) {
-          // Lerp position toward target
-          model.position.x = lerp(model.position.x, target.x, 0.05);
-          model.position.y = lerp(model.position.y, target.y, 0.05);
-          model.position.z = lerp(model.position.z, target.z, 0.05);
-          model.rotation.x = lerp(model.rotation.x, target.rx, 0.05);
-          model.rotation.y = lerp(model.rotation.y, target.ry, 0.05);
-          model.rotation.z = lerp(model.rotation.z, target.rz, 0.05);
+        if (hidden) {
+          rafId = requestAnimationFrame(animate);
+          return;
         }
 
-        renderer.render(scene, camera);
+        const delta = clock.getDelta();
+
+        // Update animation mixer
+        if (mixer) mixer.update(delta);
+
+        // Lerp model to target — stops needing render when close enough
+        if (model) {
+          const SPEED = 0.05;
+          let stillMoving = false;
+
+          const dx = target.x - model.position.x;
+          const dy = target.y - model.position.y;
+          const dz = target.z - model.position.z;
+          const drx = target.rx - model.rotation.x;
+          const dry = target.ry - model.rotation.y;
+          const drz = target.rz - model.rotation.z;
+
+          if (
+            Math.abs(dx) > 0.001 ||
+            Math.abs(dy) > 0.001 ||
+            Math.abs(dz) > 0.001 ||
+            Math.abs(drx) > 0.001 ||
+            Math.abs(dry) > 0.001 ||
+            Math.abs(drz) > 0.001
+          ) {
+            model.position.x = lerp(model.position.x, target.x, SPEED);
+            model.position.y = lerp(model.position.y, target.y, SPEED);
+            model.position.z = lerp(model.position.z, target.z, SPEED);
+            model.rotation.x = lerp(model.rotation.x, target.rx, SPEED);
+            model.rotation.y = lerp(model.rotation.y, target.ry, SPEED);
+            model.rotation.z = lerp(model.rotation.z, target.rz, SPEED);
+            stillMoving = true;
+          }
+
+          // Always render if mixer has animations
+          renderer.render(scene, camera);
+
+          isMoving = stillMoving;
+        }
+
+        rafId = requestAnimationFrame(animate);
       };
 
       rafId = requestAnimationFrame(animate);
     }
 
+    // On scroll — update target position
     function onScroll() {
       if (!model) return;
 
@@ -174,17 +177,17 @@ export default function MonkCanvas() {
       }
     }
 
+    // Resize handler
     function onResize() {
       if (!camera || !renderer) return;
-      // Skip if now on mobile (user rotated device etc)
-      if (isMobileDevice()) return;
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
+    // Visibility API — pause rendering when tab hidden
     function onVisibilityChange() {
-      tabHidden = document.hidden;
+      hidden = document.hidden;
     }
 
     init();
@@ -194,42 +197,23 @@ export default function MonkCanvas() {
     document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
-      destroyed = true;
-
+      // Cleanup
       if (rafId) cancelAnimationFrame(rafId);
-
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibilityChange);
 
-      if (mixer) mixer.stopAllAction();
-
       if (renderer) {
         renderer.dispose();
-        try {
-          if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
-            containerRef.current.removeChild(renderer.domElement);
-          }
-        } catch (_) {}
+        if (containerRef.current && renderer.domElement) {
+          containerRef.current.removeChild(renderer.domElement);
+        }
       }
 
-      // Dispose scene geometry + materials to free GPU memory
-      if (scene) {
-        scene.traverse((obj) => {
-          if (obj.geometry) obj.geometry.dispose();
-          if (obj.material) {
-            if (Array.isArray(obj.material)) {
-              obj.material.forEach((m) => m.dispose());
-            } else {
-              obj.material.dispose();
-            }
-          }
-        });
-      }
+      if (mixer) mixer.stopAllAction();
     };
   }, []);
 
-  // Render nothing on mobile — CSS media query as extra safety net
   return (
     <div
       ref={containerRef}
@@ -239,7 +223,6 @@ export default function MonkCanvas() {
         zIndex: 20,
         pointerEvents: "none",
       }}
-      className="monk-canvas-wrap"
     />
   );
 }

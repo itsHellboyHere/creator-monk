@@ -1,12 +1,16 @@
 /* =========================================
-   Services.module.css — Fixed for Next.js Image
+   Services.module.css
    ========================================= */
 
 .stackWrapper {
   position: relative;
 }
 
-/* ── Progress dots ── */
+/* ── Progress dots ──
+   Fixed position but HIDDEN by default.
+   .dotsVisible class added/removed by IntersectionObserver
+   watching the whole services wrapper — so dots only appear
+   when the services section is actually on screen. */
 .progressDots {
   position: fixed;
   right: 28px;
@@ -16,6 +20,15 @@
   flex-direction: column;
   gap: 10px;
   z-index: 100;
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.dotsVisible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .dot {
@@ -52,10 +65,6 @@
   align-items: center;
 }
 
-/* ── Parallax bg wrapper ──
-   Uses top/left/right/bottom instead of inset
-   so Next.js Image fill works correctly.
-   Oversized -15% on each side gives parallax room. */
 .bg {
   position: absolute;
   top: -15%;
@@ -65,14 +74,13 @@
   will-change: transform;
   filter: brightness(0.38) saturate(0.85);
   transition: filter 0.4s ease;
-  overflow: hidden; /* required for Next.js Image fill */
+  overflow: hidden;
 }
 
 .section:hover .bg {
   filter: brightness(0.3) saturate(1.05);
 }
 
-/* ── Color tint ── */
 .tint {
   position: absolute;
   inset: 0;
@@ -82,7 +90,6 @@
   z-index: 1;
 }
 
-/* ── Gradient ── */
 .grad {
   position: absolute;
   inset: 0;
@@ -97,7 +104,6 @@
   pointer-events: none;
 }
 
-/* ── Content ── */
 .content {
   position: relative;
   z-index: 10;
@@ -220,7 +226,6 @@
 
 .cta:hover .ctaArrow { transform: translateX(5px); }
 
-/* ── Stat ── */
 .stat {
   position: absolute;
   bottom: 48px;
@@ -253,7 +258,6 @@
   margin-top: 4px;
 }
 
-/* ── Scroll hint ── */
 .scrollHint {
   position: absolute;
   bottom: 36px;
@@ -321,7 +325,6 @@
     align-items: flex-end;
     padding-bottom: 48px;
   }
-
   .grad {
     background: linear-gradient(
       to top,
@@ -330,15 +333,12 @@
       rgba(2, 2, 3, 0.2) 100%
     );
   }
-
   .content { padding: 0 5%; max-width: 100%; }
   .title { font-size: clamp(36px, 13vw, 56px); }
   .desc { font-size: 0.9rem; max-width: 100%; }
-
   .stat { top: 32px; bottom: auto; right: 5%; }
   .statVal { font-size: 40px; opacity: 0.2; }
   .section:hover .statVal { opacity: 0.4; }
-
   .progressDots { display: none; }
   .scrollHint { bottom: 20px; }
 }

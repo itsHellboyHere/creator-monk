@@ -25,7 +25,7 @@ export default function Home() {
       <div id="roadmap" className="sec-wrapper"><RoadmapGrid /></div>
       <div id="team" className="sec-wrapper"><OurTeam /></div>
       <div id="cta" className="sec-wrapper"><FinalCTA /></div>
-      {/* <MonkCanvas /> */}
+      <MonkCanvas />
     </>
   );
 }
