@@ -6,19 +6,19 @@ const team = [
   {
     name: "Rohan Sinha",
     role: "Marketing Head",
-    image: "/team/rohan.jpg",
+    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1774168188/rohan_te1o7m.jpg",
     dialogue: "Market ka Raja",
   },
   {
     name: "Vishal Kumar",
     role: "Technical Head",
-    image: "/team/vishal.jpg",
+    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1774168189/vishal_pez7g5.jpg",
     dialogue: "Asli Power",
   },
   {
     name: "Kundan",
     role: "Operations Head",
-    image: "/team/kundan.jpg",
+    image: "https://res.cloudinary.com/dgifa4wgb/image/upload/v1774168187/kundan_zut5ys.jpg",
     dialogue: "System ka Khiladi",
   },
 ];

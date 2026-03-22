@@ -1,16 +1,17 @@
 "use client";
-import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useEffect } from "react";
+import { motion } from "framer-motion";
 import styles from "@/app/css/Hero.module.css";
 
+// Text entrance — runs ONCE on mount, no repeat
+// Kept exactly as-is — this is the signature effect
 const maskVars = {
-  initial: { 
-    x: "-100%", 
+  initial: {
+    x: "-100%",
     opacity: 0,
-    scale: 0.9
+    scale: 0.9,
   },
   animate: (i) => ({
-    x: "0%", 
+    x: "0%",
     opacity: 1,
     scale: 1,
     transition: {
@@ -22,40 +23,24 @@ const maskVars = {
 };
 
 export default function Hero() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springX = useSpring(mouseX, { stiffness: 40, damping: 30 });
-  const springY = useSpring(mouseY, { stiffness: 40, damping: 30 });
-
-  useEffect(() => {
-    const move = (e) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, [mouseX, mouseY]);
-
   return (
     <section id="banner" className={`${styles.hero} sec-wrapper`}>
-      {/* Bollywood Style Moving Mesh - Increased Opacity */}
+
+      {/* Gradient — static, no animation. Visual depth without CPU cost */}
       <div className={styles.movingGradient} />
-      
-      <motion.div
-        className={styles.spotlight}
-        style={{ x: springX, y: springY }}
-      />
 
       <div className={styles.content}>
-        <motion.div 
+        {/* Badge — fades in once */}
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           className={styles.badge}
         >
           INFULENCE • ENGINEERING • IMPACT
         </motion.div>
 
+        {/* Title — slides in from left one by one. Runs once. Keep this. */}
         <div className={styles.titleContainer}>
           {["WE BUILD", "DIGITAL", "SUPERSTARS."].map((text, i) => (
             <div key={i} className={styles.mask}>
@@ -72,27 +57,25 @@ export default function Hero() {
           ))}
         </div>
 
+        {/* Description — fades in once */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
           className={styles.bottomRow}
         >
           <p className={styles.description}>
-      We engineer growth for creators who are built to last —
-not fade with trends or algorithms.
+            We engineer growth for creators who are built to last —
+            not fade with trends or algorithms.
           </p>
         </motion.div>
       </div>
 
+      {/* Scroll hint — CSS animation only, no Framer Motion */}
       <div className={styles.scrollHint}>
         <p>कहानी यहीं खत्म नहीं होती</p>
         <div className={styles.scrollLine}>
-           <motion.div 
-             animate={{ y: [0, 20, 0] }} 
-             transition={{ duration: 2, repeat: Infinity }} 
-             className={styles.scrollDot} 
-           />
+          <div className={styles.scrollDot} />
         </div>
       </div>
 

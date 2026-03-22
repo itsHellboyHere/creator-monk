@@ -34,7 +34,7 @@ export const metadata = {
 
   manifest: "/site.webmanifest",
 
-  themeColor: "#ffffff",
+  // themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }) {

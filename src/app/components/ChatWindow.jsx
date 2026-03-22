@@ -1,6 +1,5 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import styles from "@/app/css/ChatWindow.module.css";
 
@@ -13,19 +12,9 @@ const SUGGESTED = [
 function TypingDots() {
   return (
     <div className={styles.typingWrap}>
-      {[0, 1, 2].map((i) => (
-        <motion.span
-          key={i}
-          className={styles.typingDot}
-          animate={{ y: [0, -5, 0] }}
-          transition={{
-            duration: 0.7,
-            repeat: Infinity,
-            delay: i * 0.15,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
+      <span className={styles.dot} style={{ animationDelay: "0s" }} />
+      <span className={styles.dot} style={{ animationDelay: "0.15s" }} />
+      <span className={styles.dot} style={{ animationDelay: "0.3s" }} />
     </div>
   );
 }
@@ -40,11 +29,24 @@ export default function ChatWindow({ onClose }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showSuggested, setShowSuggested] = useState(true);
+  const [visible, setVisible] = useState(false);
   const bottomRef = useRef(null);
+
+  // Trigger CSS open animation on mount
+  useEffect(() => {
+    const t = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(t);
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  const handleClose = () => {
+    setVisible(false);
+    // Wait for CSS exit animation before unmounting
+    setTimeout(onClose, 220);
+  };
 
   const sendMessage = async (text) => {
     const userMsg = (text || input).trim();
@@ -80,13 +82,8 @@ export default function ChatWindow({ onClose }) {
   };
 
   return (
-    <motion.div
-      className={styles.chatWindow}
-      initial={{ opacity: 0, y: 24, scale: 0.96 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 16, scale: 0.96 }}
-      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-    >
+    <div className={`${styles.chatWindow} ${visible ? styles.chatVisible : ""}`}>
+
       {/* ── HEADER ── */}
       <div className={styles.header}>
         <div className={styles.headerLeft}>
@@ -107,7 +104,7 @@ export default function ChatWindow({ onClose }) {
             <p className={styles.status}>● Online · Replies instantly</p>
           </div>
         </div>
-        <button onClick={onClose} className={styles.closeBtn} aria-label="Close">
+        <button onClick={handleClose} className={styles.closeBtn} aria-label="Close chat">
           ✕
         </button>
       </div>
@@ -115,38 +112,32 @@ export default function ChatWindow({ onClose }) {
       {/* ── MESSAGES ── */}
       <div className={styles.messages}>
         {messages.map((msg, i) => (
-          <motion.div
+          <div
             key={i}
-            className={msg.role === "user" ? styles.userWrapper : styles.botWrapper}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.22 }}
+            className={`${styles.msgRow} ${
+              msg.role === "user" ? styles.userRow : styles.botRow
+            }`}
           >
-            <div className={msg.role === "user" ? styles.userMessage : styles.botMessage}>
+            <div
+              className={
+                msg.role === "user" ? styles.userMessage : styles.botMessage
+              }
+            >
               {msg.text}
             </div>
-          </motion.div>
+          </div>
         ))}
 
         {loading && (
-          <motion.div
-            className={styles.botWrapper}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+          <div className={`${styles.msgRow} ${styles.botRow}`}>
             <div className={styles.botMessage}>
               <TypingDots />
             </div>
-          </motion.div>
+          </div>
         )}
 
         {showSuggested && !loading && (
-          <motion.div
-            className={styles.suggestedWrap}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35 }}
-          >
+          <div className={styles.suggestedWrap}>
             {SUGGESTED.map((q) => (
               <button
                 key={q}
@@ -156,14 +147,14 @@ export default function ChatWindow({ onClose }) {
                 {q}
               </button>
             ))}
-          </motion.div>
+          </div>
         )}
 
         <div ref={bottomRef} />
       </div>
 
       {/* ── INPUT ── */}
-      <div className={styles.inputContainer}>
+      <div className={styles.inputArea}>
         <textarea
           rows={1}
           value={input}
@@ -179,22 +170,21 @@ export default function ChatWindow({ onClose }) {
         />
         <button
           onClick={() => sendMessage()}
-          className={styles.sendButton}
+          className={styles.sendBtn}
           disabled={loading || !input.trim()}
-          aria-label="Send message"
+          aria-label="Send"
         >
-          {/* Simple clean up arrow — no SVG path issues */}
-          <span style={{ fontSize: "18px", fontWeight: 700, lineHeight: 1 }}>↑</span>
+          ↑
         </button>
       </div>
 
       {/* ── POWERED BY ── */}
       <div className={styles.poweredBy}>
-        <span>Powered by</span>
+        <span>Powered by </span>
         <span className={styles.poweredMonk}>
           CREATOR<span style={{ color: "#ffae00" }}>MONK</span> AI
         </span>
       </div>
-    </motion.div>
+    </div>
   );
 }

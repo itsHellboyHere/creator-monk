@@ -1,77 +1,160 @@
 "use client";
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { gsap } from "gsap";
+
+const GLB_URL =
+  "https://res.cloudinary.com/dgifa4wgb/image/upload/v1774166565/robot_playground_g25ggg.glb";
+
+const POSITIONS = [
+  { id: "banner",      position: { x: 1.6,  y: -1.5, z: 8 }, rotation: { x: 0,   y: -0.5, z: 0 } },
+  { id: "intro",       position: { x: -1.6, y: -1.2, z: 5 }, rotation: { x: 0,   y: 0.8,  z: 0 } },
+  { id: "description", position: { x: 1.8,  y: -1.5, z: 4 }, rotation: { x: 0.2, y: -0.6, z: 0 } },
+  { id: "services",    position: { x: -2.0, y: -1.0, z: 6 }, rotation: { x: 0,   y: 0,    z: 0 } },
+  { id: "roadmap",     position: { x: 2.0,  y: -1.0, z: 5 }, rotation: { x: 0,   y: 0.5,  z: 0 } },
+  { id: "team",        position: { x: 2.0,  y: -1.5, z: 4 }, rotation: { x: 0,   y: -0.8, z: 0 } },
+  { id: "cta",         position: { x: 0,    y: -1.8, z: 2 }, rotation: { x: 0,   y: 0,    z: 0 } },
+];
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+// Robust mobile detection — checks both screen width AND touch capability
+function isMobileDevice() {
+  if (typeof window === "undefined") return true;
+  const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  const isSmallScreen = window.innerWidth < 1024;
+  // Only skip if BOTH small screen AND touch — avoids false positive on desktop devtools
+  return isTouchDevice && isSmallScreen;
+}
 
 export default function MonkCanvas() {
-  const containerRef = useRef();
-  const monkRef = useRef(null);
-
-  const arrPositionModel = [
-    { id: "banner", position: { x: 1.6, y: -1.5, z: 8 }, rotation: { x: 0, y: -0.5, z: 0 } },
-    { id: "intro", position: { x: -1.6, y: -1.2, z: 5 }, rotation: { x: 0, y: 0.8, z: 0 } },
-    { id: "description", position: { x: 1.8, y: -1.5, z: 4 }, rotation: { x: 0.2, y: -0.6, z: 0 } },
-    { id: "services", position: { x: -2.0, y: -1.0, z: 6 }, rotation: { x: 0, y: 0, z: 0 } },
-    { id: "roadmap", position: { x: 2.0, y: -1.0, z: 5 }, rotation: { x: 0, y: 0.5, z: 0 } },
-    { id: "team", position: { x: 2.0, y: -1.5, z: 4 }, rotation: { x: 0, y: -0.8, z: 0 } },
-    { id: "cta", position: { x: 0, y: -1.8, z: 2 }, rotation: { x: 0, y: 0, z: 0 } }
-  ];
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    const scene = new THREE.Scene();
+    // Skip on real mobile devices — saves 8MB GLB + Three.js
+    if (isMobileDevice()) return;
 
-    const camera = new THREE.PerspectiveCamera(
-      18,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = 15;
+    let THREE, GLTFLoader;
+    let renderer, scene, camera, mixer, model;
+    let rafId = null;
+    let clock;
+    let tabHidden = false;
+    let destroyed = false;
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    // Target position/rotation for lerp
+    const target = {
+      x: 1.6, y: -1.5, z: 8,
+      rx: 0, ry: -0.5, rz: 0,
+    };
 
-    containerRef.current.appendChild(renderer.domElement);
+    async function init() {
+      if (destroyed) return;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-    scene.add(ambientLight);
+      // Dynamic imports — Three.js only loads here, not in initial bundle
+      const threeModule = await import("three");
+      THREE = threeModule;
+      const { GLTFLoader: Loader } = await import(
+        "three/examples/jsm/loaders/GLTFLoader"
+      );
+      GLTFLoader = Loader;
 
-    const topLight = new THREE.DirectionalLight(0xffffff, 4);
-    topLight.position.set(5, 5, 5);
-    scene.add(topLight);
+      if (destroyed) return; // Component may have unmounted during async load
 
-    let mixer;
-    const loader = new GLTFLoader();
+      // Scene
+      scene = new THREE.Scene();
+      clock = new THREE.Clock();
 
-    loader.load("/robot_playground.glb", (gltf) => {
-      const model = gltf.scene;
-      monkRef.current = model;
+      // Camera
+      camera = new THREE.PerspectiveCamera(
+        18,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      camera.position.z = 15;
 
-      // Reduced robot size
-      const baseScale = window.innerWidth < 768 ? 0.32 : 0.55;
-      model.scale.set(baseScale, baseScale, baseScale);
+      // Renderer
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true,
+        powerPreference: "high-performance",
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-      model.position.set(1.6, -1.5, 8);
-      model.rotation.y = -0.5;
-
-      scene.add(model);
-
-      mixer = new THREE.AnimationMixer(model);
-      if (gltf.animations.length > 0) {
-        mixer.clipAction(gltf.animations[0]).play();
+      if (containerRef.current) {
+        containerRef.current.appendChild(renderer.domElement);
       }
-    });
 
-    const modelMove = () => {
+      // Lights
+      scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+      const dirLight = new THREE.DirectionalLight(0xffffff, 4);
+      dirLight.position.set(5, 5, 5);
+      scene.add(dirLight);
+
+      // Load GLB from Cloudinary
+      const loader = new GLTFLoader();
+      loader.load(
+        GLB_URL,
+        (gltf) => {
+          if (destroyed) return;
+
+          model = gltf.scene;
+          model.scale.set(0.55, 0.55, 0.55);
+          model.position.set(target.x, target.y, target.z);
+          model.rotation.set(target.rx, target.ry, target.rz);
+          scene.add(model);
+
+          // Start animation mixer
+          mixer = new THREE.AnimationMixer(model);
+          if (gltf.animations.length > 0) {
+            mixer.clipAction(gltf.animations[0]).play();
+          }
+
+          startLoop();
+        },
+        undefined,
+        (err) => console.warn("MonkCanvas: GLB load failed —", err.message)
+      );
+    }
+
+    function startLoop() {
+      const animate = () => {
+        if (destroyed) return;
+
+        rafId = requestAnimationFrame(animate);
+
+        // Skip render when tab is not visible
+        if (tabHidden) return;
+
+        const delta = clock.getDelta();
+        if (mixer) mixer.update(delta);
+
+        if (model) {
+          // Lerp position toward target
+          model.position.x = lerp(model.position.x, target.x, 0.05);
+          model.position.y = lerp(model.position.y, target.y, 0.05);
+          model.position.z = lerp(model.position.z, target.z, 0.05);
+          model.rotation.x = lerp(model.rotation.x, target.rx, 0.05);
+          model.rotation.y = lerp(model.rotation.y, target.ry, 0.05);
+          model.rotation.z = lerp(model.rotation.z, target.rz, 0.05);
+        }
+
+        renderer.render(scene, camera);
+      };
+
+      rafId = requestAnimationFrame(animate);
+    }
+
+    function onScroll() {
+      if (!model) return;
+
       const sections = document.querySelectorAll(".sec-wrapper");
       let currentSection = "";
 
       sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
-
         if (
           rect.top <= window.innerHeight * 0.5 &&
           rect.bottom >= window.innerHeight * 0.5
@@ -80,71 +163,73 @@ export default function MonkCanvas() {
         }
       });
 
-      const activePos = arrPositionModel.find(
-        (val) => val.id === currentSection
-      );
-
-      if (activePos && monkRef.current) {
-        const isMobile = window.innerWidth < 768;
-        const targetX = isMobile
-          ? activePos.position.x * 0.25
-          : activePos.position.x;
-
-        gsap.to(monkRef.current.position, {
-          x: targetX,
-          y: activePos.position.y,
-          z: activePos.position.z,
-          duration: 2,
-          ease: "power2.out",
-          overwrite: "auto"
-        });
-
-        gsap.to(monkRef.current.rotation, {
-          x: activePos.rotation.x,
-          y: activePos.rotation.y,
-          z: activePos.rotation.z,
-          duration: 2,
-          ease: "power2.out",
-          overwrite: "auto"
-        });
+      const found = POSITIONS.find((p) => p.id === currentSection);
+      if (found) {
+        target.x  = found.position.x;
+        target.y  = found.position.y;
+        target.z  = found.position.z;
+        target.rx = found.rotation.x;
+        target.ry = found.rotation.y;
+        target.rz = found.rotation.z;
       }
-    };
+    }
 
-    const clock = new THREE.Clock();
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-
-      if (mixer) mixer.update(clock.getDelta());
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    window.addEventListener("scroll", modelMove);
-
-    const handleResize = () => {
+    function onResize() {
+      if (!camera || !renderer) return;
+      // Skip if now on mobile (user rotated device etc)
+      if (isMobileDevice()) return;
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-
       renderer.setSize(window.innerWidth, window.innerHeight);
+    }
 
-      if (monkRef.current) {
-        const baseScale = window.innerWidth < 768 ? 0.32 : 0.55;
-        monkRef.current.scale.set(baseScale, baseScale, baseScale);
-      }
-    };
+    function onVisibilityChange() {
+      tabHidden = document.hidden;
+    }
 
-    window.addEventListener("resize", handleResize);
+    init();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
-      window.removeEventListener("scroll", modelMove);
-      window.removeEventListener("resize", handleResize);
-      renderer.dispose();
+      destroyed = true;
+
+      if (rafId) cancelAnimationFrame(rafId);
+
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+
+      if (mixer) mixer.stopAllAction();
+
+      if (renderer) {
+        renderer.dispose();
+        try {
+          if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
+            containerRef.current.removeChild(renderer.domElement);
+          }
+        } catch (_) {}
+      }
+
+      // Dispose scene geometry + materials to free GPU memory
+      if (scene) {
+        scene.traverse((obj) => {
+          if (obj.geometry) obj.geometry.dispose();
+          if (obj.material) {
+            if (Array.isArray(obj.material)) {
+              obj.material.forEach((m) => m.dispose());
+            } else {
+              obj.material.dispose();
+            }
+          }
+        });
+      }
     };
   }, []);
 
+  // Render nothing on mobile — CSS media query as extra safety net
   return (
     <div
       ref={containerRef}
@@ -152,8 +237,9 @@ export default function MonkCanvas() {
         position: "fixed",
         inset: 0,
         zIndex: 20,
-        pointerEvents: "none"
+        pointerEvents: "none",
       }}
+      className="monk-canvas-wrap"
     />
   );
 }

@@ -1,304 +1,344 @@
-/* =========================
-   STACK WRAPPER
-========================= */
+/* =========================================
+   Services.module.css — Fixed for Next.js Image
+   ========================================= */
+
 .stackWrapper {
   position: relative;
-  height: 350vh;
-  background: #020203;
-  z-index: 10;
-
-  /* NEW: section breathing room */
-  padding: 12vh 0 10vh;
-  overflow: visible;
 }
 
-/* =========================
-   CONTENT CONTAINER
-========================= */
-.contentWrap {
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
-
-  /* NEW: horizontal safety */
-  padding: 0 6%;
+/* ── Progress dots ── */
+.progressDots {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
 }
 
-/* =========================
-   SECTION HEADER
-========================= */
-.sectionHeader {
-  padding-top: 20px;
-  text-align: center;
-  margin-bottom: 6vh;
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease,
+              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s ease;
+  padding: 0;
+}
 
+.dot:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: scaleX(1.3);
+}
+
+.dotActive {
+  background: var(--dc, #ffae00) !important;
+  height: 22px !important;
+  border-radius: 3px;
+}
+
+/* ── Section ── */
+.section {
   position: relative;
-  z-index: 5;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
-.sectionBadge {
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  letter-spacing: 0.5em;
-  color: var(--monk-orange);
-  display: block;
-  margin-bottom: 14px;
+/* ── Parallax bg wrapper ──
+   Uses top/left/right/bottom instead of inset
+   so Next.js Image fill works correctly.
+   Oversized -15% on each side gives parallax room. */
+.bg {
+  position: absolute;
+  top: -15%;
+  left: -15%;
+  right: -15%;
+  bottom: -15%;
+  will-change: transform;
+  filter: brightness(0.38) saturate(0.85);
+  transition: filter 0.4s ease;
+  overflow: hidden; /* required for Next.js Image fill */
 }
 
-.sectionTitle {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 900;
-  color: #fff;
-  text-transform: uppercase;
+.section:hover .bg {
+  filter: brightness(0.3) saturate(1.05);
 }
 
-.thin {
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* =========================
-   AMBIENT BACKGROUND
-========================= */
-.ambientBg {
+/* ── Color tint ── */
+.tint {
   position: absolute;
   inset: 0;
-  filter: blur(120px);
+  opacity: 0.14;
+  mix-blend-mode: color;
+  pointer-events: none;
   z-index: 1;
+}
+
+/* ── Gradient ── */
+.grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(2, 2, 3, 0.97) 0%,
+    rgba(2, 2, 3, 0.75) 45%,
+    rgba(2, 2, 3, 0.25) 75%,
+    rgba(2, 2, 3, 0.1) 100%
+  );
+  z-index: 2;
   pointer-events: none;
 }
 
-/* =========================
-   STICKY TRACK
-========================= */
-.stickyTrack {
-  height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-
-  position: sticky;
-  top: 0;
-}
-.cardLink {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-
-/* =========================
-   CARD
-========================= */
-.card {
-  position: relative;
-  width: 90vw;
-  max-width: 1100px;
-  height: 70vh;
-
-  border-radius: 32px;
-  overflow: hidden;
-
-  background: rgba(15, 15, 15, 0.8);
-  backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  transform-origin: top;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-}
-
-/* =========================
-   CARD STRUCTURE
-========================= */
-.cardInner {
-  display: flex;
-  height: 100%;
-}
-
-.cardBg {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 60%;
-  height: 100%;
-  z-index: 1;
-}
-
-.cardBg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(100%) brightness(0.4);
-  mask-image: linear-gradient(to left, black 40%, transparent);
-}
-
-.cardContent {
+/* ── Content ── */
+.content {
   position: relative;
   z-index: 10;
+  padding: 0 7%;
+  max-width: 700px;
   width: 100%;
-
-  padding: 80px;
-
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
-/* =========================
-   TEXT
-========================= */
-.serviceTitle {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  color: #fff;
-  text-transform: uppercase;
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.metaLine {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--c);
+  opacity: 0.6;
+}
+
+.metaNum {
+  font-size: 9px;
   font-weight: 900;
-  line-height: 1;
-  margin-bottom: 20px;
-  letter-spacing: -0.02em;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  letter-spacing: 0.35em;
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.osLabel {
+  font-size: 9px;
+  letter-spacing: 0.44em;
+  font-weight: 800;
+  color: var(--c);
+  display: block;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  line-height: 0.9;
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleLine {
+  display: block;
 }
 
 .desc {
-  max-width: 400px;
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.6;
-  margin-bottom: 40px;
-}
-
-/* =========================
-   CARD HEADER & BUTTON
-========================= */
-.cardHeader {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
-.num {
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 0.3em;
-  font-size: 0.8rem;
-}
-
-.indicator {
-  width: 40px;
-  height: 2px;
-}
-
-.cardBtn {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-weight: 900;
-  letter-spacing: 0.2em;
-  font-size: 0.75rem;
-  cursor: pointer;
-
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.btnLine {
-  width: 30px;
-  height: 2px;
-  background: var(--monk-orange);
-  transition: width 0.3s ease;
-}
-
-.cardBtn:hover .btnLine {
-  width: 100%;
-}
-
-/* =========================
-   MOBILE
-========================= */
-@media (max-width: 768px) {
-  .stackWrapper {
-    padding: 10vh 0 8vh;
-    height: 330vh;
-  }
-
-  .contentWrap {
-    padding: 0 5%;
-  }
-
-  .sectionHeader {
-    margin-bottom: 4vh;
-    padding: 0 10px;
-  }
-
-  .sectionTitle {
-    font-size: 2.4rem;
-  }
-
-  .cardBg {
-    width: 100%;
-    height: 50%;
-    top: 0;
-    mask-image: linear-gradient(to bottom, black, transparent);
-  }
-
-  .cardContent {
-    padding: 40px 30px;
-    justify-content: flex-end;
-  }
-
-  .serviceTitle {
-    font-size: 2.2rem;
-  }
-}
-
-
-/* =========================
-   ADD THESE TO Services.module.css
-   (append to your existing file)
-========================= */
-
-/* Section subtitle under the heading */
-.sectionSubtitle {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.35);
-  margin-top: 12px;
-  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 1.78;
+  max-width: 420px;
+  margin-bottom: 24px;
 }
 
-/* Service pills row */
-.pillRow {
+.pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 7px;
   margin-bottom: 32px;
 }
 
 .pill {
-  font-size: 0.65rem;
+  font-size: 9px;
+  letter-spacing: 0.12em;
   font-weight: 700;
-  letter-spacing: 0.15em;
-  padding: 5px 12px;
+  padding: 5px 14px;
   border-radius: 999px;
-  border: 1px solid;
-  background: transparent;
+  border: 1px solid var(--c);
+  color: var(--c);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
   text-transform: uppercase;
-  opacity: 0.85;
 }
 
-/* Mobile */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-bottom: 6px;
+  position: relative;
+  width: fit-content;
+}
+
+.cta::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 1.5px;
+  width: 0%;
+  background: var(--c);
+  transition: width 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cta:hover::after { width: 100%; }
+
+.ctaArrow {
+  color: var(--c);
+  font-size: 16px;
+  transition: transform 0.25s ease;
+}
+
+.cta:hover .ctaArrow { transform: translateX(5px); }
+
+/* ── Stat ── */
+.stat {
+  position: absolute;
+  bottom: 48px;
+  right: 7%;
+  z-index: 10;
+  text-align: right;
+}
+
+.statVal {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(56px, 9vw, 96px);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: var(--c);
+  opacity: 0.12;
+  line-height: 1;
+  transition: opacity 0.4s ease;
+}
+
+.section:hover .statVal { opacity: 0.55; }
+
+.statLbl {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── Scroll hint ── */
+.scrollHint {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.35;
+}
+
+.scrollHint span {
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollDot {
+  width: 100%;
+  height: 8px;
+  background: #fff;
+  position: absolute;
+  top: -8px;
+  animation: sdrop 1.8s ease-in-out infinite;
+}
+
+@keyframes sdrop {
+  0%   { top: -8px; opacity: 1; }
+  100% { top: 28px; opacity: 0; }
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 7%; right: 7%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.04);
+  z-index: 20;
+}
+
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+  .content { padding: 0 6%; }
+  .stat { right: 6%; bottom: 36px; }
+  .progressDots { right: 16px; }
+}
+
+/* ── Mobile ── */
 @media (max-width: 768px) {
-  .pillRow {
-    gap: 6px;
-    margin-bottom: 24px;
+  .section {
+    min-height: 100svh;
+    align-items: flex-end;
+    padding-bottom: 48px;
   }
-  .pill {
-    font-size: 0.6rem;
-    padding: 4px 10px;
+
+  .grad {
+    background: linear-gradient(
+      to top,
+      rgba(2, 2, 3, 0.97) 0%,
+      rgba(2, 2, 3, 0.7) 50%,
+      rgba(2, 2, 3, 0.2) 100%
+    );
   }
-  .sectionSubtitle {
-    font-size: 0.9rem;
-    padding: 0 10px;
-  }
+
+  .content { padding: 0 5%; max-width: 100%; }
+  .title { font-size: clamp(36px, 13vw, 56px); }
+  .desc { font-size: 0.9rem; max-width: 100%; }
+
+  .stat { top: 32px; bottom: auto; right: 5%; }
+  .statVal { font-size: 40px; opacity: 0.2; }
+  .section:hover .statVal { opacity: 0.4; }
+
+  .progressDots { display: none; }
+  .scrollHint { bottom: 20px; }
 }

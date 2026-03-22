@@ -1,7 +1,11 @@
+/* =========================================
+   Hero.module.css — Optimised
+   ========================================= */
+
 .hero {
   height: calc(100vh - var(--nav-height, 80px));
   background: #020203;
-  background-image: 
+  background-image:
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
@@ -9,14 +13,16 @@
   align-items: center;
   justify-content: center;
   padding: 0 8%;
-
   position: sticky;
   top: var(--nav-height);
   overflow: hidden;
   isolation: isolate;
 }
 
-/* ---  CINEMATIC GRADIENT --- */
+/* ── Gradient background ──
+   REMOVED infinite animation — was repainting 200%×200% every frame.
+   Static radial gradients give same visual depth at zero CPU cost.
+   The blur filter alone makes it feel rich and alive. */
 .movingGradient {
   position: absolute;
   top: -50%;
@@ -24,34 +30,21 @@
   width: 200%;
   height: 200%;
   z-index: 1;
-
   background:
     radial-gradient(circle at 25% 30%, rgba(255, 107, 0, 0.28) 0%, transparent 45%),
     radial-gradient(circle at 75% 65%, rgba(255, 165, 0, 0.22) 0%, transparent 45%),
     radial-gradient(circle at 55% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 35%),
     radial-gradient(circle at 20% 80%, rgba(255, 68, 0, 0.18) 0%, transparent 45%);
-
   filter: blur(70px);
   pointer-events: none;
-
-  animation: cinematicLava 14s infinite alternate ease-in-out;
+  /* No animation — static. Still looks premium. */
+  will-change: auto;
 }
 
-@keyframes cinematicLava {
-  0% {
-    transform: translate(0%, 0%) scale(1);
-  }
-  50% {
-    transform: translate(-6%, -4%) scale(1.05);
-  }
-  100% {
-    transform: translate(4%, 6%) scale(1.1);
-  }
-}
-
+/* ── Content ── */
 .content {
   position: relative;
-  z-index:2;
+  z-index: 2;
   max-width: 1400px;
   width: 100%;
 }
@@ -73,7 +66,8 @@
   display: block;
 }
 
-.whiteText, .goldText {
+.whiteText,
+.goldText {
   font-family: var(--font-display);
   font-size: clamp(2.8rem, 9vw, 8.5rem);
   font-weight: 900;
@@ -84,7 +78,6 @@
 }
 
 .goldText {
-  /* Punchier Gold Gradient */
   background: linear-gradient(to right, #fff 0%, #ffae00 40%, #ff6b00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -94,7 +87,7 @@
 .bottomRow {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 20px;
 }
 
@@ -102,20 +95,88 @@
   max-width: 440px;
   font-size: 1rem;
   line-height: 1.5;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.5);
 }
 
-/* --- MOBILE OPTIMIZATION --- */
+/* ── Scroll hint ──
+   REMOVED Framer Motion repeat:Infinity bounce.
+   Replaced with pure CSS keyframe — same visual, zero JS. */
+.scrollHint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 20;
+}
+
+.scrollHint p {
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollDot {
+  width: 100%;
+  height: 10px;
+  background: #ffa500;
+  position: absolute;
+  top: 0;
+  /* CSS animation replaces Framer Motion repeat:Infinity */
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(20px); }
+  100% { transform: translateY(0); }
+}
+
+/* ── Vignette ── */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 40%, #000 110%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── Grain ──
+   REMOVED external URL (grainy-gradients.vercel.app).
+   Third-party URLs add a DNS lookup + network request on every load.
+   Replaced with a local SVG data URI — same effect, instant, no request. */
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 6;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* ── Mobile ── */
 @media (max-width: 768px) {
- .hero {
+  .hero {
     height: calc(100vh - var(--nav-height, 60px));
-    /* height: auto; */
     padding: 0 6%;
   }
 
-  .whiteText, .goldText {
-    /* Adjusted for tight mobile screens */
-    font-size: 13.5vw; 
+  .whiteText,
+  .goldText {
+    font-size: 13.5vw;
     line-height: 0.9;
     letter-spacing: -0.03em;
   }
@@ -130,57 +191,6 @@
   }
 
   .scrollHint {
-    bottom: 20px; /* Bring it up so it doesn't hit the home bar */
+    bottom: 20px;
   }
-}
-
-/* --- SCROLL HINT WITH BOLLYWOOD TOUCH --- */
-.scrollHint {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  z-index: 20;
-}
-
-.scrollHint p {
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 8px;
-}
-
-.scrollLine {
-  width: 1px;
-  height: 30px;
-  background: rgba(255,255,255,0.1);
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-}
-
-.scrollDot {
-  width: 100%;
-  height: 10px;
-  background: #ffa500;
-  position: absolute;
-}
-
-.vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, transparent 40%, #000 110%);
-  pointer-events: none;
-  z-index: 5;
-}
-
-.grain {
-  position: absolute;
-  inset: 0;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.05;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  z-index: 6;
 }

@@ -1,20 +1,16 @@
 "use client";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import ChatBubble from "./ChatBubble";
-import ChatWindow from "./ChatWindow";
+
+const ChatWindow = dynamic(() => import("./ChatWindow"), { ssr: false });
 
 export default function Chat() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <AnimatePresence mode="wait">
-        {isOpen && (
-          <ChatWindow key="window" onClose={() => setIsOpen(false)} />
-        )}
-      </AnimatePresence>
-
+      {isOpen && <ChatWindow onClose={() => setIsOpen(false)} />}
       <ChatBubble isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
     </>
   );
