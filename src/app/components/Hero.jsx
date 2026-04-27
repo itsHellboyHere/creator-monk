@@ -37,7 +37,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className={styles.badge}
         >
-          INFULENCE • ENGINEERING • IMPACT
+          INFLUENCE • ENGINEERING • IMPACT
         </motion.div>
 
         {/* Title — slides in from left one by one. Runs once. Keep this. */}
