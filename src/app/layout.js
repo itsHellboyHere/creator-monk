@@ -65,6 +65,7 @@ export default function RootLayout({ children }) {
     {children}
     <Footer />
     {/* <Chat/> */}
+    {/* open in future */}
   </body>
 </html>
   );
