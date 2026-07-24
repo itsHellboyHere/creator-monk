@@ -4,7 +4,7 @@ import Impact from "./components/Impact";
 import TechStack from "./components/TechStack";
 import Process from "./components/Process";
 import TrustedBy from "./components/TrustedBy";
-import FinalCTA from "./components/FinalCta";
+import FinalCTA from "./components/FinalCTA";
 
 import { SERVICES } from "./data/servicesData";
 import { SITE, buildMetadata, absoluteUrl, JsonLd } from "./lib/seo";
