@@ -1,0 +1,214 @@
+/* Process.module.css — CreatorMonk "How we work" timeline */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4.5rem, 10vw, 9rem) 20px calc(clamp(4.5rem, 10vw, 9rem) + 88px);
+  background: var(--bg-base);
+  --curve-next: #f4f1ff;
+  --curve-next-soft: rgba(214, 208, 255, 0.45);
+}
+.bgWash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(45% 40% at 85% 10%, rgba(214, 208, 255, 0.4), transparent 70%),
+    radial-gradient(45% 40% at 10% 90%, rgba(255, 214, 200, 0.28), transparent 70%);
+  pointer-events: none;
+}
+
+/* ---- Heading ---- */
+.head {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 64px;
+}
+.eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--violet-600);
+}
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  color: var(--ink-900);
+  font-size: clamp(2rem, 5vw, 3.3rem);
+  margin: 14px 0 16px;
+}
+.accent {
+  background: linear-gradient(120deg, var(--violet-600), var(--periwinkle));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.sub {
+  color: var(--ink-500);
+  font-size: 1.06rem;
+  line-height: 1.6;
+}
+
+/* ---- Timeline ---- */
+.timeline {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px;
+}
+
+/* connecting line behind the nodes */
+.line {
+  position: absolute;
+  top: 86px;               /* aligns with .node centers */
+  left: 6%;
+  right: 6%;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--violet-500),
+    var(--periwinkle),
+    rgba(255, 170, 140, 0.9)
+  );
+  transform-origin: left;
+  opacity: 0.5;
+}
+
+/* ---- Step ---- */
+.step {
+  position: relative;
+  text-align: center;
+  padding: 0 8px;
+}
+
+.ghostNum {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 3.4rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.22), rgba(124, 58, 237, 0.05));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
+}
+
+.node {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--border);
+  color: var(--violet-600);
+  box-shadow: 0 8px 22px rgba(76, 40, 130, 0.14);
+  margin-bottom: 18px;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-900);
+  font-size: 1.15rem;
+  margin: 0 0 8px;
+}
+
+.stepDesc {
+  color: var(--ink-500);
+  font-size: 0.93rem;
+  line-height: 1.55;
+  margin: 0 auto;
+  max-width: 250px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 480px;
+  }
+  /* vertical line on mobile */
+  .line {
+    top: 4%;
+    bottom: 4%;
+    left: 50%;
+    right: auto;
+    width: 3px;
+    height: auto;
+    transform-origin: top;
+    background: linear-gradient(
+      180deg,
+      var(--violet-500),
+      var(--periwinkle),
+      rgba(255, 170, 140, 0.9)
+    );
+  }
+  .stepDesc { max-width: 320px; }
+    .curveBottom {
+    height: 78px;
+  }
+
+  .curveSvg {
+    height: 78px;
+  }
+}
+
+
+/* ---- Section blend curve: Process → TrustedBy ---- */
+.curveBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 110px;
+  line-height: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.curveSvg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  height: 110px;
+  display: block;
+}
+
+.curveSvg:first-child {
+  opacity: 1;
+  animation: curveDrift 12s linear infinite;
+}
+
+.curveSvg:last-child {
+  opacity: 0.65;
+  animation: curveDrift 18s linear infinite reverse;
+}
+
+@keyframes curveDrift {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}

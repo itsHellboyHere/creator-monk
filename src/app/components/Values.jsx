@@ -1,123 +1,111 @@
 "use client";
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+
+import * as React from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Receipt, MessageSquare, Rocket, KeyRound } from "lucide-react";
 import styles from "@/app/css/Values.module.css";
 
-const values = [
+if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
+
+const useIso = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
+export const VALUES = [
   {
-    num: "01",
-    tag: "ORIGIN",
-    title: "LISTEN WITH",
-    titleAccent: "INTENTION.",
-    body: "Every great brand starts with silence. We listen before we speak — understanding your vision, your audience, and your edge before we engineer anything.",
-    icon: "◎",
+    n: "01",
+    Icon: Receipt,
+    title: "We quote once.",
+    body: "One number after a short call, and that stays the number. No surprise line items later.",
   },
   {
-    num: "02",
-    tag: "PHILOSOPHY",
-    title: "CLARITY OVER",
-    titleAccent: "CHAOS.",
-    body: "We don't chase trends. We build systems. Clarity of purpose, precision in execution — that's how uncommon builders create work that compounds over time.",
-    icon: "⌖",
+    n: "02",
+    Icon: MessageSquare,
+    title: "Boring updates beat surprises.",
+    body: "You'll hear from us even when there's nothing exciting to report. You shouldn't have to guess.",
   },
   {
-    num: "03",
-    tag: "DHARMA",
-    title: "BUILD WORK",
-    titleAccent: "THAT LASTS.",
-    body: "Viral fades. Substance stays. We help you create a digital presence so deeply rooted in truth that no algorithm shift can shake it.",
-    icon: "◈",
+    n: "03",
+    Icon: Rocket,
+    title: "Live beats perfect.",
+    body: "We'd rather put something real in front of your customers than polish it privately for months.",
+  },
+  {
+    n: "04",
+    Icon: KeyRound,
+    title: "It's yours, not ours.",
+    body: "Your code, your domain, your accounts. Nothing stays locked behind us if you ever walk away.",
   },
 ];
 
-export default function Values() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+export default function Values({
+  values = VALUES,
+  eyebrow = "How we work",
+  heading = "Four things we don't bend on",
+}) {
+  const rootRef = React.useRef(null);
+
+  useIso(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    const ctx = gsap.context(() => {
+      gsap.from(`.${styles.head} > *`, {
+        scrollTrigger: { trigger: rootRef.current, start: "top 78%", once: true },
+        y: 30,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
+
+      gsap.from(`.${styles.card}`, {
+        scrollTrigger: { trigger: `.${styles.grid}`, start: "top 82%", once: true },
+        y: 48,
+        opacity: 0,
+        scale: 0.97,
+        duration: 1,
+        stagger: 0.12,
+        ease: "power3.out",
+      });
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  /* cursor-follow spotlight */
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+  };
 
   return (
-    <section className={styles.section} ref={ref}>
-      {/* Ambient glow */}
-      <div className={styles.glow} />
+    <section className={styles.section} ref={rootRef}>
+      <span className={styles.mesh} aria-hidden="true" />
+      <span className={styles.orb} aria-hidden="true" />
 
-      {/* Header */}
-      <motion.div
-        className={styles.header}
-        initial={{ opacity: 0, y: 32 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <div className={styles.headerBadgeRow}>
-          <span className={styles.headerDash} />
-          <span className={styles.sectionTag}>THE MONK WAY</span>
-          <span className={styles.headerDash} />
+      <div className={styles.inner}>
+        <header className={styles.head}>
+          <span className={styles.eyebrow}>{eyebrow}</span>
+          <h2 className={styles.heading}>{heading}</h2>
+        </header>
+
+        <div className={styles.grid}>
+          {values.map(({ n, Icon, title, body }) => (
+            <article key={n} className={styles.card} onMouseMove={onMove}>
+              <span className={styles.spot} aria-hidden="true" />
+              <div className={styles.cardTop}>
+                <span className={styles.iconWrap}>
+                  <Icon size={20} strokeWidth={1.8} />
+                </span>
+                <span className={styles.num}>{n}</span>
+              </div>
+              <h3 className={styles.title}>{title}</h3>
+              <p className={styles.body}>{body}</p>
+            </article>
+          ))}
         </div>
-        <h2 className={styles.sectionTitle}>
-          WHAT WE{" "}
-          <span className={styles.sectionTitleAccent}>BELIEVE IN.</span>
-        </h2>
-      </motion.div>
-
-      {/* Values grid */}
-      <div className={styles.grid}>
-        {values.map((v, i) => (
-          <motion.div
-            key={v.num}
-            className={styles.card}
-            initial={{ opacity: 0, y: 48 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{
-              duration: 0.85,
-              delay: i * 0.14,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            {/* Top row */}
-            <div className={styles.cardTop}>
-              <span className={styles.cardNum}>{v.num}</span>
-              <span className={styles.cardIcon}>{v.icon}</span>
-            </div>
-
-            {/* Tag */}
-            <span className={styles.cardTag}>{v.tag}</span>
-
-            {/* Title */}
-            <div className={styles.cardTitle}>
-              <span className={styles.cardTitleSolid}>{v.title}</span>
-              <span className={styles.cardTitleAccent}>{v.titleAccent}</span>
-            </div>
-
-            {/* Divider */}
-            <div className={styles.cardDivider} />
-
-            {/* Body */}
-            <p className={styles.cardBody}>{v.body}</p>
-
-            {/* Hover glow */}
-            <div className={styles.cardGlow} />
-
-            {/* Bottom accent line */}
-            <div className={styles.cardBottomLine} />
-          </motion.div>
-        ))}
       </div>
-
-      {/* Bottom quote */}
-      <motion.div
-        className={styles.quote}
-        initial={{ opacity: 0, y: 24 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 1, delay: 0.55 }}
-      >
-        <span className={styles.quoteLine} />
-        <div className={styles.quoteInner}>
-          <p className={styles.quoteText}>
-            "Discipline is not a constraint — it is the foundation of every
-            uncommon thing ever built."
-          </p>
-          <span className={styles.quoteAuthor}>— THE MONK PRINCIPLE</span>
-        </div>
-        <span className={styles.quoteLineRight} />
-      </motion.div>
     </section>
   );
 }

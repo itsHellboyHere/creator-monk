@@ -1,0 +1,155 @@
+/* TechStack.module.css — Fly.io "Use the Tech You Love" style, CreatorMonk palette */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(5rem, 10vw, 9rem) 24px;
+  /* deep violet gradient like Fly */
+  background:
+    radial-gradient(60% 80% at 12% 8%, rgba(167, 139, 250, 0.5) 0%, transparent 60%),
+    radial-gradient(50% 60% at 90% 90%, rgba(109, 40, 217, 0.6) 0%, transparent 65%),
+    linear-gradient(160deg, #6d28d9 0%, #5b21b6 55%, #4c1d95 100%);
+}
+
+/* ---- Mesh grid lines (Fly-style) ---- */
+.mesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(75% 75% at 50% 40%, #000 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(75% 75% at 50% 40%, #000 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* soft top-left glow */
+.glow {
+  position: absolute;
+  top: -120px;
+  left: -80px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: rgba(196, 181, 253, 0.35);
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+/* ---- Left text ---- */
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  color: #ffffff;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  margin: 0 0 18px;
+}
+
+.desc {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 1.08rem;
+  line-height: 1.65;
+  max-width: 460px;
+  margin: 0;
+}
+
+/* ---- Glass logo grid ---- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 26px 14px 20px;
+  border-radius: 18px;
+
+  /* glassmorphism */
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 10px 26px rgba(46, 16, 101, 0.3);
+
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cell:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 16px 34px rgba(46, 16, 101, 0.42);
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.22));
+}
+
+.textMark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.22));
+}
+
+.cellName {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .desc { max-width: none; }
+}
+
+@media (max-width: 560px) {
+  .section { padding: 4rem 16px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .cell { padding: 20px 10px 16px; }
+  .logo { width: 34px; height: 34px; }
+}

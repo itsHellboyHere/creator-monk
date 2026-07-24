@@ -1,196 +1,307 @@
-/* =========================================
-   Hero.module.css — Optimised
-   ========================================= */
+/* Hero.module.css — CreatorMonk infinite-grid hero (light / Fly.io) */
 
 .hero {
-  height: calc(100vh - var(--nav-height, 80px));
-  background: #020203;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+  position: relative;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 8%;
-  position: sticky;
-  top: var(--nav-height);
   overflow: hidden;
-  isolation: isolate;
+  background: var(--grad-hero);
+  padding: calc(var(--nav-height) + 0px) 20px 80px;
 }
 
-/* ── Gradient background ──
-   REMOVED infinite animation — was repainting 200%×200% every frame.
-   Static radial gradients give same visual depth at zero CPU cost.
-   The blur filter alone makes it feel rich and alive. */
-.movingGradient {
+/* ---- Grids ---- */
+.gridBase,
+.gridReveal {
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  z-index: 1;
-  background:
-    radial-gradient(circle at 25% 30%, rgba(255, 107, 0, 0.28) 0%, transparent 45%),
-    radial-gradient(circle at 75% 65%, rgba(255, 165, 0, 0.22) 0%, transparent 45%),
-    radial-gradient(circle at 55% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 35%),
-    radial-gradient(circle at 20% 80%, rgba(255, 68, 0, 0.18) 0%, transparent 45%);
-  filter: blur(70px);
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
-  /* No animation — static. Still looks premium. */
-  will-change: auto;
 }
 
-/* ── Content ── */
-.content {
-  position: relative;
-  z-index: 2;
-  max-width: 1400px;
-  width: 100%;
+.gridBase {
+  color: var(--ink-900);   /* faint dark lines */
+  opacity: 0.05;
 }
 
-.badge {
-  font-size: 0.65rem;
-  letter-spacing: 0.4em;
-  color: #ffa500;
-  margin-bottom: 1rem;
-  font-weight: 700;
+.gridReveal {
+  color: var(--violet-600); /* violet lines under cursor */
+  opacity: 0.6;
 }
 
-.titleContainer {
-  margin-bottom: 2rem;
-}
-
-.mask {
-  overflow: hidden;
+.svg {
   display: block;
 }
 
-.whiteText,
-.goldText {
-  font-family: var(--font-display);
-  font-size: clamp(2.8rem, 9vw, 8.5rem);
-  font-weight: 900;
-  line-height: 0.85;
-  letter-spacing: -0.04em;
+/* ---- Gradient blobs ---- */
+.blobs {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.blobs span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+}
+
+.blobViolet {
+  right: -15%;
+  top: -18%;
+  width: 46%;
+  height: 46%;
+  background: rgba(139, 92, 246, 0.34);
+}
+
+.blobBlue {
+  left: -15%;
+  bottom: -20%;
+  width: 46%;
+  height: 46%;
+  background: rgba(150, 170, 255, 0.34);
+}
+
+.blobPeach {
+  left: 8%;
+  top: -12%;
+  width: 22%;
+  height: 22%;
+  background: rgba(255, 190, 170, 0.28);
+}
+
+/* ---- Content ---- */
+.content {
+  position: relative;
+  z-index: 10;
+  max-width: 760px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  color: var(--violet-600);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  color: var(--ink-900);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
   margin: 0;
 }
 
-.goldText {
-  background: linear-gradient(to right, #fff 0%, #ffae00 40%, #ff6b00 100%);
+.accent {
+  background: linear-gradient(120deg, var(--violet-600), var(--periwinkle));
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 15px rgba(255, 174, 0, 0.2));
+  background-clip: text;
+  color: transparent;
 }
 
-.bottomRow {
+.sub {
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--ink-500);
+  max-width: 560px;
+}
+
+/* ---- CTAs ---- */
+.actions {
   display: flex;
-  justify-content: space-between;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 20px;
+  gap: 14px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.description {
-  max-width: 440px;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-/* ── Scroll hint ──
-   REMOVED Framer Motion repeat:Infinity bounce.
-   Replaced with pure CSS keyframe — same visual, zero JS. */
-.scrollHint {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  z-index: 20;
-}
-
-.scrollHint p {
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 8px;
-}
-
-.scrollLine {
-  width: 1px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.1);
-  margin: 0 auto;
+/* Uiverse-style pill buttons, using CreatorMonk colors */
+.ctaButton {
   position: relative;
+  display: inline-flex;
+  width: 190px;
+  min-height: 52px;
+  border-radius: var(--r-pill);
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  cursor: pointer;
   overflow: hidden;
+  text-decoration: none;
+  font-family: var(--font-body);
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    filter 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
 }
 
-.scrollDot {
-  width: 100%;
-  height: 10px;
-  background: #ffa500;
-  position: absolute;
-  top: 0;
-  /* CSS animation replaces Framer Motion repeat:Infinity */
-  animation: scrollBounce 2s ease-in-out infinite;
+.ctaText {
+  width: calc(100% - 48px);
+  height: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 14px;
+  font-size: 0.98rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
-@keyframes scrollBounce {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(20px); }
-  100% { transform: translateY(0); }
+.iconContainer {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 2px;
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
-/* ── Vignette ── */
-.vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, transparent 40%, #000 110%);
-  pointer-events: none;
-  z-index: 5;
+.arrow {
+  transition-duration: 1.5s;
 }
 
-/* ── Grain ──
-   REMOVED external URL (grainy-gradients.vercel.app).
-   Third-party URLs add a DNS lookup + network request on every load.
-   Replaced with a local SVG data URI — same effect, instant, no request. */
-.grain {
-  position: absolute;
-  inset: 0;
-  opacity: 0.045;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  z-index: 6;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 200px 200px;
+/* Primary — current violet color */
+.ctaPrimary {
+  color: #fff;
+  background: var(--grad-violet-btn);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 8px 22px rgba(109, 40, 217, 0.32),
+    0 2px 6px rgba(109, 40, 217, 0.24);
 }
 
-/* ── Mobile ── */
+.ctaPrimary .iconContainer {
+  background: #fff;
+  color: var(--violet-700);
+  border: 3px solid rgba(109, 40, 217, 0.92);
+}
+
+/* Ghost — current glass style */
+.ctaGhost {
+  color: var(--ink-900);
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 1px 2px rgba(23, 18, 58, 0.04);
+}
+
+.ctaGhost .iconContainer {
+  background: var(--grad-violet-btn);
+  color: #fff;
+  border: 3px solid rgba(255, 255, 255, 0.75);
+}
+
+/* Hover */
+.ctaButton:hover {
+  transform: translateY(-2px);
+}
+
+.ctaPrimary:hover {
+  filter: brightness(1.07) saturate(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 14px 32px rgba(109, 40, 217, 0.42),
+    0 4px 10px rgba(109, 40, 217, 0.28);
+}
+
+.ctaGhost:hover {
+  background: #fff;
+  border-color: rgba(124, 58, 237, 0.35);
+  color: var(--violet-700);
+  box-shadow: 0 12px 26px rgba(23, 18, 58, 0.1);
+}
+
+.ctaButton:hover .arrow {
+  animation: arrowMove 1s linear infinite;
+}
+
+.ctaButton:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@keyframes arrowMove {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(8px);
+  }
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 768px) {
+  .actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .ctaButton {
+    width: 100%;
+  }
+
+  .ctaText {
+    padding-left: 48px;
+  }
+}
+
+/* ---- Mobile ---- */
 @media (max-width: 768px) {
   .hero {
-    height: calc(100vh - var(--nav-height, 60px));
-    padding: 0 6%;
+    padding: calc(var(--nav-height) + 24px) 20px 64px;
+    min-height: 92svh;
   }
-
-  .whiteText,
-  .goldText {
-    font-size: 13.5vw;
-    line-height: 0.9;
-    letter-spacing: -0.03em;
+  .gridReveal {
+    display: none; /* no cursor on touch — skip reveal layer */
   }
-
-  .titleContainer {
-    margin-bottom: 1.5rem;
+  .gridBase {
+    opacity: 0.06;
   }
-
-  .description {
-    font-size: 0.9rem;
-    max-width: 90%;
+  .brDesktop {
+    display: none;
   }
+  .title {
+    font-size: clamp(2.6rem, 12vw, 3.6rem);
+  }
+  .actions {
+    width: 100%;
+    flex-direction: column;
+  }
+  .ctaPrimary,
+  .ctaGhost {
+    width:auto;
+    justify-content: center;
+  }
+  .blobViolet,
+  .blobBlue {
+    filter: blur(80px); /* lighter blur = smoother on mobile */
+  }
+}
 
-  .scrollHint {
-    bottom: 20px;
+@media (prefers-reduced-motion: reduce) {
+  .gridReveal {
+    display: none;
   }
 }

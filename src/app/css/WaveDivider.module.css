@@ -1,0 +1,21 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  margin-top: -1px;   /* kills hairline gap with section above */
+}
+
+.svg {
+  position: absolute;
+  bottom: -1px;
+  left: -5%;
+  width: 110%;   /* extra width so the float animation never shows an edge */
+  height: 100%;
+  display: block;
+}
+
+.flip {
+  transform: rotate(180deg);
+}

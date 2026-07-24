@@ -1,0 +1,173 @@
+.section {
+  position: relative;
+  padding: clamp(3rem, 6vw, 5rem) 24px clamp(4rem, 8vw, 7rem);
+  background: var(--bg-base);
+}
+
+.grid {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+}
+
+/* bento: 2 wide (span 3), 4 small (span 3 → auto on wider, but we do 2-col row) */
+.size_wide  { grid-column: span 3; }
+.size_small { grid-column: span 3; }
+
+@media (min-width: 900px) {
+  /* on desktop: wides remain 3-col; smalls sit 4-per-row (span 3 of 12 wouldn't work — use 12-col trick) */
+  .grid { grid-template-columns: repeat(12, 1fr); }
+  .size_wide  { grid-column: span 6; }
+  .size_small { grid-column: span 3; }
+}
+
+/* ---- Card ---- */
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(165deg, #ffffff, #f7f5fc);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(124, 58, 237, 0.25);
+}
+
+/* soft top-corner glow per card */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  filter: blur(52px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.tint_violet::before { background: rgba(139, 92, 246, 0.42); }
+.tint_blue::before   { background: rgba(130, 160, 255, 0.42); }
+.tint_peach::before  { background: rgba(255, 180, 150, 0.44); }
+
+.cardInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 28px;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Wide cards: text left, art right */
+.size_wide .cardInner {
+  flex-direction: row;
+  align-items: center;
+  gap: 28px;
+  min-height: 320px;
+}
+.size_wide .text { flex: 1; max-width: 320px; }
+.size_wide .artWrap { flex: 1; }
+
+/* Small cards: text top, art bottom */
+.size_small .cardInner {
+  min-height: 380px;
+  justify-content: space-between;
+}
+
+/* Text */
+.text { position: relative; z-index: 1; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--violet-700);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--ink-900);
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  margin: 0 0 10px;
+}
+
+.desc {
+  color: var(--ink-500);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+
+.learn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--violet-700);
+  transition: gap 0.25s ease;
+}
+.card:hover .learn { gap: 10px; }
+
+/* Art */
+.artWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.artGlow {
+  position: absolute;
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+  filter: blur(24px);
+}
+
+.art {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  mix-blend-mode: multiply;   /* blend off-white bg into card */
+  filter: drop-shadow(0 14px 30px rgba(76, 40, 130, 0.14));
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.size_wide .art { max-width: 300px; }
+.card:hover .art { transform: scale(1.04); }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 899px) {
+  .grid { grid-template-columns: 1fr; gap: 14px; }
+  .size_wide, .size_small { grid-column: span 1; }
+  .size_wide .cardInner {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: unset;
+  }
+  .size_wide .text, .size_wide .artWrap { max-width: none; flex: unset; }
+  .size_small .cardInner { min-height: unset; }
+  .art { max-width: 220px; }
+}

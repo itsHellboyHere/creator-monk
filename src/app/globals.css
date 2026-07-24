@@ -1,15 +1,75 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Syne:wght@800&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@1,600&display=swap'); */
+/* ========================================================================
+   CREATORMONK — GLOBAL SYSTEM
+   Light theme · Apple-grade type · Fly.io-style gradients
+   ======================================================================== */
 
 :root {
-  --bg-deep: #020203;
-  --monk-orange: #ffa500;
-  --font-display: 'Syne', sans-serif;
-  --font-heading: 'Bebas Neue', cursive;
-  --font-accent: 'Cormorant Garamond', serif;
-  /* --nav-height: 80px; */
-  --nav-height: 80px; 
+  /* ---- Surfaces (light) ---- */
+  --bg-base:    #fdfcff;   /* app background, faint violet-white */
+  --bg-soft:    #f6f4fb;   /* alt section background */
+  --surface:    #ffffff;   /* cards */
+  --surface-2:  #faf9fe;
+
+  /* ---- Ink / text ---- */
+  --ink-900: #17123a;   /* headings — deep Fly indigo */
+  --ink-700: #2d2758;   /* strong body */
+  --ink-500: #56506f;   /* body */
+  --ink-400: #857fa0;   /* muted / captions */
+
+  /* ---- Fly-style violet (primary / system) ---- */
+  --violet-500: #8b5cf6;
+  --violet-600: #7c3aed;   /* primary buttons */
+  --violet-700: #6d28d9;
+  --violet-800: #5b21b6;
+  --periwinkle: #8b7fff;   /* underline / soft accents */
+
+  /* ---- CreatorMonk brand orange (secondary accent) ---- */
+  --brand-orange:   #ff8a00;
+  --brand-orange-2: #ff5e00;
+
+  /* ---- Lines & shadows ---- */
+  --border:      rgba(23, 18, 58, 0.08);
+  --border-soft: rgba(23, 18, 58, 0.05);
+  --shadow-sm: 0 2px 8px rgba(23, 18, 58, 0.05);
+  --shadow-md: 0 12px 40px rgba(23, 18, 58, 0.08);
+  --shadow-lg: 0 30px 80px rgba(76, 40, 130, 0.14);
+
+  /* ---- Gradients ---- */
+/* Hero: Fly.io lavender — soft blue top-right, lavender center, faint peach hint left */
+  --grad-hero:
+    radial-gradient(55% 50% at 85% 4%,  rgba(197, 208, 255, 0.60) 0%, transparent 62%),
+    radial-gradient(50% 45% at 10% 6%,  rgba(255, 224, 214, 0.35) 0%, transparent 60%),
+    radial-gradient(85% 75% at 50% 0%,  rgba(233, 230, 255, 0.75) 0%, transparent 72%),
+    var(--bg-base);
+
+  /* Soft section wash */
+  --grad-soft:
+    radial-gradient(50% 40% at 80% 0%, rgba(224, 219, 255, 0.5) 0%, transparent 65%),
+    var(--bg-base);
+
+  /* Saturated violet block (like Fly "Use the Tech You Love") */
+  --grad-violet:
+    radial-gradient(60% 80% at 15% 10%, rgba(167, 139, 250, 0.55) 0%, transparent 60%),
+    linear-gradient(160deg, var(--violet-700) 0%, var(--violet-800) 100%);
+
+  /* Brand gradient (buttons / highlights) */
+  --grad-brand: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-orange-2) 100%);
+  --grad-violet-btn: linear-gradient(135deg, var(--violet-600) 0%, var(--violet-700) 100%);
+
+  /* ---- Radii ---- */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-pill: 999px;
+
+/* ---- Type ---- */
+  --font-body:    var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: var(--font-display), -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --nav-height: 80px;
 }
 
+/* ---- Reset ---- */
 *,
 *::before,
 *::after {
@@ -17,93 +77,208 @@
   margin: 0;
   padding: 0;
 }
-html{
+
+html {
   scroll-behavior: smooth;
-}
-body {
-  background: var(--bg-deep);
-  color: #fff;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* Film Grain – GPU safe */
-/* body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.02;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translateZ(0);
-} */
+body {
+  background: var(--bg-base);
+  color: var(--ink-500);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 
 #__next,
 #root {
   isolation: isolate;
 }
 
-
-
-/* --- CREATOR_MONK SYSTEM SCROLLER --- */
-
-/* Chrome, Safari, and Edge */
-::-webkit-scrollbar {
-  width: 10px;
+::selection {
+  background: rgba(124, 58, 237, 0.18);
+  color: var(--ink-900);
 }
 
-::-webkit-scrollbar-track {
-  background: #F8F8F6;
+/* ========================================================================
+   TYPOGRAPHY — Apple-style tight display
+   ======================================================================== */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink-900);
+  line-height: 1.05;
+  letter-spacing: -0.035em;   /* the Apple "tight" signature */
+  text-wrap: balance;
 }
 
+h1 { font-weight: 700; letter-spacing: -0.045em; }
+h2 { font-weight: 700; }
+h3 { font-weight: 600; letter-spacing: -0.025em; }
+
+p { line-height: 1.65; }
+
+/* Big hero display helper */
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  color: var(--ink-900);
+  font-size: clamp(2.6rem, 6vw, 5.25rem);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--violet-600);
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  color: var(--ink-500);
+  line-height: 1.6;
+}
+
+.text-gradient-violet {
+  background: linear-gradient(120deg, var(--violet-600), var(--periwinkle));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-brand {
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ========================================================================
+   LAYOUT HELPERS
+   ======================================================================== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.section {
+  padding-block: clamp(4.5rem, 10vw, 9rem);
+}
+
+/* Background utilities */
+.bg-hero   { background: var(--grad-hero); }
+.bg-soft   { background: var(--grad-soft); }
+.bg-violet { background: var(--grad-violet); color: #fff; }
+.bg-violet h1, .bg-violet h2, .bg-violet h3 { color: #fff; }
+.bg-violet p { color: rgba(255,255,255,0.82); }
+
+/* Subtle mesh grid overlay (use inside .bg-violet blocks) */
+.mesh-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(70% 70% at 50% 40%, #000 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ========================================================================
+   BUTTONS
+   ======================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.98rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--r-pill);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.25s ease, filter 0.25s ease;
+  will-change: transform;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {          /* Fly violet */
+  background: var(--grad-violet-btn);
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(109, 40, 217, 0.30);
+}
+.btn-primary:hover { transform: translateY(-2px); filter: brightness(1.06); }
+
+.btn-brand {            /* CreatorMonk orange */
+  background: var(--grad-brand);
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(255, 94, 0, 0.28);
+}
+.btn-brand:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+.btn-ghost {
+  background: var(--surface);
+  color: var(--ink-900);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.btn-ghost:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+/* ========================================================================
+   REVEAL — initial states (pair with framer-motion, or CSS-only fallback)
+   ======================================================================== */
+.reveal        { opacity: 0; transform: translateY(28px); }
+.reveal-in     { opacity: 1; transform: none; transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ========================================================================
+   SCROLLBAR — light violet
+   ======================================================================== */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-soft); }
 ::-webkit-scrollbar-thumb {
-  /* Monk Orange Gradient */
-  background: linear-gradient(
-    180deg, 
-    #ffae00 0%, 
-    #ff7b00 100%
-  );
+  background: linear-gradient(180deg, var(--violet-500) 0%, var(--violet-700) 100%);
   border-radius: 20px;
-  border: 3px solid #F8F8F6; 
-  transition: all 0.3s ease;
+  border: 3px solid var(--bg-soft);
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  /* Brighter glow on hover */
-  background: linear-gradient(
-    180deg, 
-    #ffd000 0%, 
-    #ffae00 100%
-  );
+  background: linear-gradient(180deg, var(--violet-600) 0%, var(--violet-800) 100%);
 }
+* { scrollbar-width: thin; scrollbar-color: var(--violet-600) var(--bg-soft); }
 
-/* Firefox Support */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #ffae00 #F8F8F6;
-}
-
-/* ── About Page Layout — add to globals.css ── */
-
-.about-sticky-hero {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.about-content-stack {
-  position: relative;
-  z-index: 10;
-}
-
+/* ========================================================================
+   ABOUT PAGE — sticky hero stack (converted to light shadows)
+   ======================================================================== */
+.about-sticky-hero { position: sticky; top: 0; z-index: 1; }
+.about-content-stack { position: relative; z-index: 10; }
 .about-content-stack > *:first-child {
-  box-shadow: 0 -40px 80px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 -40px 80px rgba(23, 18, 58, 0.10);
 }
 
 @media (max-width: 1023px) {
-  .monk-canvas-wrap {
-    display: none !important;
-  }
+  .monk-canvas-wrap { display: none !important; }
 }

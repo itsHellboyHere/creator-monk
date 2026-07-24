@@ -1,0 +1,238 @@
+/* ServiceIncluded.module.css — split hero, GSAP-level scroll magic via framer */
+
+.section {
+  position: relative;
+  padding: clamp(4.5rem, 9vw, 8rem) 24px;
+  background: var(--bg-base);
+  overflow: hidden;
+}
+
+.mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(50% 55% at 15% 20%, rgba(197, 180, 255, 0.4), transparent 65%),
+    radial-gradient(40% 50% at 90% 80%, rgba(255, 214, 200, 0.28), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+
+/* ---- LEFT ---- */
+.left {
+  position: sticky;
+  top: calc(var(--nav-height, 80px) + 32px);
+  padding-top: 10px;
+  will-change: transform;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--violet-600);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  color: var(--ink-900);
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+
+.accent {
+  background: linear-gradient(120deg, var(--violet-600), var(--periwinkle));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sub {
+  color: var(--ink-500);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin: 0 0 32px;
+  max-width: 440px;
+}
+
+/* ---- CTA — with ambient bloom ---- */
+.ctaWrap {
+  display: inline-block;
+}
+
+.cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: #fff;
+  background: var(--grad-violet-btn);
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(109, 40, 217, 0.3);
+  transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 14px 32px rgba(109, 40, 217, 0.4);
+}
+
+.cta svg { transition: transform 0.25s ease; }
+.cta:hover svg { transform: translateX(3px); }
+
+/* ambient bloom halo */
+.ctaBloom {
+  position: absolute;
+  inset: -30px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at center,
+    rgba(139, 92, 246, 0.35) 0%,
+    transparent 60%
+  );
+  filter: blur(24px);
+  z-index: -1;
+  opacity: 0.7;
+  animation: bloomPulse 4s ease-in-out infinite;
+}
+
+@keyframes bloomPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 0.9; transform: scale(1.08); }
+}
+
+/* ---- RIGHT: checklist ---- */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border-soft);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease, background 0.3s ease,
+    box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.item:hover {
+  transform: translateX(6px);
+  background: #ffffff;
+  border-color: rgba(124, 58, 237, 0.28);
+  box-shadow: 0 12px 30px rgba(76, 40, 130, 0.12);
+}
+
+/* ---- Check icon with SVG stroke draw ---- */
+.check {
+  position: relative;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-grid;
+  place-items: center;
+}
+
+.check svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.checkRing {
+  fill: none;
+  stroke: var(--violet-500);
+  stroke-width: 1.8;
+  opacity: 0.4;
+}
+
+.checkTick {
+  fill: none;
+  stroke: var(--violet-600);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* on hover — halo behind check pulses */
+.item:hover .check::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%);
+  z-index: -1;
+  animation: checkGlow 1.6s ease-in-out infinite;
+}
+
+@keyframes checkGlow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.15); }
+}
+
+.text {
+  color: var(--ink-700);
+  font-size: 1rem;
+  line-height: 1.55;
+  font-weight: 500;
+  padding-top: 2px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+  .left {
+    position: relative;
+    top: 0;
+  }
+  .sub { max-width: none; }
+  .list { gap: 14px; }
+}
+
+@media (max-width: 560px) {
+  .item {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .check { width: 26px; height: 26px; }
+  .text { font-size: 0.95rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaBloom, .item:hover .check::after { animation: none; }
+}

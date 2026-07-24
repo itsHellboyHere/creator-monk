@@ -1,0 +1,107 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 38vh;
+  padding: calc(var(--nav-height) + 40px) 24px 40px;
+  background: var(--bg-base);
+}
+
+.mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(45% 55% at 15% 20%, rgba(197, 180, 255, 0.5), transparent 65%),
+    radial-gradient(40% 50% at 85% 30%, rgba(190, 205, 255, 0.42), transparent 65%),
+    radial-gradient(50% 60% at 75% 100%, rgba(255, 205, 185, 0.32), transparent 68%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--violet-600);
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  color: var(--ink-900);
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  margin: 0 0 16px;
+}
+
+.accent {
+  background: linear-gradient(120deg, var(--violet-600), var(--periwinkle));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.desc {
+  color: var(--ink-500);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 480px;
+  margin: 0;
+}
+
+/* art */
+.art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artGlow {
+  position: absolute;
+  width: 72%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(139, 92, 246, 0.24) 0%,
+    rgba(197, 180, 255, 0.14) 45%,
+    transparent 70%
+  );
+  filter: blur(28px);
+}
+
+.artImg {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  filter: drop-shadow(0 20px 40px rgba(76, 40, 130, 0.16));
+}
+
+@media (max-width: 860px) {
+  .hero {
+    padding-top: calc(var(--nav-height) + 28px);
+    min-height: unset;
+  }
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+  .desc { margin: 0 auto; }
+  .artImg { max-width: 260px; }
+}

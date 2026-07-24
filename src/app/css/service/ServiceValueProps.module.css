@@ -1,0 +1,192 @@
+/* ServiceValueProps.module.css — grid with violet hover glow + accent bar slide */
+
+.section {
+  position: relative;
+  padding: clamp(4rem, 8vw, 7rem) 24px;
+  background: var(--bg-base);
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---- Head ---- */
+.head {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 56px;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--violet-600);
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  color: var(--ink-900);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  margin: 0;
+}
+
+.accent {
+  background: linear-gradient(120deg, var(--violet-600), var(--periwinkle));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Grid — 2×2 on desktop, single col on mobile ---- */
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid transparent;   /* alignment reference */
+}
+
+@media (min-width: 768px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---- Card ---- */
+.card {
+  position: relative;
+  padding: 44px 40px;
+  border-right: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+/* borders — only right on left col, only bottom on non-last row */
+.leftCol { border-left: 1px solid var(--border-soft); }
+.card:not(.leftCol) { }  /* no left border on right col */
+
+/* remove bottom border on last row */
+.card:not(.notLastRow) { border-bottom: none; }
+
+/* remove right border on rightmost col */
+@media (min-width: 768px) {
+  .card:nth-child(2n) { border-right: none; }
+}
+
+/* on mobile — only bottom borders */
+@media (max-width: 767px) {
+  .card {
+    border-right: none;
+    border-left: none;
+  }
+  .leftCol { border-left: none; }
+}
+
+/* ---- Hover glow — soft violet gradient rises from bottom ---- */
+.glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(197, 180, 255, 0.35) 60%,
+    rgba(139, 92, 246, 0.18) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card:hover .glow { opacity: 1; }
+
+/* ---- Icon ---- */
+.iconWrap {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-500);
+  margin-bottom: 22px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover .iconWrap {
+  color: var(--violet-600);
+  transform: scale(1.08);
+}
+
+/* ---- Title with accent bar ---- */
+.cardTitle {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 1.18rem;
+  line-height: 1.2;
+  color: var(--ink-900);
+  margin: 0 0 12px;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.accentBar {
+  display: block;
+  width: 3px;
+  height: 22px;
+  border-radius: 3px;
+  background: var(--ink-400);
+  transition: background 0.3s ease, height 0.3s ease;
+  flex-shrink: 0;
+}
+
+.titleText {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* on hover — bar turns violet + grows, text slides right */
+.card:hover .accentBar {
+  background: linear-gradient(180deg, var(--violet-500), var(--violet-700));
+  height: 28px;
+}
+
+.card:hover .titleText {
+  transform: translateX(6px);
+}
+
+/* ---- Description ---- */
+.cardDesc {
+  position: relative;
+  z-index: 1;
+  color: var(--ink-500);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 15px;   /* aligns under title text (bar width + gap) */
+  max-width: 380px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
+  .card {
+    padding: 32px 24px;
+  }
+  .cardTitle { font-size: 1.1rem; }
+  .cardDesc { font-size: 0.94rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow, .iconWrap, .accentBar, .titleText { transition: none; }
+}

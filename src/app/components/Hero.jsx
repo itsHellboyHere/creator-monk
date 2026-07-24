@@ -1,86 +1,141 @@
 "use client";
-import { motion } from "framer-motion";
-import styles from "@/app/css/Hero.module.css";
 
-// Text entrance — runs ONCE on mount, no repeat
-// Kept exactly as-is — this is the signature effect
-const maskVars = {
-  initial: {
-    x: "-100%",
-    opacity: 0,
-    scale: 0.9,
-  },
-  animate: (i) => ({
-    x: "0%",
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 1.2,
-      delay: 0.3 + i * 0.2,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  }),
-};
+import Link from "next/link";
+import {
+  motion,
+  useMotionValue,
+  useMotionTemplate,
+  useAnimationFrame,
+} from "framer-motion";
+import styles from "@/app/css/Hero.module.css";
+import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
+  // start offscreen so no reveal-blob sits in the corner on load
+  const mouseX = useMotionValue(-400);
+  const mouseY = useMotionValue(-400);
+
+  const offsetX = useMotionValue(0);
+  const offsetY = useMotionValue(0);
+
+  useAnimationFrame(() => {
+    offsetX.set((offsetX.get() + 0.35) % 40);
+    offsetY.set((offsetY.get() + 0.35) % 40);
+  });
+
+  const handleMouseMove = (e) => {
+    const { left, top } = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - left);
+    mouseY.set(e.clientY - top);
+  };
+
+  const maskImage = useMotionTemplate`radial-gradient(320px circle at ${mouseX}px ${mouseY}px, black, transparent 80%)`;
+
+  const EASE = [0.22, 1, 0.36, 1];
+
   return (
-    <section id="banner" className={`${styles.hero} sec-wrapper`}>
+    <section className={styles.hero} onMouseMove={handleMouseMove}>
+      {/* faint base grid */}
+      <div className={styles.gridBase} aria-hidden>
+        <GridPattern id="grid-base" offsetX={offsetX} offsetY={offsetY} />
+      </div>
 
-      {/* Gradient — static, no animation. Visual depth without CPU cost */}
-      <div className={styles.movingGradient} />
+      {/* violet grid revealed under cursor */}
+      <motion.div
+        className={styles.gridReveal}
+        style={{ maskImage, WebkitMaskImage: maskImage }}
+        aria-hidden
+      >
+        <GridPattern id="grid-accent" offsetX={offsetX} offsetY={offsetY} />
+      </motion.div>
 
+      {/* gradient blobs */}
+      <div className={styles.blobs} aria-hidden>
+        <span className={styles.blobViolet} />
+        <span className={styles.blobBlue} />
+        <span className={styles.blobPeach} />
+      </div>
+
+      {/* content */}
       <div className={styles.content}>
-        {/* Badge — fades in once */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
+        {/* <motion.span
+          className={styles.eyebrow}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className={styles.badge}
+          transition={{ duration: 0.6, ease: EASE }}
         >
-          INFLUENCE • ENGINEERING • IMPACT
-        </motion.div>
+   
+Websites · Apps · AI · Social · Branding
+        </motion.span> */}
 
-        {/* Title — slides in from left one by one. Runs once. Keep this. */}
-        <div className={styles.titleContainer}>
-          {["WE BUILD", "DIGITAL", "SUPERSTARS."].map((text, i) => (
-            <div key={i} className={styles.mask}>
-              <motion.h1
-                custom={i}
-                variants={maskVars}
-                initial="initial"
-                animate="animate"
-                className={i === 2 ? styles.goldText : styles.whiteText}
-              >
-                {text}
-              </motion.h1>
-            </div>
-          ))}
-        </div>
-
-        {/* Description — fades in once */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className={styles.bottomRow}
+        <motion.h1
+          className={styles.title}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
         >
-          <p className={styles.description}>
-            We engineer growth for creators who are built to last —
-            not fade with trends or algorithms.
-          </p>
-        </motion.div>
-      </div>
+          We design, build{" "}
+          <br className={styles.brDesktop} />&amp;{" "}
+          <span className={styles.accent}>automate.</span>
+        </motion.h1>
 
-      {/* Scroll hint — CSS animation only, no Framer Motion */}
-      <div className={styles.scrollHint}>
-        <p>कहानी यहीं खत्म नहीं होती</p>
-        <div className={styles.scrollLine}>
-          <div className={styles.scrollDot} />
-        </div>
-      </div>
+        <motion.p
+          className={styles.sub}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.18, ease: EASE }}
+        >
+     {/* sub */}
+From websites and apps to social media and AI automation — CreatorMonk
+builds everything your brand needs to grow online. Clean design, shipped fast.
+        </motion.p>
 
-      <div className={styles.vignette} />
-      <div className={styles.grain} />
+       <motion.div
+  className={styles.actions}
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.7, delay: 0.28, ease: EASE }}
+>
+  <Link href="/contact" className={`${styles.ctaButton} ${styles.ctaPrimary}`}>
+    <span className={styles.ctaText}>Start a Project</span>
+    <span className={styles.iconContainer}>
+      <ArrowRight size={18} className={styles.arrow} strokeWidth={2.4} />
+    </span>
+  </Link>
+
+  <Link href="/services" className={`${styles.ctaButton} ${styles.ctaGhost}`}>
+    <span className={styles.ctaText}>See what we do</span>
+    <span className={styles.iconContainer}>
+      <ArrowRight size={18} className={styles.arrow} strokeWidth={2.4} />
+    </span>
+  </Link>
+</motion.div>
+      </div>
     </section>
+  );
+}
+
+function GridPattern({ id, offsetX, offsetY }) {
+  return (
+    <svg width="100%" height="100%" className={styles.svg}>
+      <defs>
+        <motion.pattern
+          id={id}
+          width="40"
+          height="40"
+          patternUnits="userSpaceOnUse"
+          x={offsetX}
+          y={offsetY}
+        >
+          <path
+            d="M 40 0 L 0 0 0 40"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+        </motion.pattern>
+      </defs>
+      <rect width="100%" height="100%" fill={`url(#${id})`} />
+    </svg>
   );
 }

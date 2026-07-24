@@ -1,0 +1,220 @@
+/* ServiceHero.module.css — Apple iPad Air style hero, device rises from below */
+
+.hero {
+  position: relative;
+  overflow: hidden;                 /* clips the device while it rises */
+  padding: calc(var(--nav-height)) 24px 0;
+  background: var(--bg-base);        /* lavender — transparent PNG blends */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Ambient mesh — soft violet radials */
+.mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(50% 45% at 20% 8%,  rgba(197, 180, 255, 0.32), transparent 65%),
+    radial-gradient(45% 40% at 80% 12%, rgba(190, 205, 255, 0.28), transparent 65%),
+    radial-gradient(60% 50% at 50% 100%, rgba(214, 208, 255, 0.35), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Text ---- */
+.textBlock {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 0 0;                /* thoda breathing space top pe */
+}
+.eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--violet-600);
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.05em;          /* thoda aur tight */
+  line-height: 1.0;
+  color: var(--ink-900);
+  font-size: clamp(3rem, 8vw, 6.5rem);   /* aur bada — Apple-scale */
+  margin: 0;
+  text-wrap: balance;
+}
+
+.accent {
+  background: linear-gradient(120deg, var(--violet-600), var(--periwinkle));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sub {
+  color: var(--ink-500);
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 620px;
+  margin: 0 auto 28px;
+}
+
+/* ---- CTAs ---- */
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.ctaPrimary,
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  font-size: 0.98rem;
+  text-decoration: none;
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease,
+    border-color 0.2s ease, color 0.2s ease;
+}
+
+.ctaPrimary {
+  color: #fff;
+  background: var(--grad-violet-btn);
+  box-shadow: 0 10px 26px rgba(109, 40, 217, 0.3);
+}
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 14px 32px rgba(109, 40, 217, 0.4);
+}
+.ctaPrimary svg { transition: transform 0.25s ease; }
+.ctaPrimary:hover svg { transform: translateX(3px); }
+
+.ctaGhost {
+  color: var(--ink-900);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(6px);
+}
+.ctaGhost:hover {
+  transform: translateY(-2px);
+  border-color: rgba(124, 58, 237, 0.35);
+  color: var(--violet-700);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---- Stage — device rises from here ---- */
+.stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  flex: 1;
+  min-height: 520px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: 30px;                 /* pehle 30px tha */
+  padding-bottom: 0;
+}
+
+/* Violet halo behind the device — grounds the reveal */
+.glow {
+  position: absolute;
+  bottom: -8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(139, 92, 246, 0.38) 0%,
+    rgba(197, 180, 255, 0.2) 40%,
+    transparent 75%
+  );
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 0;
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.75; transform: translateX(-50%) scale(1); }
+  50%      { opacity: 1;    transform: translateX(-50%) scale(1.06); }
+}
+
+/* The device itself — after reveal, subtle float */
+.device {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  max-height: 78vh;
+  object-fit: contain;
+  object-position: bottom;
+  filter: drop-shadow(0 40px 60px rgba(76, 40, 130, 0.28));
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 1.6s;             /* wait for reveal to finish */
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* Dev placeholder */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1100px;
+  aspect-ratio: 16 / 9;
+  border-radius: 24px;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(124, 58, 237, 0.06) 0 12px,
+      rgba(124, 58, 237, 0.02) 12px 24px
+    ),
+    linear-gradient(160deg, #faf9fe, #efeaf9);
+  color: var(--violet-600);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 780px) {
+  .hero {
+    min-height: unset;
+    padding: calc(var(--nav-height) + 40px) 20px 0;
+  }
+  .title { font-size: clamp(2.2rem, 10vw, 3.2rem); }
+  .actions { flex-direction: column; width: 100%; align-items: stretch; }
+  .ctaPrimary, .ctaGhost { justify-content: center; }
+  .stage { min-height: 340px; margin-top: 10px; }
+  .device { max-height: 55vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .device, .glow { animation: none; }
+}

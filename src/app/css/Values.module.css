@@ -1,412 +1,173 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap');
+/* ============================================================
+   VALUES — glass cards on a violet block
+   ============================================================ */
 
-/* ================================= */
-/* SECTION                           */
-/* ================================= */
 .section {
-  width: 100%;
-  background: #080808;
-  padding: 100px 80px 120px;
   position: relative;
+  padding-block: clamp(4.5rem, 10vw, 8rem);
+  background: var(--grad-violet);
   overflow: hidden;
-  /* Top separator line with gold gradient */
-  border-top: 1px solid rgba(255, 174, 0, 0.15);
+  isolation: isolate;
 }
 
-/* Ambient glow top right */
-.glow {
+.mesh {
   position: absolute;
-  top: -120px;
-  right: -80px;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 174, 0, 0.05) 0%,
-    transparent 65%
-  );
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(70% 70% at 50% 40%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(70% 70% at 50% 40%, #000 0%, transparent 100%);
   pointer-events: none;
-  z-index: 0;
 }
 
-/* ================================= */
-/* HEADER                            */
-/* ================================= */
-.header {
-  text-align: center;
-  margin-bottom: 72px;
+.orb {
+  position: absolute;
+  top: -18%;
+  right: -8%;
+  width: 46vw;
+  height: 46vw;
+  max-width: 620px;
+  max-height: 620px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197, 208, 255, 0.30) 0%, transparent 68%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.inner {
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
 }
 
-.headerBadgeRow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 20px;
+/* ---- Head ---- */
+.head {
+  max-width: 640px;
+  margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
 }
 
-.headerDash {
-  display: block;
-  width: 32px;
-  height: 1px;
-  background: rgba(255, 174, 0, 0.4);
-}
-
-.sectionTag {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.45em;
-  color: #ffae00;
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 400;
+  color: rgba(255, 255, 255, 0.62);
+  margin-bottom: 0.85rem;
 }
 
-.sectionTitle {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.8rem, 6vw, 5.5rem);
-  line-height: 0.92;
+.heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
   color: #fff;
-  letter-spacing: 2px;
-  margin: 0;
+  font-size: clamp(2rem, 4.2vw, 3.25rem);
 }
 
-.sectionTitleAccent {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-weight: 300;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255, 174, 0, 0.85);
-  letter-spacing: 2px;
-}
-
-/* ================================= */
-/* GRID                              */
-/* ================================= */
+/* ---- Grid ---- */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: rgba(255, 255, 255, 0.04);
-  position: relative;
-  z-index: 2;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 1.8vw, 1.35rem);
 }
 
-/* ================================= */
-/* CARD                              */
-/* ================================= */
+@media (min-width: 780px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- Glass card ---- */
 .card {
   position: relative;
-  padding: 48px 40px 52px;
-  background: #0e0e0e;
   overflow: hidden;
-  cursor: default;
-  transition: background 0.4s ease;
+  padding: clamp(1.6rem, 2.6vw, 2.15rem);
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.20) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.12) inset,
+    0 24px 60px rgba(23, 12, 60, 0.28);
+  will-change: transform, opacity;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.45s ease, background 0.45s ease;
 }
 
 .card:hover {
-  background: #111111;
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.10);
 }
 
-/* Bottom accent line — draws in on hover */
-.cardBottomLine {
+/* cursor spotlight */
+.spot {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  width: 0%;
-  background: linear-gradient(to right, #ffae00, #ff7b00);
-  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.card:hover .cardBottomLine {
-  width: 100%;
-}
-
-.card:hover .cardGlow {
-  opacity: 1;
-}
-
-.card:hover .cardDivider {
-  width: 72px;
-  opacity: 1;
-}
-
-.card:hover .cardIcon {
-  opacity: 1;
-  transform: scale(1.12);
-  color: #ffae00;
-}
-
-.card:hover .cardBody {
-  color: rgba(255, 255, 255, 0.75);
-}
-
-/* Card top */
-.cardTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.cardNum {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 4.5rem;
-  color: rgba(255, 255, 255, 0.05);
-  line-height: 1;
-  letter-spacing: -1px;
-  transition: color 0.3s ease;
-  user-select: none;
-}
-
-.card:hover .cardNum {
-  color: rgba(255, 174, 0, 0.08);
-}
-
-.cardIcon {
-  font-size: 1.4rem;
-  color: #ffae00;
-  opacity: 0.45;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* Tag */
-.cardTag {
-  display: block;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.52rem;
-  letter-spacing: 0.42em;
-  color: #ffae00;
-  margin-bottom: 16px;
-  opacity: 0.8;
-  text-transform: uppercase;
-}
-
-/* Title */
-.cardTitle {
-  margin-bottom: 24px;
-}
-
-.cardTitleSolid {
-  display: block;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
-  line-height: 0.95;
-  color: #ffffff;
-  letter-spacing: 1px;
-}
-
-.cardTitleAccent {
-  display: block;
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(1.6rem, 2.5vw, 2.5rem);
-  line-height: 1.1;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 174, 0, 0.55);
-  transition: -webkit-text-stroke-color 0.3s ease;
-}
-
-.card:hover .cardTitleAccent {
-  -webkit-text-stroke-color: rgba(255, 174, 0, 0.9);
-}
-
-/* Divider */
-.cardDivider {
-  width: 36px;
-  height: 1px;
-  background: linear-gradient(to right, #ffae00, #ff7b00);
-  opacity: 0.4;
-  margin-bottom: 22px;
-  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-}
-
-/* Body */
-.cardBody {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1rem, 1.2vw, 1.1rem);
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.88;
-  transition: color 0.3s ease;
-}
-
-/* Hover glow */
-.cardGlow {
-  position: absolute;
-  bottom: -60px;
-  left: -60px;
-  width: 260px;
-  height: 260px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 174, 0, 0.07) 0%,
-    transparent 70%
-  );
+  inset: 0;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.16) 0%,
+    transparent 62%
+  );
 }
 
-/* ================================= */
-/* BOTTOM QUOTE                      */
-/* ================================= */
-.quote {
+.card:hover .spot { opacity: 1; }
+
+/* ---- Card content ---- */
+.cardTop {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 36px;
-  margin-top: 80px;
-  padding-top: 48px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  position: relative;
-  z-index: 2;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
 }
 
-.quoteLine {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(255, 174, 0, 0.2));
+.iconWrap {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-md);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.10);
 }
 
-.quoteLineRight {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to left, transparent, rgba(255, 174, 0, 0.2));
+.num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.20);
 }
 
-.quoteInner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  max-width: 620px;
-  text-align: center;
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #fff;
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
 }
 
-.quoteText {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: clamp(1rem, 1.6vw, 1.25rem);
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.48);
-  line-height: 1.72;
-  letter-spacing: 0.3px;
+.body {
+  margin-top: 0.75rem;
+  font-size: clamp(0.95rem, 1.1vw, 1.02rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 40ch;
 }
 
-.quoteAuthor {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.44em;
-  color: rgba(255, 174, 0, 0.45);
-  text-transform: uppercase;
-}
-
-/* ================================= */
-/* TABLET                            */
-/* ================================= */
-@media (max-width: 1024px) {
-  .section {
-    padding: 80px 48px 100px;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .card {
-    padding: 40px 36px 44px;
-  }
-
-  /* On single column, bottom line draws per card */
-  .cardNum {
-    font-size: 3.5rem;
-  }
-}
-
-/* ================================= */
-/* MOBILE                            */
-/* ================================= */
-@media (max-width: 768px) {
-  .section {
-    padding: 72px 24px 80px;
-  }
-
-  .header {
-    margin-bottom: 52px;
-  }
-
-  .sectionTitle {
-    font-size: clamp(2.2rem, 10vw, 3rem);
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 1px;
-  }
-
-  .card {
-    padding: 36px 24px 40px;
-  }
-
-  .cardNum {
-    font-size: 3rem;
-  }
-
-  .cardTitleSolid {
-    font-size: 2rem;
-  }
-
-  .cardTitleAccent {
-    font-size: 1.8rem;
-  }
-
-  .cardBody {
-    font-size: 1rem;
-  }
-
-  .quote {
-    margin-top: 56px;
-    padding-top: 36px;
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
-  }
-
-  .quoteLine,
-  .quoteLineRight {
-    flex: none;
-    width: 48px;
-    background: linear-gradient(
-      to right,
-      transparent,
-      rgba(255, 174, 0, 0.25),
-      transparent
-    );
-  }
-
-  .quoteText {
-    font-size: 0.98rem;
-  }
-}
-
-/* ================================= */
-/* SMALL MOBILE                      */
-/* ================================= */
-@media (max-width: 480px) {
-  .section {
-    padding: 56px 18px 64px;
-  }
-
-  .card {
-    padding: 28px 18px 32px;
-  }
-
-  .cardNum {
-    font-size: 2.5rem;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+  .spot { display: none; }
 }

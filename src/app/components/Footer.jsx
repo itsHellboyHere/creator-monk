@@ -1,16 +1,25 @@
 "use client";
 
-import styles from "../css/Footer.module.css";
-import SocialLinks from "../components/SocialLinks";
 import Link from "next/link";
 import Image from "next/image";
-import { FiArrowUpRight, FiMapPin } from "react-icons/fi";
+import { ArrowUpRight, MapPin, Phone } from "lucide-react";
+import SocialLinks from "../components/SocialLinks";
+import styles from "../css/Footer.module.css";
 
-const links_items = [
+const EXPLORE = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
   { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" }
+  { name: "Contact", href: "/contact" },
+];
+
+const SERVICES = [
+  { name: "App Development", href: "/services/app-development" },
+  { name: "Website & Software", href: "/services/web-development" },
+  { name: "AI & Automation", href: "/services/ai-automation" },
+  { name: "Social Media", href: "/services/social-media" },
+  { name: "Branding", href: "/services/branding" },
+  { name: "Video Editing", href: "/services/video-editing" },
 ];
 
 export default function Footer() {
@@ -18,73 +27,94 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.mainGrid}>
-          
-          {/* BRAND SECTION */}
+          {/* BRAND */}
           <div className={styles.brandCol}>
-            <div className={styles.logoFrame}>
-              <Image 
-                src="/logo1.png" 
-                alt="CreatorMonk" 
-                width={100} 
-                height={100} 
+            <Link href="/" className={styles.brand}>
+              <Image
+                src="/logo1.png"
+                alt="CreatorMonk"
+                width={64}
+                height={64}
                 className={styles.brandLogo}
               />
-            </div>
+              <span className={styles.brandName}>CreatorMonk</span>
+            </Link>
             <p className={styles.tagline}>
-              Engineering digital presence for the modern creator economy through strategy and cinematic execution.
+              We design, build and automate — websites, apps, AI and content
+              that help your brand grow online.
             </p>
             <SocialLinks variant="footer" />
           </div>
 
-          {/* CONTACT SECTION - NOIDA HQ */}
-          <div className={styles.infoCol}>
-            <h4 className={styles.label}>Get In Touch</h4>
-            <div className={styles.addressBox}>
-              <p><FiMapPin className={styles.icon} /> 8C, Galaxy Blue Sapphire</p>
-              <p>Sec 16B, Greater Noida</p>
-              <p>Uttar Pradesh 201309</p>
-            </div>
-            <div className={styles.contactLinks}>
-                <a href="tel:+917827332337" className={styles.phoneLink}>
-                +91 78273 32337 <FiArrowUpRight />
-              </a>
-              <a href="tel:+917004671676" className={styles.phoneLink}>
-                +91 70046 71676 <FiArrowUpRight />
-              </a>
-            </div>
-          </div>
-
-          {/* NAVIGATION */}
-          <div className={styles.infoCol}>
-            <h4 className={styles.label}>Explore</h4>
+          {/* SERVICES */}
+          <div className={styles.col}>
+            <h4 className={styles.label}>Services</h4>
             <nav className={styles.navStack}>
-              {links_items.map((item) => (
-                <Link key={item.name} href={item.href} className={styles.footerLink}>
+              {SERVICES.map((item) => (
+                <Link key={item.name} href={item.href} className={styles.link}>
                   {item.name}
                 </Link>
               ))}
             </nav>
           </div>
 
+          {/* EXPLORE */}
+          <div className={styles.col}>
+            <h4 className={styles.label}>Explore</h4>
+            <nav className={styles.navStack}>
+              {EXPLORE.map((item) => (
+                <Link key={item.name} href={item.href} className={styles.link}>
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* CONTACT */}
+          <div className={styles.col}>
+            <h4 className={styles.label}>Get in touch</h4>
+            <address className={styles.address}>
+              <MapPin size={15} strokeWidth={2.2} className={styles.pin} />
+              <span>
+                8C, Galaxy Blue Sapphire,
+                <br />
+                Sec 16B, Greater Noida,
+                <br />
+                Uttar Pradesh 201309
+              </span>
+            </address>
+            <div className={styles.contactStack}>
+              <a href="tel:+917827332337" className={styles.contactLink}>
+                <Phone size={14} strokeWidth={2.2} />
+                <span>+91 78273 32337</span>
+                <ArrowUpRight size={14} className={styles.upright} />
+              </a>
+              <a href="tel:+917004671676" className={styles.contactLink}>
+                <Phone size={14} strokeWidth={2.2} />
+                <span>+91 70046 71676</span>
+                <ArrowUpRight size={14} className={styles.upright} />
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* BOTTOM BAR */}
         <div className={styles.bottomBar}>
           <div className={styles.legal}>
-            <span>© {new Date().getFullYear()} CREATORMONK STUDIO</span>
-            <span className={styles.dot}></span>
-            <span>NOIDA • INDIA</span>
+            <span>© {new Date().getFullYear()} CreatorMonk Studio</span>
+            <span className={styles.dot} />
+            <span>Greater Noida · India</span>
           </div>
           <div className={styles.status}>
-            <span className={styles.pulse}></span> AVAILABLE FOR PROJECTS
+            <span className={styles.pulse} />
+            Available for projects
           </div>
         </div>
       </div>
 
-      {/* MASSIVE BOTTOM WATERMARK - Heavy Visibility */}
-      <div className={styles.bigTextContainer}>
-        <div className={styles.watermarkWord}>CREATOR</div>
-        <div className={styles.watermarkWord}>MONK</div>
+      {/* BIG WATERMARK */}
+      <div className={styles.watermark} aria-hidden>
+        CREATORMONK
       </div>
     </footer>
   );
