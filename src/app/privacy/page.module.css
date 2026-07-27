@@ -1,177 +1,169 @@
-/* ── Privacy Policy Page ── */
+/* ============================================================
+   PRIVACY POLICY — light theme, matches the site
+   ============================================================ */
 
 .main {
-  background: var(--bg-deep);
-  color: #fff;
+  background: var(--bg-base);
+  color: var(--ink-500);
   min-height: 100vh;
-  padding-top: var(--nav-height);
 }
 
-/* ── Hero ── */
+/* ---- Hero ---- */
 .hero {
-  padding: 100px 6vw 0;
-  max-width: 1200px;
-  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--nav-height) + clamp(2rem, 5vw, 4rem));
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+  background: var(--grad-hero);
+}
+
+.mesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(23, 18, 58, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 18, 58, 0.03) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(70% 70% at 30% 20%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(70% 70% at 30% 20%, #000 0%, transparent 100%);
+  pointer-events: none;
 }
 
 .heroInner {
-  max-width: 720px;
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .eyebrow {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  letter-spacing: 0.25em;
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--monk-orange);
-  margin-bottom: 20px;
+  color: var(--violet-600);
+  margin-bottom: 1rem;
 }
 
 .heroTitle {
-  font-family: var(--font-heading);
-  font-size: clamp(72px, 12vw, 140px);
-  line-height: 0.9;
-  letter-spacing: 0.01em;
-  color: #fff;
-  margin-bottom: 32px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: var(--ink-900);
+  font-size: clamp(3rem, 9vw, 6rem);
+  margin-bottom: 1.5rem;
 }
 
-.heroAccent {
-  color: var(--monk-orange);
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-size: clamp(80px, 13vw, 150px);
-}
+.heroAccent { color: var(--violet-600); }
 
 .heroMeta {
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.35);
-  margin-bottom: 24px;
+  color: var(--ink-400);
+  margin-bottom: 1.25rem;
 }
 
-.heroMeta strong {
-  color: rgba(255, 255, 255, 0.6);
-}
+.heroMeta strong { color: var(--ink-700); font-weight: 600; }
 
 .heroSubtitle {
-  font-size: clamp(1rem, 1.5vw, 1.15rem);
-  line-height: 1.75;
-  color: rgba(255, 255, 255, 0.55);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--ink-500);
   max-width: 560px;
 }
 
-.heroDivider {
-  margin-top: 80px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--monk-orange) 0%, transparent 60%);
-}
-
-/* ── Content Grid ── */
+/* ---- Content grid ---- */
 .content {
-  padding: 80px 6vw 60px;
   max-width: 1200px;
   margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem) clamp(2rem, 4vw, 3rem);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 1.6vw, 1.35rem);
 }
 
-/* ── Card ── */
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* ---- Card ---- */
 .card {
-  padding: 48px 40px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
   position: relative;
-  transition: border-color 0.3s ease, background 0.3s ease;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .card:hover {
-  border-color: rgba(255, 165, 0, 0.2);
-  background: rgba(255, 165, 0, 0.02);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(124, 58, 237, 0.2);
 }
 
 .cardNum {
-  font-family: var(--font-heading);
-  font-size: 3.5rem;
-  color: rgba(255, 165, 0, 0.12);
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
   line-height: 1;
-  margin-bottom: 16px;
-  letter-spacing: 0.02em;
-  transition: color 0.3s ease;
+  letter-spacing: -0.04em;
+  color: rgba(124, 58, 237, 0.14);
+  margin-bottom: 0.85rem;
+  transition: color 0.35s ease;
 }
 
-.card:hover .cardNum {
-  color: rgba(255, 165, 0, 0.25);
-}
+.card:hover .cardNum { color: rgba(124, 58, 237, 0.28); }
 
 .cardTitle {
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 24px;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  letter-spacing: -0.02em;
+  color: var(--ink-900);
+  margin-bottom: 1.1rem;
 }
 
 .cardBody {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.7rem;
 }
 
 .cardBody p {
-  font-size: 0.9rem;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.94rem;
+  line-height: 1.75;
+  color: var(--ink-500);
 }
 
-.cardBody p strong {
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 600;
-}
+.cardBody p strong { color: var(--ink-900); font-weight: 600; }
 
-/* ── Footer Note ── */
+/* ---- Footer note ---- */
 .footerNote {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 48px 6vw 80px;
   max-width: 1200px;
   margin: 0 auto;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem) clamp(4rem, 8vw, 6rem);
+  border-top: 1px solid var(--border-soft);
 }
 
 .footerNote p {
-  font-size: 0.82rem;
-  line-height: 1.85;
-  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--ink-400);
   max-width: 680px;
 }
 
-/* ── Responsive ── */
-@media (max-width: 768px) {
-  .hero {
-    padding: 60px 5vw 0;
-  }
-
-  .heroTitle {
-    font-size: clamp(56px, 18vw, 80px);
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .card {
-    padding: 36px 24px;
-  }
-
-  .content {
-    padding: 60px 5vw 40px;
-  }
-
-  .footerNote {
-    padding: 40px 5vw 60px;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
 }
