@@ -105,7 +105,7 @@ export const SERVICES = {
 
   "app-development": {
     slug: "app-development",
-    title: "App Development",
+    title: "Mobile App Development",
     eyebrow: "Apps",
     hero: {
       headline: "Your idea, live on every phone.",
