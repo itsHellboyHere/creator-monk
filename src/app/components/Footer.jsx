@@ -10,6 +10,7 @@ const EXPLORE = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
   { name: "About", href: "/about" },
+  { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -101,7 +102,7 @@ export default function Footer() {
         {/* BOTTOM BAR */}
         <div className={styles.bottomBar}>
           <div className={styles.legal}>
-            <span>© {new Date().getFullYear()} CreatorMonk Studio</span>
+            <span>© {new Date().getFullYear()} CreatorMonk </span>
             <span className={styles.dot} />
             <span>Greater Noida · India</span>
           </div>

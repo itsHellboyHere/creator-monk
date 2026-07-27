@@ -1,5 +1,6 @@
 import { SITE, absoluteUrl } from "./lib/seo";
 import { SERVICE_SLUGS } from "./data/servicesData";
+import { getPostSlugs } from "./lib/posts";
 
 export default function sitemap() {
   const now = new Date();
@@ -18,8 +19,15 @@ export default function sitemap() {
     changeFrequency: "monthly",
     priority: 0.8,
   }));
+  const blogPages = getPostSlugs().map((slug) => ({
+    path: `/blog/${slug}`,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
 
-  return [...staticPages, ...servicePages].map(
+  const blogHub = [{ path: "/blog", changeFrequency: "weekly", priority: 0.7 }];
+
+ return [...staticPages, ...blogHub, ...servicePages, ...blogPages].map(
     ({ path, changeFrequency, priority }) => ({
       url: absoluteUrl(path),
       lastModified: now,
