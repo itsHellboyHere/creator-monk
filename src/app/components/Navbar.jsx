@@ -36,6 +36,7 @@ const SERVICES = [
 const NAV_ITEMS = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services", dropdown: true },
+  {name:"Blog",href:"/blog"},
   { name: "About", href: "/about" },
 ];
 
