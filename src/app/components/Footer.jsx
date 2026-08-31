@@ -90,11 +90,6 @@ export default function Footer() {
                 <span>+91 78273 32337</span>
                 <ArrowUpRight size={14} className={styles.upright} />
               </a>
-              <a href="tel:+917004671676" className={styles.contactLink}>
-                <Phone size={14} strokeWidth={2.2} />
-                <span>+91 70046 71676</span>
-                <ArrowUpRight size={14} className={styles.upright} />
-              </a>
             </div>
           </div>
         </div>
